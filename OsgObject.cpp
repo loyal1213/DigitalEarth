@@ -143,11 +143,16 @@ void cOSG::InitCameraConfig(void)
 void cOSG::PreFrameUpdate()
 {
     // Due any preframe updates in this routine
+	while(theApp.b_need_modify_){Sleep(1);}
+	theApp.b_can_modify_ = false;
 }
 
 void cOSG::PostFrameUpdate()
 {
     // Due any postframe updates in this routine
+	if (theApp.b_need_modify_){
+		theApp.b_can_modify_ = true;
+	}
 }
 
 
@@ -168,18 +173,25 @@ void cOSG::addAirport()
 
 void cOSG::rmWorldBound()
 {
+	theApp.b_need_modify_ = true;
+	while(!theApp.b_can_modify_)Sleep(1);
 	if (china_boundaries_)
 	{
 		mapNode->getMap()->removeLayer(china_boundaries_);
 	}
+	theApp.b_need_modify_ = false;
 }
 
 void cOSG::addWorldBound()
 {
-	if (!china_boundaries_)
+	theApp.b_need_modify_ = true;
+	while(!theApp.b_can_modify_)Sleep(1);
+	if (china_boundaries_)
 	{
 		mapNode->getMap()->addLayer(china_boundaries_);
 	}
+    theApp.b_need_modify_ = false;
+
 }
 
 void cOSG::InitOsgEarth()
@@ -208,7 +220,7 @@ void cOSG::InitOsgEarth()
 	mapNode->getBound();
 
 	// 新增显示视点信息的控件
-	addViewPointLable();
+	// addViewPointLable();
 
 }
 
@@ -231,7 +243,7 @@ void cOSG::addViewPointLable()
 	mouseCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
 	mouseCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
 	mouseCoords->setBackColor(0,0,0,0.5);
-	mouseCoords->setSize(800,50);
+	mouseCoords->setSize(400,50);
 	mouseCoords->setMargin(10);
 	canvas->addChild(mouseCoords);
 }

@@ -29,6 +29,9 @@ class CDigitaleEarthApp : public CWinAppEx
 public:
 	CDigitaleEarthApp();
 
+public:
+	bool b_need_modify_;
+	bool b_can_modify_;
 
 // ÖØÐ´
 public:

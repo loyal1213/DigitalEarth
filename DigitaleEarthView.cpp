@@ -173,7 +173,7 @@ void CDigitaleEarthView::OnInitialUpdate()
 	// Get Filename from DocumentOpen Dialog
 	CString csFileName = GetDocument()->GetFileName();
 	if (csFileName.IsEmpty()){
-		csFileName = "demo.earth";
+		csFileName = "feature_clip_plane.earth";
 	}
 
 	// Init the osg class
@@ -216,17 +216,17 @@ void CDigitaleEarthView::OnSetBound()
 void CDigitaleEarthView::OnUpdateShowBound(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
-	pCmdUI->SetCheck(isShowBound_);
+	/*pCmdUI->SetCheck(isShowBound_);
 	if (isShowBound_){
 		mOSG->addWorldBound();
 	}else{
 		mOSG->rmWorldBound();
-	}
+	}*/
 }
 
 
 void CDigitaleEarthView::OnShowBound()
 {
 	// TODO: 在此添加命令处理程序代码
-	isShowBound_ = !isShowBound_;
+	// isShowBound_ = !isShowBound_;
 }

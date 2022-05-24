@@ -1,24 +1,73 @@
-﻿生成启动时间为 2022/5/24 19:34:18。
-     1>项目“G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\DigitaleEarth.vcxproj”在节点 2 上(build 个目标)。
-     1>InitializeBuildStatus:
-         正在创建“Debug\DigitaleEarth.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
-       ClCompile:
-         所有输出均为最新。
-         所有输出均为最新。
-       ResourceCompile:
-         所有输出均为最新。
-       ManifestResourceCompile:
-         所有输出均为最新。
-       Link:
-         所有输出均为最新。
-       Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\DigitaleEarth.exe.embed.manifest" /manifest Debug\DigitaleEarth.exe.intermediate.manifest "E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
-         所有输出均为最新。
-       FinalizeBuildStatus:
-         正在删除文件“Debug\DigitaleEarth.unsuccessfulbuild”。
-         正在对“Debug\DigitaleEarth.lastbuildstate”执行 Touch 任务。
-     1>已完成生成项目“G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\DigitaleEarth.vcxproj”(build 个目标)的操作。
-
-生成成功。
-
-已用时间 00:00:01.08
+﻿  OsgObject.cpp
+  LabelCOntrolEventHandler.cpp
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(17): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(17): error C2143: 语法错误 : 缺少“,”(在“&”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(19): error C2061: 语法错误: 标识符“MapNode”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(25): error C2061: 语法错误: 标识符“MapNode”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(37): error C2143: 语法错误 : 缺少“;”(在“*”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(37): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(37): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(44): error C2653: “CLabelCOntrolEventHandler”: 不是类或命名空间名称
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(45): error C2504: “Callback”: 未定义基类
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(47): error C2061: 语法错误: 标识符“Formatter”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(51): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(51): error C2143: 语法错误 : 缺少“,”(在“&”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(52): error C2061: 语法错误: 标识符“MapNode”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.h(56): error C2065: “Formatter”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2065: “MapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2065: “mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2065: “label”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2275: “osgEarth::Util::Controls::LabelControl”: 将此类型用作表达式非法
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2065: “Formatter”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2065: “formatter”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2448: “CLabelControlEventHandler::{ctor}”: 函数样式初始值设定项类似函数定义
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(4): error C2143: 语法错误 : 缺少“;”(在“:”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(5): error C2065: “mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(6): error C2448: “_mapNode”: 函数样式初始值设定项类似函数定义
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(31): error C2065: “_mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(31): error C2227: “->getTerrain”的左边必须指向类/结构/联合/泛型类型
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(31): error C2227: “->getWorldCoordsUnderMouse”的左边必须指向类/结构/联合/泛型类型
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(33): error C2065: “GeoPoint”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(33): error C2146: 语法错误: 缺少“;”(在标识符“map”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(33): error C2065: “map”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(34): error C2065: “map”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(34): error C2228: “.fromWorld”的左边必须有类/结构/联合
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(34): error C2065: “_mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(34): error C2227: “->getMapSRS”的左边必须指向类/结构/联合/泛型类型
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(37): error C2065: “map”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(37): error C2065: “_mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(42): error C2065: “_mapNode”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(51): error C2061: 语法错误: 标识符“Formatter”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(53): error C2065: “formatter”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(53): error C2542: “MouseCoordsLabelCallback::_formatter”: 类对象没有用于初始化的构造函数
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(55): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(55): error C2143: 语法错误 : 缺少“,”(在“&”的前面)
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(59): error C2451: “osg::ref_ptr”类型的条件表达式是非法的
+          没有可用于执行该转换的用户定义的转换运算符，或者无法调用该运算符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(62): error C2678: 二进制“->”: 没有找到接受“osg::ref_ptr”类型的左操作数的运算符(或没有可接受的转换)
+          c:\program files (x86)\osgearth\osg\include\osg\ref_ptr(106): 可能是“T *osg::ref_ptr<T>::operator ->(void) const”
+          尝试匹配参数列表“(osg::ref_ptr)”时
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(62): error C2039: “format”: 不是“osg::ref_ptr”的成员
+          c:\program files (x86)\osgearth\osg\include\osg\ref_ptr(32) : 参见“osg::ref_ptr”的声明
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(62): error C2065: “mapCoords”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(63): error C2065: “mapCoords”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(63): error C2228: “.z”的左边必须有类/结构/联合
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(61): error C3861: “Stringify”: 找不到标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2065: “mapCoords”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2228: “.x”的左边必须有类/结构/联合
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2065: “mapCoords”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2228: “.y”的左边必须有类/结构/联合
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2065: “mapCoords”: 未声明的标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C2228: “.z”的左边必须有类/结构/联合
+          类型是“'unknown-type'”
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C3861: “gb2312ToUtf8”: 找不到标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C3861: “gb2312ToUtf8”: 找不到标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(68): error C3861: “gb2312ToUtf8”: 找不到标识符
+e:\the_way_code\vs_2010\111\digitalearth\labelcontroleventhandler.cpp(74): error C2061: 语法错误: 标识符“MapNode”
+  正在生成代码...

@@ -120,6 +120,7 @@
     <ClInclude Include="DigitaleEarth.h" />
     <ClInclude Include="DigitaleEarthDoc.h" />
     <ClInclude Include="DigitaleEarthView.h" />
+    <ClInclude Include="LabelCOntrolEventHandler.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OsgObject.h" />
     <ClInclude Include="Resource.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="DigitaleEarth.cpp" />
     <ClCompile Include="DigitaleEarthDoc.cpp" />
     <ClCompile Include="DigitaleEarthView.cpp" />
+    <ClCompile Include="LabelCOntrolEventHandler.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OsgObject.cpp" />
     <ClCompile Include="stdafx.cpp">

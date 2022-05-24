@@ -38,7 +38,7 @@ END_MESSAGE_MAP()
 
 // CDigitaleEarthApp 构造
 
-CDigitaleEarthApp::CDigitaleEarthApp()
+CDigitaleEarthApp::CDigitaleEarthApp():b_can_modify_(false),b_need_modify_(false)
 {
 	// 支持重新启动管理器
 	m_dwRestartManagerSupportFlags = AFX_RESTART_MANAGER_SUPPORT_ALL_ASPECTS;

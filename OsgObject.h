@@ -16,6 +16,7 @@
 #include <osgEarthUtil/Sky>
 #include <osgEarthUtil/Controls>
 #include <string>
+#include "DigitaleEarth.h"
 
 class cOSG
 {
