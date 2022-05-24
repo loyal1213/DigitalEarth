@@ -38,9 +38,8 @@ public:
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
 #endif
-
-protected:  // 控件条嵌入成员
 	CMFCRibbonBar     m_wndRibbonBar;
+protected:  // 控件条嵌入成员
 	CMFCRibbonApplicationButton m_MainButton;
 	CMFCToolBarImages m_PanelImages;
 	CMFCRibbonStatusBar  m_wndStatusBar;

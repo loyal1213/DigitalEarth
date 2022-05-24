@@ -23,10 +23,11 @@ void cOSG::InitOSG(std::string modelname)
     m_ModelName = modelname;
 
     // Init different parts of OSG
-    InitManipulators();
+    InitManipulators(); // 操纵器
     InitSceneGraph();
     InitCameraConfig();
-	addAirport();
+	// addAirport();
+	InitOsgEarth();
 }
 
 void cOSG::InitManipulators(void)
@@ -61,6 +62,9 @@ void cOSG::InitSceneGraph(void)
 
     // Add the model to the scene
     mRoot->addChild(mModel.get());
+	mapNode = dynamic_cast<osgEarth::MapNode*>(mModel.get());
+	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.第三讲-VPB用法详解与常见问题处理/vpbtest/TestCommon10/output.ive"));
+
 }
 
 void cOSG::InitCameraConfig(void)
@@ -160,6 +164,92 @@ void cOSG::addAirport()
 	osg::Matrixd mtTemp;
 	csn->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762),osg::DegreesToRadians(109.1263),360,mtTemp);
 	mtAirport->setMatrix(mtTemp);
+}
+
+void cOSG::rmWorldBound()
+{
+	if (china_boundaries_)
+	{
+		mapNode->getMap()->removeLayer(china_boundaries_);
+	}
+}
+
+void cOSG::addWorldBound()
+{
+	if (!china_boundaries_)
+	{
+		mapNode->getMap()->addLayer(china_boundaries_);
+	}
+}
+
+void cOSG::InitOsgEarth()
+{
+	//初始化操作器
+	em = new osgEarth::Util::EarthManipulator;
+	if (mapNode.valid())
+	{
+		em->setNode(mapNode);
+	}
+	em->getSettings()->setArcViewpointTransitions(true);
+	mViewer->setCameraManipulator(em);
+
+	////初始化天空
+	/*osgEarth::Config skyConf;
+	double hours = skyConf.value("hours", 12.0);
+	osg::ref_ptr<osgEarth::Util::SkyNode> sky_node = new osgEarth::Util::SkyNode(mapNode->getMap());
+	sky_node->setDateTime(2012, 1, 27, hours);
+	sky_node->attach(mViewer, 1);
+	// sky_node->setAmbientBrightness(1.0, mViewer);
+	mRoot->addChild(sky_node);*/
+
+
+	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode->getMap()->getLayerByName("world_boundaries"));
+
+	mapNode->getBound();
+
+	// 新增显示视点信息的控件
+	addViewPointLable();
+
+}
+
+void cOSG::addViewPointLable()
+{
+	mRoot->addChild(osgEarth::Util::Controls::ControlCanvas::get(mViewer));
+	osgEarth::Util::Controls::ControlCanvas* canvas = osgEarth::Util::Controls::ControlCanvas::get(mViewer);
+	
+	// 添加控件，用来显示视点信息
+	osgEarth::Util::Controls::LabelControl* viewCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
+	viewCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_LEFT);
+	viewCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_TOP);
+	viewCoords->setBackColor(0,0,0,0.5);
+	viewCoords->setSize(800,50);
+	viewCoords->setMargin(10);
+	canvas->addChild(viewCoords);
+
+	// 添加控件，用来显示鼠标信息
+	osgEarth::Util::Controls::LabelControl* mouseCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
+	mouseCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
+	mouseCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
+	mouseCoords->setBackColor(0,0,0,0.5);
+	mouseCoords->setSize(800,50);
+	mouseCoords->setMargin(10);
+	canvas->addChild(mouseCoords);
+}
+
+void cOSG::set_boundaries(double opt)
+{
+	if (china_boundaries_){
+		china_boundaries_->setOpacity(opt);
+	}
+
+}
+
+double cOSG::get_boundaries()
+{
+	if (china_boundaries_){
+		return china_boundaries_->getOpacity();
+	}
+	return 0.0f;
 }
 
 /*void cOSG::Render(void* ptr)

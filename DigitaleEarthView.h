@@ -48,6 +48,9 @@ protected:
 	//HANDLE mThreadHandle;
 	CRenderingThread* mThreadHandle;
 
+private:
+	bool isShowBound_;
+
 // 生成的消息映射函数
 protected:
 	afx_msg void OnFilePrintPreview();
@@ -59,7 +62,10 @@ public:
 	afx_msg void OnDestroy();
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
-	
+	afx_msg void OnChinaBound();
+	afx_msg void OnSetBound();
+	afx_msg void OnUpdateShowBound(CCmdUI *pCmdUI);
+	afx_msg void OnShowBound();
 };
 
 #ifndef _DEBUG  // DigitaleEarthView.cpp 中的调试版本

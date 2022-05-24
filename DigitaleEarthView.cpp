@@ -21,6 +21,7 @@
 
 #include "DigitaleEarthDoc.h"
 #include "DigitaleEarthView.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -38,11 +39,15 @@ BEGIN_MESSAGE_MAP(CDigitaleEarthView, CView)
 	ON_WM_DESTROY()
 	ON_WM_KEYDOWN()
 	ON_WM_ERASEBKGND()
+	ON_COMMAND(ID_CHINA_BOUND, &CDigitaleEarthView::OnChinaBound)
+	ON_COMMAND(ID_SET_BOUND, &CDigitaleEarthView::OnSetBound)
+	ON_UPDATE_COMMAND_UI(ID_SHOW_BOUND, &CDigitaleEarthView::OnUpdateShowBound)
+	ON_COMMAND(ID_SHOW_BOUND, &CDigitaleEarthView::OnShowBound)
 END_MESSAGE_MAP()
 
 // CDigitaleEarthView 构造/析构
 
-CDigitaleEarthView::CDigitaleEarthView(): mOSG(0L)
+CDigitaleEarthView::CDigitaleEarthView(): mOSG(0L),isShowBound_(true),mThreadHandle(nullptr)
 {
 	// TODO: 在此处添加构造代码
 
@@ -126,12 +131,14 @@ int CDigitaleEarthView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 void CDigitaleEarthView::OnDestroy()
 {
 	// TODO: 在此处添加消息处理程序代码
+	CView::OnDestroy();
+	WaitForSingleObject(mThreadHandle, 1000);
 	delete mThreadHandle;
 	if(mOSG != 0){
 		delete mOSG;
 		mOSG = nullptr;
 	}
-	CView::OnDestroy();
+	
 }
 
 
@@ -148,12 +155,13 @@ void CDigitaleEarthView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 BOOL CDigitaleEarthView::OnEraseBkgnd(CDC* pDC)
 {
-	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	//BOOL ret = CView::OnEraseBkgnd(pDC);
-	//return ret;
-	/* Do nothing, to avoid flashing on MSW */
-	// 如果它擦除了背景，则返回非零值；否则返回0。
-	return true;
+	if (0 == mOSG){
+		return CView::OnEraseBkgnd(pDC);
+	}else{
+		return FALSE;
+	}
+
+	return CView::OnEraseBkgnd(pDC);
 }
 
 
@@ -165,7 +173,7 @@ void CDigitaleEarthView::OnInitialUpdate()
 	// Get Filename from DocumentOpen Dialog
 	CString csFileName = GetDocument()->GetFileName();
 	if (csFileName.IsEmpty()){
-		csFileName = "gdal_interp.earth";
+		csFileName = "demo.earth";
 	}
 
 	// Init the osg class
@@ -175,4 +183,50 @@ void CDigitaleEarthView::OnInitialUpdate()
 	//mThreadHandle = (HANDLE)_beginthread(&cOSG::Render, 0, mOSG); 
 	mThreadHandle = new CRenderingThread(mOSG);
 	mThreadHandle->start();
+}
+
+
+void CDigitaleEarthView::OnChinaBound()
+{
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CDigitaleEarthView::OnSetBound()
+{
+	// TODO: 在此添加命令处理程序代码
+	// AfxMessageBox(TEXT("111111111111"));
+	CDigitaleEarthApp* p_app = (CDigitaleEarthApp*)AfxGetApp();
+	CMainFrame* p_wnd = (CMainFrame*)p_app->GetMainWnd();
+	CMFCRibbonEdit *p_edit = dynamic_cast<CMFCRibbonEdit*>(p_wnd->m_wndRibbonBar.FindByID(ID_CHINA_BOUND));
+	if (p_edit){
+		CString str  = p_edit->GetEditText();
+		std::string strTemp(str.GetBuffer());
+		double opt = std::atof(strTemp.c_str());
+		if (opt<0){
+			AfxMessageBox("错误，透明度必须为正值",MB_OK,MB_ICONEXCLAMATION);
+		}else{
+			mOSG->set_boundaries(opt);
+		}
+
+	}
+}
+
+
+void CDigitaleEarthView::OnUpdateShowBound(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(isShowBound_);
+	if (isShowBound_){
+		mOSG->addWorldBound();
+	}else{
+		mOSG->rmWorldBound();
+	}
+}
+
+
+void CDigitaleEarthView::OnShowBound()
+{
+	// TODO: 在此添加命令处理程序代码
+	isShowBound_ = !isShowBound_;
 }

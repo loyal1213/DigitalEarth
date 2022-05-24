@@ -10,6 +10,11 @@
 #include <osgDB/ReadFile>
 #include <osgUtil/Optimizer>
 #include <osg/MatrixTransform>
+#include <osgEarth/MapNode>
+#include <osgEarthUtil/EarthManipulator>
+#include <osgEarth/ImageLayer>
+#include <osgEarthUtil/Sky>
+#include <osgEarthUtil/Controls>
 #include <string>
 
 class cOSG
@@ -32,7 +37,20 @@ public:
 	// 设置机场
 	void addAirport();
 
+	void rmWorldBound();
+
+	void addWorldBound();
+
+	void InitOsgEarth();
+
     osgViewer::Viewer* getViewer() { return mViewer; }
+
+	// 添加显示视点信息的控件
+	void addViewPointLable();
+
+public:
+	void set_boundaries(double opt);
+	double get_boundaries();
 
 private:
     bool mDone;
@@ -41,9 +59,13 @@ private:
     osgViewer::Viewer* mViewer;
     osg::ref_ptr<osg::Group> mRoot;
     osg::ref_ptr<osg::Node> mModel;
+	osg::ref_ptr<osgEarth::MapNode> mapNode;
+	osg::ref_ptr<osgEarth::Util::EarthManipulator> em;
+
+private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;
-
+	osg::ref_ptr<osgEarth::ImageLayer> china_boundaries_;
 	// 地表的矩阵操作
 public:
 	osg::ref_ptr<osg::CoordinateSystemNode> csn;
