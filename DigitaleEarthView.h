@@ -66,6 +66,11 @@ public:
 	afx_msg void OnSetBound();
 	afx_msg void OnUpdateShowBound(CCmdUI *pCmdUI);
 	afx_msg void OnShowBound();
+	afx_msg void OnButton5();
+	afx_msg void OnEditLongitude();
+	afx_msg void OnUpdateEditLongitude(CCmdUI *pCmdUI);
+	afx_msg void OnEditLatitude();
+	afx_msg void OnEditAltitude();
 };
 
 #ifndef _DEBUG  // DigitaleEarthView.cpp 中的调试版本

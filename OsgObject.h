@@ -65,6 +65,11 @@ public:
 public:
 	void set_boundaries(double opt);
 	double get_boundaries();
+	osg::AnimationPath* createAirLinePath(osg::Vec4Array * ctrl);
+	void DoAPreLine();
+	double GetDis(osg::Vec3 form, osg::Vec3 to);
+	double GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed);
+	void FlyTo(double longitude,double latitude,double altitude);
 
 private:
     bool mDone;

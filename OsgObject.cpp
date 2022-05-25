@@ -2,7 +2,7 @@
 //
 #include "stdafx.h"
 #include "OsgObject.h"
-
+#include <list>
 cOSG::cOSG(HWND hWnd):m_hWnd(hWnd),label_event_(nullptr)
 {
 }
@@ -22,15 +22,14 @@ void cOSG::InitOSG(std::string modelname)
     m_ModelName = modelname;
 
     // Init different parts of OSG
-    // InitManipulators(); // 操纵器
+    InitManipulators(); // 操纵器
 
     InitSceneGraph();
 
     InitCameraConfig();
 	// addAirport();
 
-	// 新增显示视点信息的控件
-	addViewPointLable();
+	InitOsgEarth();
 	
 }
 
@@ -137,8 +136,8 @@ void cOSG::InitCameraConfig(void)
 	mViewer->setSceneData(mRoot.get());
 
     // Add the Camera Manipulator to the Viewer
-    // mViewer->setCameraManipulator(keyswitchManipulator.get());
-	mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
+    mViewer->setCameraManipulator(keyswitchManipulator.get());
+	// mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
 
     // Realize the Viewer
     mViewer->realize();
@@ -213,7 +212,9 @@ void cOSG::InitOsgEarth()
 		em->setNode(mapNode);
 	}
 	em->getSettings()->setArcViewpointTransitions(true);
+
 	mViewer->setCameraManipulator(em);
+	em->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
 
 	////初始化天空
 	/*osgEarth::Config skyConf;
@@ -228,6 +229,10 @@ void cOSG::InitOsgEarth()
 	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode->getMap()->getLayerByName("world_boundaries"));
 
 	mapNode->getBound();
+
+
+	// 新增显示视点信息的控件
+	addViewPointLable();
 
 }
 
@@ -259,7 +264,6 @@ void cOSG::addViewPointLable()
 
 	if (label_event_ == 0){
 		label_event_ = new CLabelControlEventHandler(mapNode,viewCoords);
-		// new MouseCoordsLabelCallback(mouseCoords);
 	}
 	mViewer->addEventHandler(label_event_);
 }
@@ -278,6 +282,195 @@ double cOSG::get_boundaries()
 		return china_boundaries_->getOpacity();
 	}
 	return 0.0f;
+}
+
+
+double cOSG::GetDis(osg::Vec3 form, osg::Vec3 to)
+{
+	return sqrt(pow((to.x() - form.x()), 2) + pow((to.y() - form.y()), 2) + pow((to.z() - form.z()), 2));
+}
+
+double cOSG::GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed)
+{
+	double dist = GetDis(from, to);
+	if (speed == 0)
+		return 1000000000;
+	return dist / speed;
+}
+
+void cOSG::DoAPreLine()
+{
+	/*
+		if 0代码为直接加入经纬高、速度，可能导致飞机姿态不准确。
+		else代码为在0的经纬高基础上每个节点多生成了20个节点，导致无人机更加逼真靠近。
+	*/
+#if 0
+	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
+	vaTemp->push_back(osg::Vec4(109.1050, 34.3678, 413, 50));
+	vaTemp->push_back(osg::Vec4(109.1101, 34.3717, 413, 140));
+	vaTemp->push_back(osg::Vec4(109.1237, 34.3818, 450, 300));
+	vaTemp->push_back(osg::Vec4(109.1455, 34.3985, 700, 500));
+
+	vaTemp->push_back(osg::Vec4(109.2941, 34.4344, 1000, 800));
+	vaTemp->push_back(osg::Vec4(109.1892, 34.4597, 2000, 1000));
+	vaTemp->push_back(osg::Vec4(109.1439, 34.3993, 1500, 700));
+
+	vaTemp->push_back(osg::Vec4(109.1291, 34.3861, 600, 500));
+	vaTemp->push_back(osg::Vec4(109.1101, 34.3717, 413, 200));
+	vaTemp->push_back(osg::Vec4(109.1050, 34.3678, 410, 100));
+	vaTemp->push_back(osg::Vec4(109.1050, 34.3678, 0, 0));
+	apc = createAirLinePath(vaTemp);
+#else
+	struct FlyNodeData
+	{
+		FlyNodeData(double _x,double _y,double _z,int _speed)
+		{
+			x = _x;
+			y = _y;
+			z = _z;
+			speed = _speed;
+		}
+
+		double x, y, z;
+		int speed;
+	};
+	std::list<struct FlyNodeData> FlyNodeList;
+	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.1101, 34.3717, 500, 200));
+	FlyNodeList.push_back(struct FlyNodeData(109.1237, 34.3818, 666, 500));
+	FlyNodeList.push_back(struct FlyNodeData(109.1455, 34.3985, 700, 600));
+	FlyNodeList.push_back(struct FlyNodeData(109.2941, 34.4344, 1000, 800));
+	FlyNodeList.push_back(struct FlyNodeData(109.1892, 34.4597, 1300, 900));
+	FlyNodeList.push_back(struct FlyNodeData(109.1439, 34.3993, 1000, 800));
+	FlyNodeList.push_back(struct FlyNodeData(109.1455, 34.3985, 700, 600));
+	FlyNodeList.push_back(struct FlyNodeData(109.1291, 34.3861, 666, 500));
+	FlyNodeList.push_back(struct FlyNodeData(109.1101, 34.3717, 500, 200));
+	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
+
+	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
+	for (std::list<struct FlyNodeData>::iterator it = FlyNodeList.begin(); it != FlyNodeList.end(); ++it)
+	{
+		struct FlyNodeData data     = *it;		
+		if (it == FlyNodeList.end())
+		{
+			vaTemp->push_back(osg::Vec4(data.x, data.y, data.z, data.speed));
+			vaTemp->push_back(osg::Vec4(data.x, data.y, data.z+10, data.speed));
+			break;
+		}
+		struct FlyNodeData dataNext = *(it);
+
+		const int STEP = 20;
+		double oneStepX = (dataNext.x - data.x) / STEP;
+		double oneStepY = (dataNext.y - data.y) / STEP;
+		double oneStepZ = (dataNext.z - data.z) / STEP;
+		for (int index = 1; index <= STEP; ++index)
+		{
+			double valueX = oneStepX * index;
+			double valueY = oneStepY * index;
+			double valueZ = oneStepZ * index;
+			vaTemp->push_back(osg::Vec4(data.x + valueX, data.y + valueY, data.z + valueZ, data.speed));
+		}
+	}
+	auto apc = createAirLinePath(vaTemp);
+
+#endif
+}
+
+osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
+{
+	osg::ref_ptr<osg::AnimationPath> animationPath = new osg::AnimationPath;		// 动画路径
+	animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);						// 动画不循环
+
+	double time = 0;
+	osg::Vec3d curPosition,curNextPosition;
+
+	osg::Matrix matrix;
+	osg::Quat _rotation;
+
+	double hAngle = 0.0,vAngle = 0.0;
+	for (osg::Vec4Array::iterator iterator = ctrl->begin(); iterator != ctrl->end(); ++iterator)
+	{
+		osg::Vec4Array::iterator iterator2 = iterator;
+		++iterator2;
+
+		// 需要判断是不是已经到顶
+		if (iterator2 == ctrl->end()) { break; }
+
+		// 计算当前点和当前的下一点位置:由经纬高转为xyz
+		csn->getEllipsoidModel()->convertLatLongHeightToXYZ
+		(
+			osg::DegreesToRadians(iterator->y()),
+			osg::DegreesToRadians(iterator->x()),
+			//osg::DegreesToRadians(iterator->z()),
+			iterator->z(),
+			curPosition.x(), curPosition.y(), curPosition.z()
+		);		
+		csn->getEllipsoidModel()->convertLatLongHeightToXYZ
+		(
+			osg::DegreesToRadians(iterator2->y()),
+			osg::DegreesToRadians(iterator2->x()),
+			//osg::DegreesToRadians(iterator2->z()),
+			iterator2->z(),
+			curNextPosition.x(), curNextPosition.y(), curNextPosition.z()
+		);
+
+		// 计算垂直夹角
+		if (iterator->z() == iterator2->z())
+		{
+			vAngle = 0;
+		}
+		else
+		{
+			if (sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow(iterator2->z() - iterator->z(), 2) == 0)
+			{
+				vAngle = osg::PI_2;
+			}
+			else
+			{
+				vAngle = atan((iterator2->z() - iterator->z()) / sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow((iterator2->z() - iterator->z()), 2));
+			}
+
+			if (vAngle >= osg::PI_2)
+				vAngle = osg::PI_2;
+			if (vAngle <= -osg::PI_2)
+			{
+				vAngle = -osg::PI_2;
+			}
+		}
+
+		// 计算水平夹角
+		if (iterator->x() == iterator2->x())
+		{
+			hAngle = osg::PI_2;
+		}
+		else
+		{
+			hAngle = (iterator2->y() - iterator->y()) / (iterator2->x() - iterator->x());
+
+			if (iterator2->x() > iterator->x())
+				hAngle += osg::PI;
+		}
+
+		//求飞机的变换矩阵
+		csn->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
+		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), vAngle + osg::PI_2, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
+		matrix.preMultRotate(_rotation);
+		animationPath->insert(time, osg::AnimationPath::ControlPoint(curPosition, matrix.getRotate()));
+
+		//把下一个点的时间求出来
+		time += GetRunTime(curPosition, curNextPosition, iterator2->w());
+	}
+
+	animationPath->insert(time, osg::AnimationPath::ControlPoint(curNextPosition, matrix.getRotate()));
+	return animationPath.release();
+}
+
+void cOSG::FlyTo(double longitude,double latitude,double altitude){
+	/*theApp.b_need_modify_ = true;
+	while (!theApp.b_can_modify_){
+		Sleep(1);
+	}*/
+	em->setViewpoint(osgEarth::Viewpoint("viewer_point3",longitude,latitude,0,-60,0,altitude),2);
 }
 
 /*void cOSG::Render(void* ptr)

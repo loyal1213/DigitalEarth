@@ -1,6 +1,7 @@
 #include "StdAfx.h"
 #include "LabelCOntrolEventHandler.h"
 #include <osgEarth/Terrain>
+#include <osgEarthUtil/EarthManipulator>
 
 CLabelControlEventHandler::CLabelControlEventHandler(osgEarth::MapNode* mapNode, osgEarth::Util::Controls::LabelControl* label):_mapNode(mapNode)
 {
@@ -23,25 +24,65 @@ void CLabelControlEventHandler::addCallback(CLabelControlEventHandler::Callback*
 }
 
 bool CLabelControlEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::GUIActionAdapter& aa)
-{
-	if (ea.getEventType() == ea.MOVE || ea.getEventType() == ea.DRAG || ea.getEventType() == ea.SCROLL)
+{	
+	
+	osgViewer::Viewer *viewer = dynamic_cast<osgViewer::Viewer *>(&aa);
+	if (NULL != viewer)
 	{
+		
+	}
+
+	if(ea.getEventType() == ea.FRAME ){// .MOVE || ea.getEventType() == ea.DRAG || ea.getEventType() == ea.SCROLL){
 		osg::Vec3d world;
-		if (_mapNode->getTerrain()->getWorldCoordsUnderMouse(aa.asView(), ea.getX(), ea.getY(), world))
-		{
+		if (_mapNode->getTerrain()->getWorldCoordsUnderMouse(aa.asView(), ea.getX(), ea.getY(), world)){
 			osgEarth::GeoPoint map;
 			map.fromWorld(_mapNode->getMapSRS(), world);
 
 			for (Callbacks::iterator i = _callbacks.begin(); i != _callbacks.end(); ++i)
 				i->get()->set(map, aa.asView(), _mapNode);
-		}
-		else
-		{
+		}else{
 			for (Callbacks::iterator i = _callbacks.begin(); i != _callbacks.end(); ++i)
 				i->get()->reset(aa.asView(), _mapNode);
 		}
 	}
+	osgEarth::Util::EarthManipulator * em = dynamic_cast<osgEarth::Util::EarthManipulator*>(viewer->getCameraManipulator());
+	osgEarth::Viewpoint view_point = em->getViewpoint();
+	double fx = view_point.focalPoint().mutable_value().x();
+	double fy = view_point.focalPoint().mutable_value().y();
+	double fz = view_point.focalPoint().mutable_value().z();
+	double heading_deg = view_point.getHeading();
+	double pitch = view_point.getPitch();
+	double rangle = view_point.getRange();
 
+	if (ea.getEventType() == ea.KEYDOWN){
+		if (ea.getKey() == 'P'){
+			fx++;
+		}else if(ea.getKey() == 'p'){
+			fx--;
+		}else if (ea.getKey() == 'O'){
+			fy++;
+		}else if (ea.getKey() == 'o'){
+			fy--;
+		}else if (ea.getKey() == 'I'){
+			fz++;
+		}else if (ea.getKey() == 'i'){
+			fz--;
+		}else if (ea.getKey() == 'U'){
+			heading_deg++;
+		}else if (ea.getKey() == 'u'){
+			heading_deg--;
+		}else if (ea.getKey() == 'Y'){
+			pitch++;
+		}else if (ea.getKey() == 'y'){
+			pitch--;
+		}else if (ea.getKey() == 'T'){
+			rangle+=1000;
+		}else if (ea.getKey() == 't'){
+			rangle-=1000;
+		}
+		// 112.44 33.75 444.02 -15.84 -53.01 402812.75
+		em->setViewpoint(osgEarth::Viewpoint("viepoint_1",fx,fy,fz,heading_deg,pitch,rangle));
+	}
 	return false;
 }
 

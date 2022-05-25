@@ -43,6 +43,11 @@ BEGIN_MESSAGE_MAP(CDigitaleEarthView, CView)
 	ON_COMMAND(ID_SET_BOUND, &CDigitaleEarthView::OnSetBound)
 	ON_UPDATE_COMMAND_UI(ID_SHOW_BOUND, &CDigitaleEarthView::OnUpdateShowBound)
 	ON_COMMAND(ID_SHOW_BOUND, &CDigitaleEarthView::OnShowBound)
+	ON_COMMAND(ID_BUTTON5, &CDigitaleEarthView::OnButton5)
+	ON_COMMAND(ID_EDIT_LONGITUDE, &CDigitaleEarthView::OnEditLongitude)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_LONGITUDE, &CDigitaleEarthView::OnUpdateEditLongitude)
+	ON_COMMAND(ID_EDIT_LATITUDE, &CDigitaleEarthView::OnEditLatitude)
+	ON_COMMAND(ID_EDIT_ALTITUDE, &CDigitaleEarthView::OnEditAltitude)
 END_MESSAGE_MAP()
 
 // CDigitaleEarthView 构造/析构
@@ -85,7 +90,7 @@ void CDigitaleEarthView::OnRButtonUp(UINT /* nFlags */, CPoint point)
 
 void CDigitaleEarthView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
 {
-#ifndef SHARED_HANDLERS
+#ifdef SHARED_HANDLERS
 	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 #endif
 }
@@ -138,7 +143,7 @@ void CDigitaleEarthView::OnDestroy()
 		delete mOSG;
 		mOSG = nullptr;
 	}
-	
+
 }
 
 
@@ -207,7 +212,6 @@ void CDigitaleEarthView::OnSetBound()
 		}else{
 			mOSG->set_boundaries(opt);
 		}
-
 	}
 }
 
@@ -217,9 +221,9 @@ void CDigitaleEarthView::OnUpdateShowBound(CCmdUI *pCmdUI)
 	// TODO: 在此添加命令更新用户界面处理程序代码
 	/*pCmdUI->SetCheck(isShowBound_);
 	if (isShowBound_){
-		mOSG->addWorldBound();
+	mOSG->addWorldBound();
 	}else{
-		mOSG->rmWorldBound();
+	mOSG->rmWorldBound();
 	}*/
 }
 
@@ -228,4 +232,76 @@ void CDigitaleEarthView::OnShowBound()
 {
 	// TODO: 在此添加命令处理程序代码
 	// isShowBound_ = !isShowBound_;
+}
+
+// 飞往目的地
+void CDigitaleEarthView::OnButton5()
+{
+	double longitude=0.0f, latitude=0.0f, altitude=0.0f;
+	CDigitaleEarthApp* p_app = (CDigitaleEarthApp*)AfxGetApp();
+	CMainFrame* p_wnd = (CMainFrame*)p_app->GetMainWnd();
+	{  // 获取经度
+		CMFCRibbonEdit *p_edit = dynamic_cast<CMFCRibbonEdit*>(p_wnd->m_wndRibbonBar.FindByID(ID_EDIT_LONGITUDE));
+		if (p_edit){
+			CString str  = p_edit->GetEditText();
+			std::string strTemp(str.GetBuffer());
+			longitude = std::atof(strTemp.c_str());
+			if ((longitude<-180) || (longitude>180)){
+				AfxMessageBox("经度必须介于(-180,180)之间 !",MB_OK,MB_ICONEXCLAMATION);
+				return ;
+			}
+		}
+
+	}
+
+	{	// 获取纬度
+		CMFCRibbonEdit *p_edit = dynamic_cast<CMFCRibbonEdit*>(p_wnd->m_wndRibbonBar.FindByID(ID_EDIT_LATITUDE));
+		if (p_edit){
+			CString str  = p_edit->GetEditText();
+			std::string strTemp(str.GetBuffer());
+			latitude = std::atof(strTemp.c_str());
+			if ((latitude<-90) || (latitude>90)){
+				AfxMessageBox("纬度必须介于（-90,90）之间 !",MB_OK,MB_ICONEXCLAMATION);
+				return ;
+			}
+		}
+	}
+
+	{	// 获取高度
+		CMFCRibbonEdit *p_edit = dynamic_cast<CMFCRibbonEdit*>(p_wnd->m_wndRibbonBar.FindByID(ID_EDIT_ALTITUDE));
+		if (p_edit){
+			CString str  = p_edit->GetEditText();
+			std::string strTemp(str.GetBuffer());
+			altitude = std::atof(strTemp.c_str());
+			if ((altitude<0)){
+				AfxMessageBox("高度必须为正值 !",MB_OK,MB_ICONEXCLAMATION);
+				return ;
+			}
+		}
+	}
+
+	mOSG->FlyTo(longitude,latitude,altitude);
+}
+
+void CDigitaleEarthView::OnEditLongitude()
+{
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CDigitaleEarthView::OnUpdateEditLongitude(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CDigitaleEarthView::OnEditLatitude()
+{
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CDigitaleEarthView::OnEditAltitude()
+{
+	// TODO: 在此添加命令处理程序代码
 }

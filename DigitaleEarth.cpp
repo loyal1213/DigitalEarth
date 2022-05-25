@@ -172,6 +172,8 @@ protected:
 // 实现
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+//	afx_msg void OnUpdateEditLatitude(CCmdUI *pCmdUI);
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -184,6 +186,7 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
+//	ON_UPDATE_COMMAND_UI(ID_EDIT_LATITUDE, &CAboutDlg::OnUpdateEditLatitude)
 END_MESSAGE_MAP()
 
 // 用于运行对话框的应用程序命令
@@ -216,3 +219,9 @@ void CDigitaleEarthApp::SaveCustomState()
 
 
 
+
+
+//void CAboutDlg::OnUpdateEditLatitude(CCmdUI *pCmdUI)
+//{
+//	// TODO: 在此添加命令更新用户界面处理程序代码
+//}
