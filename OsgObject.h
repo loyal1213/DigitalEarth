@@ -17,6 +17,7 @@
 #include <osgEarthUtil/Controls>
 #include <string>
 #include "DigitaleEarth.h"
+#include "LabelCOntrolEventHandler.h"
 
 class cOSG
 {
@@ -62,6 +63,7 @@ private:
     osg::ref_ptr<osg::Node> mModel;
 	osg::ref_ptr<osgEarth::MapNode> mapNode;
 	osg::ref_ptr<osgEarth::Util::EarthManipulator> em;
+	CLabelControlEventHandler* label_event_;
 
 private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;

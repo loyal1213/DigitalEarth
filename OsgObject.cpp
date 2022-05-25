@@ -4,7 +4,7 @@
 #include "OsgObject.h"
 
 
-cOSG::cOSG(HWND hWnd):m_hWnd(hWnd)
+cOSG::cOSG(HWND hWnd):m_hWnd(hWnd),label_event_(nullptr)
 {
 }
 
@@ -24,16 +24,21 @@ void cOSG::InitOSG(std::string modelname)
 
     // Init different parts of OSG
     InitManipulators(); // 操纵器
+
     InitSceneGraph();
+
     InitCameraConfig();
 	// addAirport();
-	InitOsgEarth();
+
+	// 新增显示视点信息的控件
+	// addViewPointLable();
+	
 }
 
 void cOSG::InitManipulators(void)
 {
     // Create a trackball manipulator
-    trackball = new osgGA::TrackballManipulator();
+    /*trackball = new osgGA::TrackballManipulator();
 
     // Create a Manipulator Switcher
     keyswitchManipulator = new osgGA::KeySwitchMatrixManipulator;
@@ -43,6 +48,16 @@ void cOSG::InitManipulators(void)
 
     // Init the switcher to the first manipulator (in this case the only manipulator)
     keyswitchManipulator->selectMatrixManipulator(0);  // Zero based index Value
+	*/
+
+	//初始化操作器
+	em = new osgEarth::Util::EarthManipulator;
+	if (mapNode.valid())
+	{
+		em->setNode(mapNode);
+	}
+	em->getSettings()->setArcViewpointTransitions(true);
+	
 }
 
 
@@ -55,6 +70,7 @@ void cOSG::InitSceneGraph(void)
     mModel = osgDB::readNodeFile(m_ModelName);
     if (!mModel) return;
 
+
     // Optimize the model
     osgUtil::Optimizer optimizer;
     optimizer.optimize(mModel.get());
@@ -65,6 +81,8 @@ void cOSG::InitSceneGraph(void)
 	mapNode = dynamic_cast<osgEarth::MapNode*>(mModel.get());
 	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.第三讲-VPB用法详解与常见问题处理/vpbtest/TestCommon10/output.ive"));
 
+	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode->getMap()->getLayerByName("world_boundaries"));
+	
 }
 
 void cOSG::InitCameraConfig(void)
@@ -77,6 +95,19 @@ void cOSG::InitCameraConfig(void)
 
     // Add a Stats Handler to the viewer
     mViewer->addEventHandler(new osgViewer::StatsHandler);
+
+
+	
+
+	////初始化天空
+	/*osgEarth::Config skyConf;
+	double hours = skyConf.value("hours", 12.0);
+	osg::ref_ptr<osgEarth::Util::SkyNode> sky_node = new osgEarth::Util::SkyNode(mapNode->getMap());
+	sky_node->setDateTime(2012, 1, 27, hours);
+	sky_node->attach(mViewer, 1);
+	// sky_node->setAmbientBrightness(1.0, mViewer);
+	mRoot->addChild(sky_node);*/
+
 
     // Get the current window size
     ::GetWindowRect(m_hWnd, &rect);
@@ -125,7 +156,8 @@ void cOSG::InitCameraConfig(void)
     mViewer->setCamera(camera.get());
 
     // Add the Camera Manipulator to the Viewer
-    mViewer->setCameraManipulator(keyswitchManipulator.get());
+    // mViewer->setCameraManipulator(keyswitchManipulator.get());
+	mViewer->setCameraManipulator(em);
 
     // Set the Scene Data
     mViewer->setSceneData(mRoot.get());
@@ -219,9 +251,6 @@ void cOSG::InitOsgEarth()
 
 	mapNode->getBound();
 
-	// 新增显示视点信息的控件
-	// addViewPointLable();
-
 }
 
 void cOSG::addViewPointLable()
@@ -239,13 +268,17 @@ void cOSG::addViewPointLable()
 	canvas->addChild(viewCoords);
 
 	// 添加控件，用来显示鼠标信息
-	osgEarth::Util::Controls::LabelControl* mouseCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
+	/*osgEarth::Util::Controls::LabelControl* mouseCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
 	mouseCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
 	mouseCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
 	mouseCoords->setBackColor(0,0,0,0.5);
 	mouseCoords->setSize(400,50);
 	mouseCoords->setMargin(10);
-	canvas->addChild(mouseCoords);
+	canvas->addChild(mouseCoords);*/
+
+	if (label_event_ == 0){
+		label_event_ = new CLabelControlEventHandler(mapNode,viewCoords);
+	}
 }
 
 void cOSG::set_boundaries(double opt)

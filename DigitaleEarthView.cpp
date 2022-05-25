@@ -195,7 +195,6 @@ void CDigitaleEarthView::OnChinaBound()
 void CDigitaleEarthView::OnSetBound()
 {
 	// TODO: 在此添加命令处理程序代码
-	// AfxMessageBox(TEXT("111111111111"));
 	CDigitaleEarthApp* p_app = (CDigitaleEarthApp*)AfxGetApp();
 	CMainFrame* p_wnd = (CMainFrame*)p_app->GetMainWnd();
 	CMFCRibbonEdit *p_edit = dynamic_cast<CMFCRibbonEdit*>(p_wnd->m_wndRibbonBar.FindByID(ID_CHINA_BOUND));

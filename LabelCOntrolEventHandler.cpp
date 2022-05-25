@@ -1,8 +1,8 @@
 #include "StdAfx.h"
 #include "LabelCOntrolEventHandler.h"
+#include <osgEarth/Terrain>
 
-CLabelControlEventHandler::CLabelControlEventHandler(MapNode* mapNode, osgEarth::Util::Controls::LabelControl* label, Formatter* formatter) :
-_mapNode(mapNode)
+CLabelControlEventHandler::CLabelControlEventHandler(osgEarth::MapNode* mapNode, osgEarth::Util::Controls::LabelControl* label):_mapNode(mapNode)
 {
 	_mapNodePath.push_back((osg::Node *)mapNode->getTerrainEngine());
 
@@ -14,7 +14,7 @@ _mapNode(mapNode)
 		label->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
 		label->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
 
-		addCallback(new MouseCoordsLabelCallback(label, formatter));
+		addCallback(new MouseCoordsLabelCallback(label));
 	}
 }
 
@@ -30,7 +30,7 @@ bool CLabelControlEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::
 		osg::Vec3d world;
 		if (_mapNode->getTerrain()->getWorldCoordsUnderMouse(aa.asView(), ea.getX(), ea.getY(), world))
 		{
-			GeoPoint map;
+			osgEarth::GeoPoint map;
 			map.fromWorld(_mapNode->getMapSRS(), world);
 
 			for (Callbacks::iterator i = _callbacks.begin(); i != _callbacks.end(); ++i)
@@ -48,30 +48,19 @@ bool CLabelControlEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::
 
 //-----------------------------------------------------------------------
 
-MouseCoordsLabelCallback::MouseCoordsLabelCallback(osgEarth::Util::Controls::LabelControl* label, Formatter* formatter) :
-_label(label),
-	_formatter(formatter){}
+MouseCoordsLabelCallback::MouseCoordsLabelCallback(osgEarth::Util::Controls::LabelControl* label) :_label(label){}
 
-void MouseCoordsLabelCallback::set(const GeoPoint& mapCoords, osg::View* view, MapNode* mapNode)
+void MouseCoordsLabelCallback::set(const osgEarth::GeoPoint& mapCoords, osg::View* view, osgEarth::MapNode* mapNode)
 {
 	if (_label.valid())
 	{
-		if (_formatter)
-		{
-			_label->setText(Stringify()
-				<< _formatter->format(mapCoords)
-				<< ", " << mapCoords.z());
-		}
-		else
-		{
-			char wsrc[512];
-			sprintf(wsrc, "%s:%.3f %s:%.3f %s:%.3f", gb2312ToUtf8("经度"),mapCoords.x(), gb2312ToUtf8("纬度"), mapCoords.y(), gb2312ToUtf8("高度"),mapCoords.z());
-			_label->setText(wsrc);
-		}
+		char wsrc[512];
+		sprintf(wsrc, "%s:%.3f %s:%.3f %s:%.3f", "longitude",mapCoords.x(), "latitude", mapCoords.y(), "altitude",mapCoords.z());
+		_label->setText(wsrc);
 	}
 }
 
-void MouseCoordsLabelCallback::reset(osg::View* view, MapNode* mapNode)
+void MouseCoordsLabelCallback::reset(osg::View* view, osgEarth::MapNode* mapNode)
 {
 	if (_label.valid())
 	{
