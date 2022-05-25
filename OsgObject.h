@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include <typeinfo>
 
 #include <osgViewer/Viewer>
 #include <osgViewer/ViewerEventHandlers>
@@ -15,10 +17,20 @@
 #include <osgEarth/ImageLayer>
 #include <osgEarthUtil/Sky>
 #include <osgEarthUtil/Controls>
-#include <string>
+#include <osg/Notify>
+#include <osgDB/ReadFile>
+#include <osgGA/GUIEventHandler>
+#include <osgViewer/Viewer>
+#include <osgEarth/Registry>
+#include <osgEarthUtil/EarthManipulator>
+#include <osgEarthUtil/Controls>
+#include <osgEarthUtil/ExampleResources>
+#include <osgEarthSymbology/Color>
+
 #include "DigitaleEarth.h"
 #include "LabelCOntrolEventHandler.h"
-
+using namespace osgEarth::Symbology;
+using namespace osgEarth::Util::Controls;
 class cOSG
 {
 public:
@@ -69,6 +81,7 @@ private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;
 	osg::ref_ptr<osgEarth::ImageLayer> china_boundaries_;
+	osg::ref_ptr<osgEarth::Util::Controls::ControlCanvas> canvas_;
 	// 地表的矩阵操作
 public:
 	osg::ref_ptr<osg::CoordinateSystemNode> csn;

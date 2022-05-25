@@ -35,7 +35,7 @@ public:
 protected:
 	osgEarth::MapNode*      _mapNode;
 	osg::NodePath _mapNodePath;
-	typedef std::vector< osg::ref_ptr<Callback> > Callbacks;
+	typedef std::vector<osg::ref_ptr<Callback>> Callbacks;
 	Callbacks _callbacks;
 };
 

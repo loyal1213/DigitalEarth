@@ -13,7 +13,6 @@ CLabelControlEventHandler::CLabelControlEventHandler(osgEarth::MapNode* mapNode,
 		label->setHaloColor(osg::Vec4(1.0, 0.5, 0.0, 1));
 		label->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
 		label->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
-
 		addCallback(new MouseCoordsLabelCallback(label));
 	}
 }
