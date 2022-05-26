@@ -18,6 +18,7 @@
 #include <osgEarthUtil/Sky>
 #include <osgEarthUtil/Controls>
 #include <osg/Notify>
+#include <osg/AnimationPath>
 #include <osgDB/ReadFile>
 #include <osgGA/GUIEventHandler>
 #include <osgViewer/Viewer>
@@ -65,10 +66,25 @@ public:
 public:
 	void set_boundaries(double opt);
 	double get_boundaries();
-	osg::AnimationPath* createAirLinePath(osg::Vec4Array * ctrl);
+
+public:
+	// 预设值路径飞行
+	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
+	
+	// 启动预设值路径
+	void DoPreLineNow();
+
+	// 设置一个预设值路径
 	void DoAPreLine();
+
+	// 两点间的距离公式
 	double GetDis(osg::Vec3 form, osg::Vec3 to);
+	
+	// 计算两点间需要行驶的时间
 	double GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed);
+	
+public:
+	// 飞行到指定位置
 	void FlyTo(double longitude,double latitude,double altitude);
 
 private:
@@ -79,12 +95,14 @@ private:
     osg::ref_ptr<osg::Group> mRoot;
     osg::ref_ptr<osg::Node> mModel;
 	osg::ref_ptr<osgEarth::MapNode> mapNode;
-	osg::ref_ptr<osgEarth::Util::EarthManipulator> em;
+	osg::ref_ptr<osgEarth::Util::EarthManipulator> em_;
 	CLabelControlEventHandler* label_event_;
+
 	// 飞机
 	osg::ref_ptr<osg::Node> fly_airport;
 	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_self;  // 矩阵
 	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_airport;
+	osg::ref_ptr<osg::AnimationPath> apc_;
 private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;

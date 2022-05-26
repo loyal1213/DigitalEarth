@@ -169,8 +169,9 @@ void cOSG::addAirport()
 	coordinate_system_node_ = new osg::CoordinateSystemNode;
 	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel());
 
-	airport = osgDB::readNodeFile("./data/airport/nanyuan.ive"); // 读取机场文件
+	airport = osgDB::readNodeFile("./data/airport/heinei_airport.ive"); // 读取机场文件
 	mtAirport = new osg::MatrixTransform; // 矩阵变换
+	// mtAirport->setMatrix(osg::Matrix::scale(100,100,100)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
 	mtAirport->addChild(airport);
 
 	mRoot->addChild(mtAirport);
@@ -181,7 +182,7 @@ void cOSG::addAirport()
 
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	mtrix_fly_self = new osg::MatrixTransform();
-	mtrix_fly_self->setMatrix(osg::Matrix::scale(100,100,100)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
+	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
 	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);
 	mtrix_fly_self->addChild(fly_airport);
 	mtrix_fly_airport = new osg::MatrixTransform;
@@ -220,15 +221,15 @@ void cOSG::addWorldBound()
 void cOSG::InitOsgEarth()
 {
 	//初始化操作器
-	em = new osgEarth::Util::EarthManipulator;
+	em_ = new osgEarth::Util::EarthManipulator;
 	if (mapNode.valid())
 	{
-		em->setNode(mapNode);
+		em_->setNode(mapNode);
 	}
-	em->getSettings()->setArcViewpointTransitions(true);
+	em_->getSettings()->setArcViewpointTransitions(true);
 
-	mViewer->setCameraManipulator(em);
-	em->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
+	mViewer->setCameraManipulator(em_);
+	em_->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
 
 	////初始化天空
 	/*osgEarth::Config skyConf;
@@ -301,17 +302,19 @@ double cOSG::get_boundaries()
 	return 0.0f;
 }
 
-
+// 两点间的距离公式 
 double cOSG::GetDis(osg::Vec3 form, osg::Vec3 to)
 {
 	return sqrt(pow((to.x() - form.x()), 2) + pow((to.y() - form.y()), 2) + pow((to.z() - form.z()), 2));
 }
 
+// 求出下一点的时间
 double cOSG::GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed)
 {
 	double dist = GetDis(from, to);
-	if (speed == 0)
+	if (speed == 0){
 		return 1000000000;
+	}
 	return dist / speed;
 }
 
@@ -338,19 +341,17 @@ void cOSG::DoAPreLine()
 	vaTemp->push_back(osg::Vec4(109.1050, 34.3678, 0, 0));
 	apc = createAirLinePath(vaTemp);
 #else
-	struct FlyNodeData
-	{
-		FlyNodeData(double _x,double _y,double _z,int _speed)
-		{
+	struct FlyNodeData{
+		FlyNodeData(double _x,double _y,double _z,int _speed){
 			x = _x;
 			y = _y;
 			z = _z;
 			speed = _speed;
 		}
-
 		double x, y, z;
 		int speed;
 	};
+
 	std::list<struct FlyNodeData> FlyNodeList;
 	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
 	FlyNodeList.push_back(struct FlyNodeData(109.1101, 34.3717, 500, 200));
@@ -365,11 +366,9 @@ void cOSG::DoAPreLine()
 	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
 
 	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
-	for (std::list<struct FlyNodeData>::iterator it = FlyNodeList.begin(); it != FlyNodeList.end(); ++it)
-	{
+	for (std::list<struct FlyNodeData>::iterator it = FlyNodeList.begin(); it != FlyNodeList.end(); ++it){
 		struct FlyNodeData data     = *it;		
-		if (it == FlyNodeList.end())
-		{
+		if (it == FlyNodeList.end()){
 			vaTemp->push_back(osg::Vec4(data.x, data.y, data.z, data.speed));
 			vaTemp->push_back(osg::Vec4(data.x, data.y, data.z+10, data.speed));
 			break;
@@ -380,50 +379,49 @@ void cOSG::DoAPreLine()
 		double oneStepX = (dataNext.x - data.x) / STEP;
 		double oneStepY = (dataNext.y - data.y) / STEP;
 		double oneStepZ = (dataNext.z - data.z) / STEP;
-		for (int index = 1; index <= STEP; ++index)
-		{
+		for (int index = 1; index <= STEP; ++index){
 			double valueX = oneStepX * index;
 			double valueY = oneStepY * index;
 			double valueZ = oneStepZ * index;
 			vaTemp->push_back(osg::Vec4(data.x + valueX, data.y + valueY, data.z + valueZ, data.speed));
 		}
 	}
-	auto apc = createAirLinePath(vaTemp);
+	// 根据输入的控制点，输出一个路径
+	apc_ = createAirLinePath(vaTemp);
 
 #endif
 }
 
-osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
+// 根据输入的控制点，输出一个路径，控制点格式（经度，纬度，高度，速度）
+osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) // 控制点
 {
 	osg::ref_ptr<osg::AnimationPath> animationPath = new osg::AnimationPath;		// 动画路径
 	animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);						// 动画不循环
 
-	double time = 0;
+	
 	osg::Vec3d curPosition,curNextPosition;
+	double time = 0;
 
 	osg::Matrix matrix;
 	osg::Quat _rotation;
 
 	double hAngle = 0.0,vAngle = 0.0;
-	for (osg::Vec4Array::iterator iterator = ctrl->begin(); iterator != ctrl->end(); ++iterator)
-	{
-		osg::Vec4Array::iterator iterator2 = iterator;
+	for (osg::Vec4Array::iterator iterator = ctrl->begin(); iterator != ctrl->end(); ++iterator){
+		osg::Vec4Array::iterator iterator2 = iterator; // iterator2 是 iterator 的下一个点
 		++iterator2;
 
 		// 需要判断是不是已经到顶
 		if (iterator2 == ctrl->end()) { break; }
 
 		// 计算当前点和当前的下一点位置:由经纬高转为xyz
-		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
-		(
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ(
 			osg::DegreesToRadians(iterator->y()),
 			osg::DegreesToRadians(iterator->x()),
 			//osg::DegreesToRadians(iterator->z()),
 			iterator->z(),
 			curPosition.x(), curPosition.y(), curPosition.z()
 		);		
-		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
-		(
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ(
 			osg::DegreesToRadians(iterator2->y()),
 			osg::DegreesToRadians(iterator2->x()),
 			//osg::DegreesToRadians(iterator2->z()),
@@ -431,31 +429,31 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 			curNextPosition.x(), curNextPosition.y(), curNextPosition.z()
 		);
 
-		// 计算垂直夹角
+		// 计算垂直夹角  高度相同
 		if (iterator->z() == iterator2->z())
 		{
-			vAngle = 0;
+			vAngle = 0; // 水平线
 		}
 		else
 		{
-			if (sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow(iterator2->z() - iterator->z(), 2) == 0)
-			{
+			if (sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow(iterator2->z() - iterator->z(), 2) == 0){
 				vAngle = osg::PI_2;
-			}
-			else
-			{
-				vAngle = atan((iterator2->z() - iterator->z()) / sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow((iterator2->z() - iterator->z()), 2));
+			}else{
+				vAngle = atan((iterator2->z() - iterator->z()) / sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow((iterator2->z() - iterator->z()), 2)); // 余弦定理
 			}
 
-			if (vAngle >= osg::PI_2)
+			if (vAngle >= osg::PI_2)// 保证飞机不能打滚
 				vAngle = osg::PI_2;
-			if (vAngle <= -osg::PI_2)
-			{
+			if (vAngle <= -osg::PI_2){
 				vAngle = -osg::PI_2;
 			}
 		}
 
-		// 计算水平夹角
+		// 点1 ： 直线飞， 左右角度：经纬度夹角   上下角度
+
+		// 水平夹角： 经度相同 夹角90度   | 纬度相同 夹角0，180
+
+		// 计算水平夹角  经度相同 水平夹角90度  
 		if (iterator->x() == iterator2->x())
 		{
 			hAngle = osg::PI_2;
@@ -468,13 +466,13 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 				hAngle += osg::PI;
 		}
 
-		//求飞机的变换矩阵
+		// 求飞机的变换矩阵
 		coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
 		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), vAngle + osg::PI_2, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
 		matrix.preMultRotate(_rotation);
 		animationPath->insert(time, osg::AnimationPath::ControlPoint(curPosition, matrix.getRotate()));
 
-		//把下一个点的时间求出来
+		// 把下一个点的时间求出来
 		time += GetRunTime(curPosition, curNextPosition, iterator2->w());
 	}
 
@@ -482,12 +480,19 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 	return animationPath.release();
 }
 
+void cOSG::DoPreLineNow()
+{
+	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
+	em_->setViewpoint(osgEarth::Viewpoint("view_point5",109.1347,34.3834,0,24.261,1000),1);
+	em_->setNode(mtrix_fly_airport);
+}
+
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
 	/*theApp.b_need_modify_ = true;
 	while (!theApp.b_can_modify_){
 		Sleep(1);
 	}*/
-	em->setViewpoint(osgEarth::Viewpoint("viewer_point3",longitude,latitude,0,-60,0,altitude),2);
+	em_->setViewpoint(osgEarth::Viewpoint("viewer_point3",longitude,latitude,0,-60,0,altitude),2);
 }
 
 /*void cOSG::Render(void* ptr)
