@@ -27,12 +27,7 @@ bool CLabelControlEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::
 {	
 	
 	osgViewer::Viewer *viewer = dynamic_cast<osgViewer::Viewer *>(&aa);
-	if (NULL != viewer)
-	{
-		
-	}
-
-	if(ea.getEventType() == ea.FRAME ){// .MOVE || ea.getEventType() == ea.DRAG || ea.getEventType() == ea.SCROLL){
+	if(ea.getEventType() ==  ea.MOVE || ea.getEventType() == ea.DRAG || ea.getEventType() == ea.SCROLL){ /*ea.FRAME )*/
 		osg::Vec3d world;
 		if (_mapNode->getTerrain()->getWorldCoordsUnderMouse(aa.asView(), ea.getX(), ea.getY(), world)){
 			osgEarth::GeoPoint map;
@@ -55,29 +50,29 @@ bool CLabelControlEventHandler::handle(const osgGA::GUIEventAdapter& ea, osgGA::
 	double rangle = view_point.getRange();
 
 	if (ea.getEventType() == ea.KEYDOWN){
-		if (ea.getKey() == 'P'){
+		if (ea.getKey() == 'X'){
 			fx++;
-		}else if(ea.getKey() == 'p'){
+		}else if(ea.getKey() == 'x'){
 			fx--;
-		}else if (ea.getKey() == 'O'){
-			fy++;
-		}else if (ea.getKey() == 'o'){
-			fy--;
-		}else if (ea.getKey() == 'I'){
-			fz++;
-		}else if (ea.getKey() == 'i'){
-			fz--;
-		}else if (ea.getKey() == 'U'){
-			heading_deg++;
-		}else if (ea.getKey() == 'u'){
-			heading_deg--;
 		}else if (ea.getKey() == 'Y'){
-			pitch++;
+			fy++;
 		}else if (ea.getKey() == 'y'){
+			fy--;
+		}else if (ea.getKey() == 'Z'){
+			fz++;
+		}else if (ea.getKey() == 'z'){
+			fz--;
+		}else if (ea.getKey() == 'H'){
+			heading_deg++;
+		}else if (ea.getKey() == 'h'){
+			heading_deg--;
+		}else if (ea.getKey() == 'P'){
+			pitch++;
+		}else if (ea.getKey() == 'p'){
 			pitch--;
-		}else if (ea.getKey() == 'T'){
+		}else if (ea.getKey() == 'R'){
 			rangle+=1000;
-		}else if (ea.getKey() == 't'){
+		}else if (ea.getKey() == 'r'){
 			rangle-=1000;
 		}
 		// 112.44 33.75 444.02 -15.84 -53.01 402812.75
