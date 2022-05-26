@@ -44,15 +44,31 @@ BEGIN_MESSAGE_MAP(CDigitaleEarthView, CView)
 	ON_UPDATE_COMMAND_UI(ID_SHOW_BOUND, &CDigitaleEarthView::OnUpdateShowBound)
 	ON_COMMAND(ID_SHOW_BOUND, &CDigitaleEarthView::OnShowBound)
 	ON_COMMAND(ID_BUTTON5, &CDigitaleEarthView::OnButton5)
-	ON_COMMAND(ID_EDIT_LONGITUDE, &CDigitaleEarthView::OnEditLongitude)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_LONGITUDE, &CDigitaleEarthView::OnUpdateEditLongitude)
+	ON_COMMAND(ID_CHECK_START_AIRPLANE, &CDigitaleEarthView::OnCheckStartAirplane)
+	ON_UPDATE_COMMAND_UI(ID_CHECK_START_AIRPLANE, &CDigitaleEarthView::OnUpdateCheckStartAirplane)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_LATITUDE, &CDigitaleEarthView::OnUpdateEditLatitude)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_ALTITUDE, &CDigitaleEarthView::OnUpdateEditAltitude)
+	ON_COMMAND(ID_EDIT_LONGITUDE, &CDigitaleEarthView::OnEditLongitude)
 	ON_COMMAND(ID_EDIT_LATITUDE, &CDigitaleEarthView::OnEditLatitude)
 	ON_COMMAND(ID_EDIT_ALTITUDE, &CDigitaleEarthView::OnEditAltitude)
+//	ON_COMMAND(ID_CHECK_TRACK, &CDigitaleEarthView::OnCheckTrack)
+ON_UPDATE_COMMAND_UI(ID_CHECK_TRACK, &CDigitaleEarthView::OnUpdateCheckTrack)
+ON_COMMAND(ID_CHECK_TRACK, &CDigitaleEarthView::OnCheckTrack)
 END_MESSAGE_MAP()
 
 // CDigitaleEarthView 构造/析构
 
-CDigitaleEarthView::CDigitaleEarthView(): mOSG(0L),isShowBound_(true),mThreadHandle(nullptr)
+CDigitaleEarthView::CDigitaleEarthView(): mOSG(0L),
+	mThreadHandle(nullptr),
+	fly_longitude_(112),
+	fly_latitude_(33),
+	fly_altitude_(400000),
+	isFillWorld_(false),
+	isShowContour_(false),
+	isShowBound_(true),
+	isStartFly_(false),
+	isTrack_(false)
 {
 	// TODO: 在此处添加构造代码
 
@@ -237,7 +253,7 @@ void CDigitaleEarthView::OnShowBound()
 // 飞往目的地
 void CDigitaleEarthView::OnButton5()
 {
-	double longitude=0.0f, latitude=0.0f, altitude=0.0f;
+	// double longitude=0.0f, latitude=0.0f, altitude=0.0f;
 	CDigitaleEarthApp* p_app = (CDigitaleEarthApp*)AfxGetApp();
 	CMainFrame* p_wnd = (CMainFrame*)p_app->GetMainWnd();
 	{  // 获取经度
@@ -245,8 +261,8 @@ void CDigitaleEarthView::OnButton5()
 		if (p_edit){
 			CString str  = p_edit->GetEditText();
 			std::string strTemp(str.GetBuffer());
-			longitude = std::atof(strTemp.c_str());
-			if ((longitude<-180) || (longitude>180)){
+			fly_longitude_ = std::atof(strTemp.c_str());
+			if ((fly_longitude_<-180) || (fly_longitude_>180)){
 				AfxMessageBox("经度必须介于(-180,180)之间 !",MB_OK,MB_ICONEXCLAMATION);
 				return ;
 			}
@@ -259,8 +275,8 @@ void CDigitaleEarthView::OnButton5()
 		if (p_edit){
 			CString str  = p_edit->GetEditText();
 			std::string strTemp(str.GetBuffer());
-			latitude = std::atof(strTemp.c_str());
-			if ((latitude<-90) || (latitude>90)){
+			fly_latitude_ = std::atof(strTemp.c_str());
+			if ((fly_latitude_<-90) || (fly_latitude_>90)){
 				AfxMessageBox("纬度必须介于（-90,90）之间 !",MB_OK,MB_ICONEXCLAMATION);
 				return ;
 			}
@@ -272,26 +288,57 @@ void CDigitaleEarthView::OnButton5()
 		if (p_edit){
 			CString str  = p_edit->GetEditText();
 			std::string strTemp(str.GetBuffer());
-			altitude = std::atof(strTemp.c_str());
-			if ((altitude<0)){
+			fly_altitude_ = std::atof(strTemp.c_str());
+			if ((fly_altitude_<0)){
 				AfxMessageBox("高度必须为正值 !",MB_OK,MB_ICONEXCLAMATION);
 				return ;
 			}
 		}
 	}
 
-	mOSG->FlyTo(longitude,latitude,altitude);
+	mOSG->FlyTo(fly_longitude_,fly_latitude_,fly_altitude_);
 }
-
-void CDigitaleEarthView::OnEditLongitude()
-{
-	// TODO: 在此添加命令处理程序代码
-}
-
 
 void CDigitaleEarthView::OnUpdateEditLongitude(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+void CDigitaleEarthView::OnCheckStartAirplane()
+{
+	// TODO: 在此添加命令处理程序代码
+	isStartFly_ = !isStartFly_;
+	TRACE("OnCheckStartAirplane 1111111111\n");
+	if (isStartFly_){	// 点击的时候触发
+		mOSG->DoPreLineNow(); // 开始起飞
+	}
+	
+}
+
+
+void CDigitaleEarthView::OnUpdateCheckStartAirplane(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(isStartFly_);		//  一直不断刷新
+	TRACE("OnUpdateCheckStartAirplane 222222222\n");
+}
+
+
+void CDigitaleEarthView::OnUpdateEditLatitude(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CDigitaleEarthView::OnUpdateEditAltitude(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+}
+
+
+void CDigitaleEarthView::OnEditLongitude()
+{
+	// TODO: 在此添加命令处理程序代码
 }
 
 
@@ -304,4 +351,23 @@ void CDigitaleEarthView::OnEditLatitude()
 void CDigitaleEarthView::OnEditAltitude()
 {
 	// TODO: 在此添加命令处理程序代码
+}
+
+
+void CDigitaleEarthView::OnUpdateCheckTrack(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	pCmdUI->SetCheck(isTrack_);
+	if (!isTrack_){
+		pCmdUI->Enable(false);
+	}
+}
+
+
+void CDigitaleEarthView::OnCheckTrack()
+{
+	// TODO: 在此添加命令处理程序代码
+	isTrack_ = !isTrack_;
+	mOSG->IsTrack(isTrack_);
+
 }

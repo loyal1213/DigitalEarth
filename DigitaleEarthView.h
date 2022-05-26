@@ -51,6 +51,23 @@ protected:
 private:
 	bool isShowBound_;
 
+private:
+	// 是否填充
+	bool isFillWorld_; 
+	double worldFillTrans_;
+
+	// 是否显示等高线
+	bool isShowContour_;
+	
+	// 飞往
+	double fly_longitude_,fly_latitude_,fly_altitude_;
+	
+	// 是否启动预置路径
+	bool isStartFly_;
+	
+	// 是否追踪
+	bool isTrack_;
+
 // 生成的消息映射函数
 protected:
 	afx_msg void OnFilePrintPreview();
@@ -67,10 +84,17 @@ public:
 	afx_msg void OnUpdateShowBound(CCmdUI *pCmdUI);
 	afx_msg void OnShowBound();
 	afx_msg void OnButton5();
-	afx_msg void OnEditLongitude();
 	afx_msg void OnUpdateEditLongitude(CCmdUI *pCmdUI);
+	afx_msg void OnCheckStartAirplane();
+	afx_msg void OnUpdateCheckStartAirplane(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateEditLatitude(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateEditAltitude(CCmdUI *pCmdUI);
+	afx_msg void OnEditLongitude();
 	afx_msg void OnEditLatitude();
 	afx_msg void OnEditAltitude();
+//	afx_msg void OnCheckTrack();
+	afx_msg void OnUpdateCheckTrack(CCmdUI *pCmdUI);
+	afx_msg void OnCheckTrack();
 };
 
 #ifndef _DEBUG  // DigitaleEarthView.cpp 中的调试版本

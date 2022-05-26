@@ -68,11 +68,13 @@ public:
 	double get_boundaries();
 
 public:
-	// 预设值路径飞行
-	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
-	
 	// 启动预设值路径
 	void DoPreLineNow();
+
+	void IsTrack(bool btrack);
+
+	// 预设值路径飞行
+	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
 
 	// 设置一个预设值路径
 	void DoAPreLine();
@@ -95,6 +97,13 @@ private:
     osg::ref_ptr<osg::Group> mRoot;
     osg::ref_ptr<osg::Node> mModel;
 	osg::ref_ptr<osgEarth::MapNode> mapNode;
+
+	/*
+	其中第一个translate将相机移动至世界坐标原点位置；
+	第二个rotate表示相机绕北天东坐标系旋转；
+	第三个rotate表示相机根据位置（经纬坐标）调整自己的视口，使相机移动时始终拥有固定的北天东偏转角度；
+	第四个translate表示相机从球心至视点位置的矩阵；
+	*/
 	osg::ref_ptr<osgEarth::Util::EarthManipulator> em_;
 	CLabelControlEventHandler* label_event_;
 

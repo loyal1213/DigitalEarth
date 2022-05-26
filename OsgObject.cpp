@@ -166,30 +166,35 @@ void cOSG::PostFrameUpdate()
 
 void cOSG::addAirport()
 {
-	coordinate_system_node_ = new osg::CoordinateSystemNode;
-	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel());
+	coordinate_system_node_ = new osg::CoordinateSystemNode; // 创建坐标系节点
+	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel()); // 设置椭圆体模型
 
+	// 加载机场
 	airport = osgDB::readNodeFile("./data/airport/heinei_airport.ive"); // 读取机场文件
 	mtAirport = new osg::MatrixTransform; // 矩阵变换
 	// mtAirport->setMatrix(osg::Matrix::scale(100,100,100)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
 	mtAirport->addChild(airport);
-
 	mRoot->addChild(mtAirport);
 
+	// 设置机场矩阵
 	osg::Matrixd mtTemp;   // 机场位置  109.13 34.38 高度：8434.96  海拔：390
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762),osg::DegreesToRadians(109.1263),360,mtTemp);
 	mtAirport->setMatrix(mtTemp);
 
+	// 加载飞机
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	mtrix_fly_self = new osg::MatrixTransform();
 	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
-	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);
+
+	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// 设置属性，光照法线
 	mtrix_fly_self->addChild(fly_airport);
+
 	mtrix_fly_airport = new osg::MatrixTransform;
 	mtrix_fly_airport->addChild(mtrix_fly_self);
 
 	mRoot->addChild(mtrix_fly_airport);
 
+	// 设置飞机矩阵
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3834),osg::DegreesToRadians(109.1347),437,mtTemp);
 	mtrix_fly_airport->setMatrix(mtTemp);
 
@@ -405,6 +410,8 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 	osg::Matrix matrix;
 	osg::Quat _rotation;
 
+	_rotation.makeRotate(osg::DegreesToRadians(90.0),0.0,0.0,1.0);
+
 	double hAngle = 0.0,vAngle = 0.0;
 	for (osg::Vec4Array::iterator iterator = ctrl->begin(); iterator != ctrl->end(); ++iterator){
 		osg::Vec4Array::iterator iterator2 = iterator; // iterator2 是 iterator 的下一个点
@@ -482,9 +489,38 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 
 void cOSG::DoPreLineNow()
 {
+	/*
+	focalPoint	焦点：相机的焦点位置，是一个地理坐标（含高程）
+	range	焦距：相机位置到焦点的距离，单位是米。
+	pitch	俯仰角：-90至0的值，单位是度
+	heading	水平方位角：0-360的值，控制地图水平旋转，单位是度。
+	*/
 	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
-	em_->setViewpoint(osgEarth::Viewpoint("view_point5",109.1347,34.3834,0,24.261,1000),1);
-	em_->setNode(mtrix_fly_airport);
+	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
+	em_->setViewpoint(osgEarth::Viewpoint("view_point5",109.1347,34.3834,0,24.261,-21.6,1000),1);
+	// em_->setNode(mtrix_fly_airport);
+	// em_->setTetherNode(mtrix_fly_airport);
+	// osgEarth2.10中用setNode替代setTetherNode设置视点跟踪
+	// em_->setNode(mtrix_fly_airport);
+
+	//下面是区别
+	//获取当前操作器的视点，将模型放进这个视角中，然后设置这个视角的一些参数，比如从哪个角度和距离观察模型。然后将这个视点设置为操作器的视点。
+	osgEarth::Viewpoint vp = em_->getViewpoint();
+	vp.setNode(mtrix_fly_airport);
+	/*vp.name()._set("view_point5");
+	vp.range()->set(250000.0, osgEarth::Units::METERS);//观察的距离
+	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//观察的角度
+	em->setViewpoint(vp, 1.0);*/
+}
+
+// 设置跟踪
+void cOSG::IsTrack(bool btrack)
+{
+	if (btrack){
+		em_->getViewpoint().setNode(mtrix_fly_airport);
+	}else{
+		em_->getViewpoint().setNode(0);
+	}
 }
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
