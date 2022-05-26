@@ -1,19 +1,31 @@
-﻿生成启动时间为 2022/5/25 17:26:42。
+﻿生成启动时间为 2022/5/25 18:31:25。
      1>项目“G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\DigitaleEarth.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
          正在创建“Debug\DigitaleEarth.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        ClCompile:
          所有输出均为最新。
-         所有输出均为最新。
+         E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _MBCS /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\DigitaleEarth.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt OsgObject.cpp
+         OsgObject.cpp
        ResourceCompile:
          所有输出均为最新。
        ManifestResourceCompile:
          所有输出均为最新。
        Link:
-         所有输出均为最新。
+         E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\Debug\DigitaleEarth.exe" /INCREMENTAL /NOLOGO osgd.lib osgDBd.lib osgGAd.lib osgUId.lib osgFXd.lib osgSimd.lib osgViewerd.lib OpenThreadsd.lib osgManipulatord.lib osgTerraind.lib osgVolumed.lib osgAnimationd.lib osgParticled.lib osgTextd.lib osgWidgetd.lib osgPresentationd.lib osgShadowd.lib osgUtild.lib osgEarthd.lib osgEarthAnnotationd.lib osgEarthSplatd.lib osgEarthUtild.lib osgEarthFeaturesd.lib osgEarthSymbologyd.lib freetyped.lib gdal_id.lib geos_c_d.lib geos_d.lib geotiff_d.lib giflib5d.lib libgeos_d.lib libjasperd.lib libjpegd.lib liblas_cd.lib liblasd.lib libpng16_staticd.lib libpng16d.lib proj_4_9_d.lib sqlite3d.lib tiffd.lib zlibd.lib zlibstaticd.lib /MANIFEST /ManifestFile:"Debug\DigitaleEarth.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\Debug\DigitaleEarth.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\Debug\DigitaleEarth.lib" /MACHINE:X86 Debug\DigitaleEarth.res
+         Debug\DigitaleEarth.exe.embed.manifest.res
+         Debug\DigitaleEarth.obj
+         Debug\DigitaleEarthDoc.obj
+         Debug\DigitaleEarthView.obj
+         Debug\LabelCOntrolEventHandler.obj
+         Debug\MainFrm.obj
+         Debug\OsgObject.obj
+         Debug\stdafx.obj
        Manifest:
          C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\DigitaleEarth.exe.embed.manifest" /manifest Debug\DigitaleEarth.exe.intermediate.manifest "E:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\Include\Manifest\dpiaware.manifest"
          所有输出均为最新。
+       LinkEmbedManifest:
+         所有输出均为最新。
+         DigitaleEarth.vcxproj -> G:\the_way_coder_learn\vs_project\vs_2010\DigitalEarth\Debug\DigitaleEarth.exe
        FinalizeBuildStatus:
          正在删除文件“Debug\DigitaleEarth.unsuccessfulbuild”。
          正在对“Debug\DigitaleEarth.lastbuildstate”执行 Touch 任务。
@@ -21,4 +33,4 @@
 
 生成成功。
 
-已用时间 00:00:00.20
+已用时间 00:00:09.93

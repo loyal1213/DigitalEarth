@@ -27,8 +27,7 @@ void cOSG::InitOSG(std::string modelname)
     InitSceneGraph();
 
     InitCameraConfig();
-	// addAirport();
-
+	
 	InitOsgEarth();
 	
 }
@@ -167,17 +166,32 @@ void cOSG::PostFrameUpdate()
 
 void cOSG::addAirport()
 {
-	csn = new osg::CoordinateSystemNode;
-	csn->setEllipsoidModel(new osg::EllipsoidModel());
+	coordinate_system_node_ = new osg::CoordinateSystemNode;
+	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel());
 
-	airport = osgDB::readNodeFile("../data/module/nanyuan.ive");
-	 
-	mtAirport = new osg::MatrixTransform;
+	airport = osgDB::readNodeFile("./data/airport/nanyuan.ive"); // 读取机场文件
+	mtAirport = new osg::MatrixTransform; // 矩阵变换
 	mtAirport->addChild(airport);
+
 	mRoot->addChild(mtAirport);
-	osg::Matrixd mtTemp;
-	csn->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762),osg::DegreesToRadians(109.1263),360,mtTemp);
+
+	osg::Matrixd mtTemp;   // 机场位置  109.13 34.38 高度：8434.96  海拔：390
+	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762),osg::DegreesToRadians(109.1263),360,mtTemp);
 	mtAirport->setMatrix(mtTemp);
+
+	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
+	mtrix_fly_self = new osg::MatrixTransform();
+	mtrix_fly_self->setMatrix(osg::Matrix::scale(100,100,100)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
+	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);
+	mtrix_fly_self->addChild(fly_airport);
+	mtrix_fly_airport = new osg::MatrixTransform;
+	mtrix_fly_airport->addChild(mtrix_fly_self);
+
+	mRoot->addChild(mtrix_fly_airport);
+
+	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3834),osg::DegreesToRadians(109.1347),437,mtTemp);
+	mtrix_fly_airport->setMatrix(mtTemp);
+
 }
 
 void cOSG::rmWorldBound()
@@ -233,6 +247,9 @@ void cOSG::InitOsgEarth()
 
 	// 新增显示视点信息的控件
 	addViewPointLable();
+
+	// 添加机场
+	addAirport();
 
 }
 
@@ -397,7 +414,7 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 		if (iterator2 == ctrl->end()) { break; }
 
 		// 计算当前点和当前的下一点位置:由经纬高转为xyz
-		csn->getEllipsoidModel()->convertLatLongHeightToXYZ
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
 		(
 			osg::DegreesToRadians(iterator->y()),
 			osg::DegreesToRadians(iterator->x()),
@@ -405,7 +422,7 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 			iterator->z(),
 			curPosition.x(), curPosition.y(), curPosition.z()
 		);		
-		csn->getEllipsoidModel()->convertLatLongHeightToXYZ
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
 		(
 			osg::DegreesToRadians(iterator2->y()),
 			osg::DegreesToRadians(iterator2->x()),
@@ -452,7 +469,7 @@ osg::AnimationPath *cOSG::createAirLinePath(osg::Vec4Array * ctrl)
 		}
 
 		//求飞机的变换矩阵
-		csn->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
+		coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
 		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), vAngle + osg::PI_2, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
 		matrix.preMultRotate(_rotation);
 		animationPath->insert(time, osg::AnimationPath::ControlPoint(curPosition, matrix.getRotate()));

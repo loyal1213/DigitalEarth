@@ -81,18 +81,24 @@ private:
 	osg::ref_ptr<osgEarth::MapNode> mapNode;
 	osg::ref_ptr<osgEarth::Util::EarthManipulator> em;
 	CLabelControlEventHandler* label_event_;
-
+	// 飞机
+	osg::ref_ptr<osg::Node> fly_airport;
+	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_self;  // 矩阵
+	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_airport;
 private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;
 	osg::ref_ptr<osgEarth::ImageLayer> china_boundaries_;
 	osg::ref_ptr<osgEarth::Util::Controls::ControlCanvas> canvas_;
-	// 地表的矩阵操作
+
+	
 public:
-	osg::ref_ptr<osg::CoordinateSystemNode> csn;
+	osg::ref_ptr<osg::CoordinateSystemNode> coordinate_system_node_;// 地表的矩阵操作
+
 public:
-	 osg::ref_ptr<osg::Node> airport;
-	 osg::ref_ptr<osg::MatrixTransform> mtAirport;
+	// 机场
+	osg::ref_ptr<osg::Node> airport;
+	osg::ref_ptr<osg::MatrixTransform> mtAirport;
 };
 
 class CRenderingThread : public OpenThreads::Thread
