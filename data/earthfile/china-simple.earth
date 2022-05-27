@@ -2,12 +2,12 @@
 
 	<!--全球影像图-->
 	<image name="GlobeImage" driver="gdal">
-		<url>./world.tif</url>
+		<url>../data/world.tif</url>
 	</image>
 
 	<!--全球高程图-->
 	<heightfield name="GlobeHeightfiled" driver="gdal">
-		<url>./srtm30plus.tif</url>
+		<url>../data/srtm30plus.tif</url>
 	</heightfield>
 
 	<!--文件缓存-->
