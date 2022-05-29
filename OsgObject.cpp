@@ -3,6 +3,7 @@
 #include "stdafx.h"
 #include "OsgObject.h"
 #include <list>
+#include <osg/Math>
 cOSG::cOSG(HWND hWnd):m_hWnd(hWnd),label_event_(nullptr)
 {
 }
@@ -46,6 +47,15 @@ void cOSG::InitManipulators(void)
     // Init the switcher to the first manipulator (in this case the only manipulator)
     keyswitchManipulator->selectMatrixManipulator(0);  // Zero based index Value
 	
+
+
+	// 初始化 earth 操作器
+	earth_manipulator_ = new osgEarth::Util::EarthManipulator;
+	if (mapNode_.valid()){
+		earth_manipulator_->setNode(mapNode_);
+	}
+	earth_manipulator_->getSettings()->setArcViewpointTransitions(true);
+	
 }
 
 
@@ -54,7 +64,7 @@ void cOSG::InitSceneGraph(void)
     // Init the main Root Node/Group
     mRoot  = new osg::Group;
 
-    // Load the Model from the model name
+    // 构造MapNode，arguments里面有earth文件的路径
     mModel = osgDB::readNodeFile(m_ModelName);
     if (!mModel) return;
 
@@ -66,10 +76,12 @@ void cOSG::InitSceneGraph(void)
 
     // Add the model to the scene
     mRoot->addChild(mModel.get());
-	mapNode = dynamic_cast<osgEarth::MapNode*>(mModel.get());
+	mapNode_ = dynamic_cast<osgEarth::MapNode*>(mModel.get());
 	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.第三讲-VPB用法详解与常见问题处理/vpbtest/TestCommon10/output.ive"));
 
-	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode->getMap()->getLayerByName("world_boundaries"));
+	earth_label_ = new osg::Group();
+	mRoot->addChild(earth_label_);
+	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode_->getMap()->getLayerByName("GlobeBoundary"));
 	
 }
 
@@ -78,7 +90,7 @@ void cOSG::InitCameraConfig(void)
     // Local Variable to hold window size data
     RECT rect;
 
-    // Create the viewer for this window
+    // osg 的场景
     mViewer = new osgViewer::Viewer();
 
     // Add a Stats Handler to the viewer
@@ -131,12 +143,15 @@ void cOSG::InitCameraConfig(void)
     //mViewer->addSlave(camera.get());
     mViewer->setCamera(camera.get());
 
-	// Set the Scene Data
+	// 将组节点设置为场景节点
 	mViewer->setSceneData(mRoot.get());
 
-    // Add the Camera Manipulator to the Viewer
-    mViewer->setCameraManipulator(keyswitchManipulator.get());
+    // 设置earth操作器
+    // mViewer->setCameraManipulator(keyswitchManipulator.get());
 	// mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
+	mViewer->setCameraManipulator(earth_manipulator_);
+
+	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
 
     // Realize the Viewer
     mViewer->realize();
@@ -148,19 +163,44 @@ void cOSG::InitCameraConfig(void)
     mViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);*/
 }
 
+void cOSG::InitOsgEarth()
+{
+	////初始化天空
+	/*osgEarth::Config skyConf;
+	double hours = skyConf.value("hours", 12.0);
+	osg::ref_ptr<osgEarth::Util::SkyNode> sky_node = new osgEarth::Util::SkyNode(mapNode->getMap());
+	sky_node->setDateTime(2012, 1, 27, hours);
+	sky_node->attach(mViewer, 1);
+	// sky_node->setAmbientBrightness(1.0, mViewer);
+	mRoot->addChild(sky_node);*/
+
+	mapNode_->getBound();
+
+
+	// 新增显示视点信息的控件
+	addViewPointLable();
+
+	// 添加机场
+	addAirport();
+
+	// 添加地标
+	addEarthLabel();
+
+}
+
 void cOSG::PreFrameUpdate()
 {
     // Due any preframe updates in this routine
-	while(theApp.b_need_modify_){Sleep(1);}
-	theApp.b_can_modify_ = false;
+	/*while(theApp.b_need_modify_){Sleep(1);}
+	theApp.b_can_modify_ = false;*/
 }
 
 void cOSG::PostFrameUpdate()
 {
     // Due any postframe updates in this routine
-	if (theApp.b_need_modify_){
+	/*if (theApp.b_need_modify_){
 		theApp.b_can_modify_ = true;
-	}
+	}*/
 }
 
 
@@ -172,92 +212,69 @@ void cOSG::addAirport()
 	// 加载机场
 	airport = osgDB::readNodeFile("./data/airport/heinei_airport.ive"); // 读取机场文件
 	mtAirport = new osg::MatrixTransform; // 矩阵变换
-	// mtAirport->setMatrix(osg::Matrix::scale(100,100,100)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
+	// mtAirport->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
 	mtAirport->addChild(airport);
 	mRoot->addChild(mtAirport);
 
 	// 设置机场矩阵
 	osg::Matrixd mtTemp;   // 机场位置  109.13 34.38 高度：8434.96  海拔：390
-	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762),osg::DegreesToRadians(109.1263),360,mtTemp);
+	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
 	mtAirport->setMatrix(mtTemp);
 
 	// 加载飞机
+	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;  //正值： 逆时针  
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	mtrix_fly_self = new osg::MatrixTransform();
-	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
+	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(plane_angle,osg::Vec3(0,0,1))); // -(osg::PI_2/2*10)
 
 	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// 设置属性，光照法线
 	mtrix_fly_self->addChild(fly_airport);
 
+	// mtrix_fly_self->addChild(m_pBuildRader->BuildRader(500,300).get());
 	mtrix_fly_airport = new osg::MatrixTransform;
 	mtrix_fly_airport->addChild(mtrix_fly_self);
 
 	mRoot->addChild(mtrix_fly_airport);
 
 	// 设置飞机矩阵
-	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3834),osg::DegreesToRadians(109.1347),437,mtTemp);
+	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.376128), osg::DegreesToRadians(109.125682), 537, mtTemp);
 	mtrix_fly_airport->setMatrix(mtTemp);
 
 }
 
 void cOSG::rmWorldBound()
 {
-	theApp.b_need_modify_ = true;
-	while(!theApp.b_can_modify_)Sleep(1);
-	if (china_boundaries_)
-	{
-		mapNode->getMap()->removeLayer(china_boundaries_);
+	if (china_boundaries_){
+		mapNode_->getMap()->removeLayer(china_boundaries_);
 	}
-	theApp.b_need_modify_ = false;
+
 }
 
 void cOSG::addWorldBound()
 {
-	theApp.b_need_modify_ = true;
-	while(!theApp.b_can_modify_)Sleep(1);
-	if (china_boundaries_)
-	{
-		mapNode->getMap()->addLayer(china_boundaries_);
+	if (china_boundaries_){
+		mapNode_->getMap()->addLayer(china_boundaries_);
 	}
-    theApp.b_need_modify_ = false;
-
 }
 
-void cOSG::InitOsgEarth()
+
+void cOSG::addEarthLabel()
 {
-	//初始化操作器
-	em_ = new osgEarth::Util::EarthManipulator;
-	if (mapNode.valid())
-	{
-		em_->setNode(mapNode);
-	}
-	em_->getSettings()->setArcViewpointTransitions(true);
-
-	mViewer->setCameraManipulator(em_);
-	em_->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
-
-	////初始化天空
-	/*osgEarth::Config skyConf;
-	double hours = skyConf.value("hours", 12.0);
-	osg::ref_ptr<osgEarth::Util::SkyNode> sky_node = new osgEarth::Util::SkyNode(mapNode->getMap());
-	sky_node->setDateTime(2012, 1, 27, hours);
-	sky_node->attach(mViewer, 1);
-	// sky_node->setAmbientBrightness(1.0, mViewer);
-	mRoot->addChild(sky_node);*/
-
-
-	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode->getMap()->getLayerByName("world_boundaries"));
-
-	mapNode->getBound();
-
-
-	// 新增显示视点信息的控件
-	addViewPointLable();
-
-	// 添加机场
-	addAirport();
+	// osg::Image *china_flag = osgDB::readImageFile("./res/china_flag.png");
+	osgEarth::Symbology::Style style;
+	style.getOrCreate<IconSymbol>()->url()->setLiteral(TEXT("./res/china_flag.png"));		// 图片
+	// style.getOrCreate<IconSymbol>()->declutter() = false;									// 是否在文本上启用分离功能
+	style.getOrCreate<TextSymbol>()->halo() = Color("#5f5f5f");							// 文本轮廓颜色
+	style.getOrCreate<TextSymbol>()->font() = TEXT("simsun.ttc");									// 字体
+	style.getOrCreate<TextSymbol>()->size() = 20.0;										// 字体尺寸
+	style.getOrCreate<TextSymbol>()->pixelOffset() = osg::Vec2s(100,100.0);
+	
+	// mapNode为顶层的贴图节点(osg::ref_ptr<osg::Node>),即地图
+	const osgEarth::SpatialReference* spatialReference = mapNode_->getMapSRS()->getGeographicSRS();
+	earth_label_->addChild(new osgEarth::Annotation::PlaceNode(GeoPoint(spatialReference, 110, 34, 0), "china", style));
 
 }
+
 
 void cOSG::addViewPointLable()
 {
@@ -286,7 +303,7 @@ void cOSG::addViewPointLable()
 	canvas_->addControl(mouseCoords);*/
 
 	if (label_event_ == 0){
-		label_event_ = new CLabelControlEventHandler(mapNode,viewCoords);
+		label_event_ = new CLabelControlEventHandler(mapNode_,viewCoords);
 	}
 	mViewer->addEventHandler(label_event_);
 }
@@ -358,17 +375,17 @@ void cOSG::DoAPreLine()
 	};
 
 	std::list<struct FlyNodeData> FlyNodeList;
-	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
-	FlyNodeList.push_back(struct FlyNodeData(109.1101, 34.3717, 500, 200));
-	FlyNodeList.push_back(struct FlyNodeData(109.1237, 34.3818, 666, 500));
-	FlyNodeList.push_back(struct FlyNodeData(109.1455, 34.3985, 700, 600));
-	FlyNodeList.push_back(struct FlyNodeData(109.2941, 34.4344, 1000, 800));
-	FlyNodeList.push_back(struct FlyNodeData(109.1892, 34.4597, 1300, 900));
-	FlyNodeList.push_back(struct FlyNodeData(109.1439, 34.3993, 1000, 800));
-	FlyNodeList.push_back(struct FlyNodeData(109.1455, 34.3985, 700, 600));
-	FlyNodeList.push_back(struct FlyNodeData(109.1291, 34.3861, 666, 500));
-	FlyNodeList.push_back(struct FlyNodeData(109.1101, 34.3717, 500, 200));
-	FlyNodeList.push_back(struct FlyNodeData(109.1050, 34.3678, 413, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.126324, 34.376233, 537, 50));
+	FlyNodeList.push_back(struct FlyNodeData(109.120828, 34.377273, 500, 50));
+	FlyNodeList.push_back(struct FlyNodeData(109.115934, 34.378487, 666, 50));
+	FlyNodeList.push_back(struct FlyNodeData(109.110210, 34.379818, 700, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.102964, 34.381635, 900, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.091466, 34.384476, 1000, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.0881919, 34.386829, 1200, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.056278, 34.384264, 1300, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.058372, 34.439908, 2000, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.117206, 34.437226, 3000, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.126324, 34.376233, 537, 50));
 
 	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
 	for (std::list<struct FlyNodeData>::iterator it = FlyNodeList.begin(); it != FlyNodeList.end(); ++it){
@@ -496,8 +513,7 @@ void cOSG::DoPreLineNow()
 	heading	水平方位角：0-360的值，控制地图水平旋转，单位是度。
 	*/
 	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
-	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
-	em_->setViewpoint(osgEarth::Viewpoint("view_point5",109.1347,34.3834,0,24.261,-21.6,1000),1);
+	
 	// em_->setNode(mtrix_fly_airport);
 	// em_->setTetherNode(mtrix_fly_airport);
 	// osgEarth2.10中用setNode替代setTetherNode设置视点跟踪
@@ -505,30 +521,54 @@ void cOSG::DoPreLineNow()
 
 	//下面是区别
 	//获取当前操作器的视点，将模型放进这个视角中，然后设置这个视角的一些参数，比如从哪个角度和距离观察模型。然后将这个视点设置为操作器的视点。
-	osgEarth::Viewpoint vp = em_->getViewpoint();
+	osgEarth::Viewpoint vp = earth_manipulator_->getViewpoint();
 	vp.setNode(mtrix_fly_airport);
-	/*vp.name()._set("view_point5");
-	vp.range()->set(250000.0, osgEarth::Units::METERS);//观察的距离
+	// vp.name()._set("view_point5");
+	vp.range()->set(3000.0, osgEarth::Units::METERS);//观察的距离
 	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//观察的角度
-	em->setViewpoint(vp, 1.0);*/
+	earth_manipulator_->setViewpoint(vp, 1.0);
+
+	BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
+	// osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
+	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
+	// earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point5", 109.126324, 34.376233, 4000, -60, -90, 1000),1);
 }
 
 // 设置跟踪
 void cOSG::IsTrack(bool btrack)
 {
 	if (btrack){
-		em_->getViewpoint().setNode(mtrix_fly_airport);
+		earth_manipulator_->getViewpoint().setNode(mtrix_fly_airport);
 	}else{
-		em_->getViewpoint().setNode(0);
+		earth_manipulator_->getViewpoint().setNode(0);
 	}
 }
 
+void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
+{
+	osg::ref_ptr<osgParticle::FireEffect> fire = new osgParticle::FireEffect(position,10);
+	fire->setUseLocalParticleSystem(false);													// 不使用世界坐标系统
+	fire->getEmitter()->setEndless(true);		// 发射器周期
+	fire->getEmitter()->setLifeTime(1);			// 设置效果生命周期为无限
+	scalar->addChild(fire);
+
+	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
+	geode->addDrawable(fire->getParticleSystem());
+	mRoot->addChild(geode);
+}
+
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
-	/*theApp.b_need_modify_ = true;
-	while (!theApp.b_can_modify_){
-		Sleep(1);
-	}*/
-	em_->setViewpoint(osgEarth::Viewpoint("viewer_point3",longitude,latitude,0,-60,0,altitude),2);
+
+  /*setViewpoint参数:
+	1:视点
+		1:视点名称
+		2、3、4:视点经纬高度
+		5:水平方位角：0-360的值，控制地图水平旋转，单位是度
+		6:俯仰角:-90至0的值，单位是度
+		7:焦距:相机位置到焦点的距离，单位是米
+	2:飞行时间(s)
+	*/
+	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("viewer_point3", longitude, latitude, altitude, -60, -90, 1000), 2);
 }
 
 /*void cOSG::Render(void* ptr)

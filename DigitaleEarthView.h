@@ -93,8 +93,10 @@ public:
 	afx_msg void OnEditLatitude();
 	afx_msg void OnEditAltitude();
 //	afx_msg void OnCheckTrack();
-	afx_msg void OnUpdateCheckTrack(CCmdUI *pCmdUI);
+//	afx_msg void OnUpdateCheckTrack(CCmdUI *pCmdUI);
+//	afx_msg void OnCheckTrack();
 	afx_msg void OnCheckTrack();
+	afx_msg void OnUpdateCheckTrack(CCmdUI *pCmdUI);
 };
 
 #ifndef _DEBUG  // DigitaleEarthView.cpp 中的调试版本

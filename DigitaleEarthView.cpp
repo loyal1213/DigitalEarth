@@ -53,8 +53,10 @@ BEGIN_MESSAGE_MAP(CDigitaleEarthView, CView)
 	ON_COMMAND(ID_EDIT_LATITUDE, &CDigitaleEarthView::OnEditLatitude)
 	ON_COMMAND(ID_EDIT_ALTITUDE, &CDigitaleEarthView::OnEditAltitude)
 //	ON_COMMAND(ID_CHECK_TRACK, &CDigitaleEarthView::OnCheckTrack)
-ON_UPDATE_COMMAND_UI(ID_CHECK_TRACK, &CDigitaleEarthView::OnUpdateCheckTrack)
+//ON_UPDATE_COMMAND_UI(ID_CHECK_TRACK, &CDigitaleEarthView::OnUpdateCheckTrack)
+//ON_COMMAND(ID_CHECK_TRACK, &CDigitaleEarthView::OnCheckTrack)
 ON_COMMAND(ID_CHECK_TRACK, &CDigitaleEarthView::OnCheckTrack)
+ON_UPDATE_COMMAND_UI(ID_CHECK_TRACK, &CDigitaleEarthView::OnUpdateCheckTrack)
 END_MESSAGE_MAP()
 
 // CDigitaleEarthView 构造/析构
@@ -63,7 +65,7 @@ CDigitaleEarthView::CDigitaleEarthView(): mOSG(0L),
 	mThreadHandle(nullptr),
 	fly_longitude_(112),
 	fly_latitude_(33),
-	fly_altitude_(400000),
+	fly_altitude_(4000),
 	isFillWorld_(false),
 	isShowContour_(false),
 	isShowBound_(true),
@@ -194,7 +196,7 @@ void CDigitaleEarthView::OnInitialUpdate()
 	// Get Filename from DocumentOpen Dialog
 	CString csFileName = GetDocument()->GetFileName();
 	if (csFileName.IsEmpty()){
-		csFileName = "./data/earthfile/china-simple.earth.earth";
+		csFileName = "china_simple.earth";
 	}
 
 	// Init the osg class
@@ -235,19 +237,18 @@ void CDigitaleEarthView::OnSetBound()
 void CDigitaleEarthView::OnUpdateShowBound(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
-	/*pCmdUI->SetCheck(isShowBound_);
-	if (isShowBound_){
-	mOSG->addWorldBound();
-	}else{
-	mOSG->rmWorldBound();
-	}*/
+	pCmdUI->SetCheck(isShowBound_);
 }
 
 
 void CDigitaleEarthView::OnShowBound()
 {
-	// TODO: 在此添加命令处理程序代码
-	// isShowBound_ = !isShowBound_;
+	isShowBound_ = !isShowBound_;
+	if (isShowBound_){
+		mOSG->addWorldBound();
+	}else{
+		mOSG->rmWorldBound();
+	}
 }
 
 // 飞往目的地
@@ -310,7 +311,11 @@ void CDigitaleEarthView::OnCheckStartAirplane()
 	isStartFly_ = !isStartFly_;
 	TRACE("OnCheckStartAirplane 1111111111\n");
 	if (isStartFly_){	// 点击的时候触发
-		mOSG->DoPreLineNow(); // 开始起飞
+		// 读取临时路径
+		mOSG->DoAPreLine();
+
+		// 开始起飞
+		mOSG->DoPreLineNow(); 
 	}
 	
 }
@@ -320,7 +325,7 @@ void CDigitaleEarthView::OnUpdateCheckStartAirplane(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
 	pCmdUI->SetCheck(isStartFly_);		//  一直不断刷新
-	TRACE("OnUpdateCheckStartAirplane 222222222\n");
+	// TRACE("OnUpdateCheckStartAirplane 222222222\n");
 }
 
 
@@ -354,20 +359,35 @@ void CDigitaleEarthView::OnEditAltitude()
 }
 
 
-void CDigitaleEarthView::OnUpdateCheckTrack(CCmdUI *pCmdUI)
-{
-	// TODO: 在此添加命令更新用户界面处理程序代码
-	pCmdUI->SetCheck(isTrack_);
-	if (!isTrack_){
-		pCmdUI->Enable(false);
-	}
-}
+//void CDigitaleEarthView::OnUpdateCheckTrack(CCmdUI *pCmdUI)
+//{
+//	// TODO: 在此添加命令更新用户界面处理程序代码
+//	pCmdUI->SetCheck(isTrack_);
+//	if (!isTrack_){
+//		pCmdUI->Enable(false);
+//	}
+//}
+
+
+//void CDigitaleEarthView::OnCheckTrack()
+//{
+//	// TODO: 在此添加命令处理程序代码
+//	isTrack_ = !isTrack_;
+//	mOSG->IsTrack(isTrack_);
+//
+//}
 
 
 void CDigitaleEarthView::OnCheckTrack()
 {
-	// TODO: 在此添加命令处理程序代码
 	isTrack_ = !isTrack_;
-	mOSG->IsTrack(isTrack_);
+	if (isTrack_){
+		mOSG->IsTrack(isTrack_);
+	}
+}
 
+
+void CDigitaleEarthView::OnUpdateCheckTrack(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(isTrack_);
 }

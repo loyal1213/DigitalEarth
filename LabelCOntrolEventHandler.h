@@ -8,6 +8,9 @@
 #include <osgGA/GUIEventAdapter>
 #include <osgGA/GUIActionAdapter>
 #include <osgEarth/GeoData>
+#include <osgEarthUtil/Formatter>
+
+using namespace osgEarth::Util;
 
 class CLabelControlEventHandler : public osgGA::GUIEventHandler
 {
@@ -22,7 +25,7 @@ public:
 	};
 
 public:
-	CLabelControlEventHandler(osgEarth::MapNode* mapNode, osgEarth::Util::Controls::LabelControl* label = 0L);
+	CLabelControlEventHandler(MapNode* mapNode, osgEarth::Util::Controls::LabelControl* label = 0L, Formatter* formatter = 0L);
 
 	virtual ~CLabelControlEventHandler() { }
 
@@ -43,7 +46,7 @@ protected:
 class MouseCoordsLabelCallback : public CLabelControlEventHandler::Callback
 {
 public:
-	MouseCoordsLabelCallback(osgEarth::Util::Controls::LabelControl* label);
+	MouseCoordsLabelCallback(osgEarth::Util::Controls::LabelControl* label, Formatter* formatter = 0L);
 
 	virtual ~MouseCoordsLabelCallback() { }
 
@@ -52,5 +55,5 @@ public:
 
 protected:
 	osg::observer_ptr<osgEarth::Util::Controls::LabelControl> _label;
-	// osg::ref_ptr<Formatter>         _formatter;
+	osg::ref_ptr<osgEarth::Util::Formatter>         _formatter;
 };

@@ -81,6 +81,18 @@
     <ClInclude Include="LabelCOntrolEventHandler.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="TrailerCallback.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTrackCallback.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildRader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BuildRaderCallback.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DigitaleEarth.cpp">
@@ -102,6 +114,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="LabelCOntrolEventHandler.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="TrailerCallback.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTrackCallback.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildRader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BuildRaderCallback.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

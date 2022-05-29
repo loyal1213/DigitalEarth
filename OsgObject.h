@@ -27,9 +27,13 @@
 #include <osgEarthUtil/Controls>
 #include <osgEarthUtil/ExampleResources>
 #include <osgEarthSymbology/Color>
+#include <osgEarthAnnotation/PlaceNode>
+
 
 #include "DigitaleEarth.h"
 #include "LabelCOntrolEventHandler.h"
+#include "BuildRader.h"
+
 using namespace osgEarth::Symbology;
 using namespace osgEarth::Util::Controls;
 class cOSG
@@ -38,27 +42,44 @@ public:
     cOSG(HWND hWnd);
     ~cOSG();
 
+public:
+	osgViewer::Viewer* getViewer() { return mViewer; }
+
+	void Done(bool value) { mDone = value; }
+
+	bool Done(void) { return mDone; }
+
+	
     void InitOSG(std::string filename);
+	//static void Render(void* ptr);
+
     void InitManipulators(void);
+
     void InitSceneGraph(void);
+
     void InitCameraConfig(void);
+
     void SetupWindow(void);
+
     void SetupCamera(void);
+
     void PreFrameUpdate(void);
+
     void PostFrameUpdate(void);
-    void Done(bool value) { mDone = value; }
-    bool Done(void) { return mDone; }
-    //static void Render(void* ptr);
+
+
 	// 设置机场
 	void addAirport();
 
 	void rmWorldBound();
 
+	// 添加国界线和省界线
 	void addWorldBound();
 
-	void InitOsgEarth();
+	// 添加地标
+	void addEarthLabel();
 
-    osgViewer::Viewer* getViewer() { return mViewer; }
+	void InitOsgEarth();
 
 	// 添加显示视点信息的控件
 	void addViewPointLable();
@@ -72,6 +93,9 @@ public:
 	void DoPreLineNow();
 
 	void IsTrack(bool btrack);
+
+	// Build 尾迹
+	void BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar);
 
 	// 预设值路径飞行
 	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
@@ -96,7 +120,7 @@ private:
     osgViewer::Viewer* mViewer;
     osg::ref_ptr<osg::Group> mRoot;
     osg::ref_ptr<osg::Node> mModel;
-	osg::ref_ptr<osgEarth::MapNode> mapNode;
+	osg::ref_ptr<osgEarth::MapNode> mapNode_;
 
 	/*
 	其中第一个translate将相机移动至世界坐标原点位置；
@@ -104,7 +128,7 @@ private:
 	第三个rotate表示相机根据位置（经纬坐标）调整自己的视口，使相机移动时始终拥有固定的北天东偏转角度；
 	第四个translate表示相机从球心至视点位置的矩阵；
 	*/
-	osg::ref_ptr<osgEarth::Util::EarthManipulator> em_;
+	osg::ref_ptr<osgEarth::Util::EarthManipulator> earth_manipulator_;
 	CLabelControlEventHandler* label_event_;
 
 	// 飞机
@@ -112,11 +136,18 @@ private:
 	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_self;  // 矩阵
 	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_airport;
 	osg::ref_ptr<osg::AnimationPath> apc_;
+
+    CBuildRader  m_pBuildRader;
 private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
     osg::ref_ptr<osgGA::KeySwitchMatrixManipulator> keyswitchManipulator;
-	osg::ref_ptr<osgEarth::ImageLayer> china_boundaries_;
 	osg::ref_ptr<osgEarth::Util::Controls::ControlCanvas> canvas_;
+
+	// 国界线图层
+	osg::ref_ptr<osgEarth::ImageLayer> china_boundaries_;
+
+	// 地标
+	osg::ref_ptr<osg::Group> earth_label_;
 
 	
 public:
@@ -140,3 +171,15 @@ protected:
     cOSG* _ptr;
     bool _done;
 };
+
+
+
+/* osg 常用命令  
+1. osgearth_cache --seed china-simple.earth --max-level 3
+
+
+
+
+
+
+*/
