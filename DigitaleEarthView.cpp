@@ -196,7 +196,7 @@ void CDigitaleEarthView::OnInitialUpdate()
 	// Get Filename from DocumentOpen Dialog
 	CString csFileName = GetDocument()->GetFileName();
 	if (csFileName.IsEmpty()){
-		csFileName = "china_simple.earth";
+		csFileName = "./data/earth_file/china_simple.earth";
 	}
 
 	// Init the osg class
