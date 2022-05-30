@@ -40,7 +40,7 @@
 	</image>
 	<!-- 省界线(白色) -->
 	<image name="ChinaBoundary" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_provincial_boundaries" driver="ogr">
 			<url>../china_data/provincial_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -58,7 +58,7 @@
 	</image>
 	<!-- 省会城市 （棕色）-->
 	<image name="ProvinceBoundary" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_province_capital" driver="ogr">
 			<url>../china_data/province_capital.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -76,7 +76,7 @@
 	</image>
 	<!-- 地级市 (茶色)-->
 	<image name="CityBoundary" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_province_level_cities" driver="ogr">
 			<url>../china_data/province_level_cities.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -94,7 +94,7 @@
 	</image>
 	<!-- 县界线(褐色) -->
 	<image name="CountryBoundary" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_county_boundaries" driver="ogr">
 			<url>../china_data/county_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -112,7 +112,7 @@
 	</image>
 	<!-- 经纬线（闪兰色(道奇蓝)） -->
 	<image name="GraticuleBoundary" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_graticule" driver="ogr">
 			<url>../china_data/graticule.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -130,7 +130,7 @@
 	</image>
 	<!-- 主要道路 （深橙色）-->
 	<image name="MainRoad" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_road" driver="ogr">
 			<url>../china_data/main_road.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -148,7 +148,7 @@
 	</image>
 	<!-- 主要河流 （深天蓝)-->
 	<image name="MainRiver" driver="agglite">
-		<features name="china" driver="ogr">
+		<features name="china_river" driver="ogr">
 			<url>../china_data/main_river.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
