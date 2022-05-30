@@ -39,6 +39,7 @@
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
+srtm30plus.tif
 
 # Build results
 [Dd]ebug/*

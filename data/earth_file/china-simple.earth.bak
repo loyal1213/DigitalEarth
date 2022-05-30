@@ -1,15 +1,13 @@
 <map name="Globe" type="geocentric" version="2">
 	<!--全球影像图-->
 	<image name="GlobeImage" driver="gdal">
-		<url>../data/world.tif</url>
+		<url>./data/world_data/world.tif</url>
 	</image>
-
 	<!--全球高程图-->
 	<heightfield name="GlobeHeightfiled" driver="gdal">
-		<url>../data/srtm30plus.tif</url>
+		<url>./data/world_data/srtm30plus.tif</url>
 	</heightfield>
-
-  <!--在线地图 经纬度不准-->
+	<!--在线地图 经纬度不准-->
 	<!--<image name="mapbox_satellite" driver="xyz">
 		<url>http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}</url>
 		<profile>
@@ -22,11 +20,10 @@
 			<num_tiles_high_at_lod_0>1</num_tiles_high_at_lod_0>
 		</profile>
 	</image>-->
-	
 	<!-- 世界线(黄色) -->
 	<image name="GlobeBoundary" driver="agglite">
 		<features name="world" driver="ogr">
-			<url>../data/world.shp</url>
+			<url>./data/world_data/world.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -41,11 +38,10 @@
 			</style>
 		</styles>
 	</image>
-	
 	<!-- 省界线(白色) -->
 	<image name="ChinaBoundary" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/provincial_boundaries.shp</url>
+			<url>./data/china_data/provincial_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -60,11 +56,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!-- 省会城市 （棕色）-->
 	<image name="ProvinceBoundary" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/province_capital.shp</url>
+			<url>./data/china_data/province_capital.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -79,11 +74,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!-- 地级市 (茶色)-->
 	<image name="CityBoundary" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/province_level_cities.shp</url>
+			<url>./data/china_data/province_level_cities.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -98,11 +92,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!-- 县界线(褐色) -->
 	<image name="CountryBoundary" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/county_boundaries.shp</url>
+			<url>./data/china_data/county_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -117,11 +110,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!-- 经纬线（闪兰色(道奇蓝)） -->
 	<image name="GraticuleBoundary" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/graticule.shp</url>
+			<url>./data/china_data/graticule.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -136,12 +128,10 @@
 			</style>
 		</styles>
 	</image>
-
-
 	<!-- 主要道路 （深橙色）-->
 	<image name="MainRoad" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/main_road.shp</url>
+			<url>./data/china_data/main_road.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -156,11 +146,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!-- 主要河流 （深天蓝)-->
 	<image name="MainRiver" driver="agglite">
 		<features name="china" driver="ogr">
-			<url>../data/china_data/main_river.shp</url>
+			<url>./data/china_data/main_river.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -175,12 +164,10 @@
 			</style>
 		</styles>
 	</image>
-
 	<!--文件缓存-->
 	<options>
 		<cache type="filesystem">
 			<path>c:/osgearth_cache</path>
 		</cache>
 	</options>
-
 </map>
