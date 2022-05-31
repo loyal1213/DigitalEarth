@@ -853,17 +853,13 @@ void cOSG::DoAPreLine()
 	};
 
 	std::list<struct FlyNodeData> FlyNodeList;
-	FlyNodeList.push_back(struct FlyNodeData(109.126324, 34.376233, 537, 50));
-	FlyNodeList.push_back(struct FlyNodeData(109.120828, 34.377273, 500, 50));
-	FlyNodeList.push_back(struct FlyNodeData(109.115934, 34.378487, 666, 50));
-	FlyNodeList.push_back(struct FlyNodeData(109.110210, 34.379818, 700, 100));
-	FlyNodeList.push_back(struct FlyNodeData(109.102964, 34.381635, 900, 100));
-	FlyNodeList.push_back(struct FlyNodeData(109.091466, 34.384476, 1000, 100));
-	FlyNodeList.push_back(struct FlyNodeData(109.0881919, 34.386829, 1200, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.124955, 34.376215, 550, 50));
+	FlyNodeList.push_back(struct FlyNodeData(109.091485, 34.384483, 550, 100));
+	FlyNodeList.push_back(struct FlyNodeData(109.072182, 34.389523, 700, 100));
 	FlyNodeList.push_back(struct FlyNodeData(109.056278, 34.384264, 1300, 100));
 	FlyNodeList.push_back(struct FlyNodeData(109.058372, 34.439908, 2000, 100));
 	FlyNodeList.push_back(struct FlyNodeData(109.117206, 34.437226, 3000, 100));
-	FlyNodeList.push_back(struct FlyNodeData(109.126324, 34.376233, 537, 50));
+	FlyNodeList.push_back(struct FlyNodeData(109.126324, 34.376233, 530, 50));
 
 	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
 	for (std::list<struct FlyNodeData>::iterator it = FlyNodeList.begin(); it != FlyNodeList.end(); ++it){

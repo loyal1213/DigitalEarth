@@ -56,12 +56,6 @@
 			</style>
 		</styles>
 	</image>
-<<<<<<< HEAD:data/earth_file/china_simple.earth.bak
-	<!-- 县界线(褐色) -->
-	<!--<image name="CountryBoundary" driver="agglite">
-		<features name="country_boundaries" driver="ogr">
-			<url>../china_data/country_boundaries.shp</url>
-=======
 	<!-- 省会城市 （棕色）-->
 	<image name="ProvinceBoundary" driver="agglite">
 		<features name="province_capital" driver="ogr">
@@ -102,7 +96,6 @@
 	<image name="CountyBoundary" driver="agglite">
 		<features name="county_boundaries" driver="ogr">
 			<url>../china_data/county_boundaries.shp</url>
->>>>>>> 2490618f2773106ace87d6293b622e99ccff3991:data/earth_file/china_simple.earth.bak
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -116,7 +109,7 @@
 				}
 			</style>
 		</styles>
-	</image>-->
+	</image>
 	<!-- 经纬线（闪兰色(道奇蓝)） -->
 	<image name="GraticuleBoundary" driver="agglite">
 		<features name="china_graticule" driver="ogr">
@@ -135,47 +128,9 @@
 			</style>
 		</styles>
 	</image>
-	<feature_source name="city-data" driver="ogr">
-		<url>../china_data/county_total.shp</url>
-	</feature_source>
-	<feature_model name="cities" feature_source="city-data">
-		<feature_indexing enabled="false"/>
-		<styles>
-			<selector class="cities">
-				<query>
-					<expr><![CDATA[rank_max >= 8]]></expr>
-				</query>
-			</selector>
-			<style type="text/css">              
-                cities {
-                    icon-placement: centroid;
-                    icon-declutter: true;
-                    icon-align:     center-bottom;
-                    text-content:   [name];
-                    text-encoding:  utf-8;
-                    text-priority:  [rank_max];
-                    text-align:     center-bottom;
-                    text-halo:      #1f1f1f;
-                    text-size:      6+2*[rank_max];
-                }     
-			</style>
-		</styles>
-	</feature_model>
-	<!--<screen_space_layout>
-		<out_animation_time>  0.0  </out_animation_time>
-		<in_animation_time>   0.25 </in_animation_time>
-		<min_animation_scale> 0.45 </min_animation_scale>
-		<min_animation_alpha> 0.0  </min_animation_alpha>
-		<sort_by_priority>    true </sort_by_priority>
-	</screen_space_layout>-->
 	<!-- 主要道路 （深橙色）-->
-<<<<<<< HEAD:data/earth_file/china_simple.earth.bak
-	<!--<image name="MainRoad" driver="agglite">
-		<features name="china_road" driver="ogr">
-=======
 	<image name="MainRoad" driver="agglite">
 		<features name="main_road" driver="ogr">
->>>>>>> 2490618f2773106ace87d6293b622e99ccff3991:data/earth_file/china_simple.earth.bak
 			<url>../china_data/main_road.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -190,10 +145,10 @@
 				}
 			</style>
 		</styles>
-	</image>-->
+	</image>
 	<!-- 主要河流 （深天蓝)-->
-	<!--<image name="MainRiver" driver="agglite">
-		<features name="china_river" driver="ogr">
+	<image name="MainRiver" driver="agglite">
+		<features name="main_river" driver="ogr">
 			<url>../china_data/main_river.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -208,7 +163,7 @@
 				}
 			</style>
 		</styles>
-	</image>-->
+	</image>
 	<!--文件缓存-->
 	<options>
 		<cache type="filesystem">
