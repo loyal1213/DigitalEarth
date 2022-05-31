@@ -93,6 +93,9 @@
     <ClInclude Include="BuildRaderCallback.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="StringConvert.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DigitaleEarth.cpp">
@@ -126,6 +129,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="BuildRaderCallback.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StringConvert.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

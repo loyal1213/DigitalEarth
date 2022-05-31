@@ -4,49 +4,84 @@
 #include "OsgObject.h"
 #include <list>
 #include <osg/Math>
-cOSG::cOSG(HWND hWnd):m_hWnd(hWnd),label_event_(nullptr)
-{
+#include <osgEarthDrivers/feature_ogr/OGRFeatureOptions>
+#include <osgEarthFeatures/FeatureSource>
+#include <osg/Notify>
+#include <osgEarthDrivers/feature_ogr/OGRFeatureOptions>
+#include <osgEarthFeatures/GeometryUtils>
+#include <osgEarthFeatures/FeatureCursor>
+#include <osgEarthAnnotation/LabelNode>
+
+
+#include <osgEarth/MapNode>
+#include <osgEarthUtil/EarthManipulator>
+#include <osgEarthUtil/ExampleResources>
+#include <osgEarthAnnotation/ImageOverlay>
+#include <osgEarthAnnotation/CircleNode>
+#include <osgEarthAnnotation/RectangleNode>
+#include <osgEarthAnnotation/EllipseNode>
+#include <osgEarthAnnotation/PlaceNode>
+#include <osgEarthAnnotation/LabelNode>
+#include <osgEarthAnnotation/LocalGeometryNode>
+#include <osgEarthAnnotation/FeatureNode>
+#include <osgEarthAnnotation/ModelNode>
+#include <osgEarthAnnotation/AnnotationEditing>
+#include <osgEarthAnnotation/ImageOverlayEditor>
+#include <osgEarthSymbology/GeometryFactory>
+#include <osgViewer/Viewer>
+
+#include "StringConvert.h"
+
+using namespace osgEarth;
+using namespace osgEarth::Features;
+using namespace osgEarth::Drivers;
+using namespace osgEarth::Symbology;
+using namespace osgEarth::Annotation;
+using namespace osgEarth::Util;
+
+cOSG::cOSG(HWND hWnd):m_hWnd(hWnd),label_event_(nullptr){
+
 }
 
 cOSG::~cOSG()
 {
-    mViewer->setDone(true);
-    Sleep(1000);
-    mViewer->stopThreading();
+	mViewer->setDone(true);
+	Sleep(1000);
+	mViewer->stopThreading();
 
-    delete mViewer;
+	delete mViewer;
 }
 
 void cOSG::InitOSG(std::string modelname)
 {
-    // Store the name of the model to load
-    m_ModelName = modelname;
+	// Store the name of the model to load
+	m_ModelName = modelname;
 
-    // Init different parts of OSG
-    InitManipulators(); // 操纵器
+	// Init different parts of OSG
+	InitManipulators(); // 操纵器
 
-    InitSceneGraph();
+	InitSceneGraph();
 
-    InitCameraConfig();
-	
+	InitCameraConfig();
+
 	InitOsgEarth();
-	
+
 }
 
 void cOSG::InitManipulators(void)
 {
-    // Create a trackball manipulator
-    trackball = new osgGA::TrackballManipulator();
+	// Create a trackball manipulator
+	trackball = new osgGA::TrackballManipulator();
 
-    // Create a Manipulator Switcher
-    keyswitchManipulator = new osgGA::KeySwitchMatrixManipulator;
+	// Create a Manipulator Switcher
+	keyswitchManipulator = new osgGA::KeySwitchMatrixManipulator;
 
-    // Add our trackball manipulator to the switcher
-    keyswitchManipulator->addMatrixManipulator( '1', "Trackball", trackball.get());
+	// Add our trackball manipulator to the switcher
+	keyswitchManipulator->addMatrixManipulator( '1', "Trackball", trackball.get());
 
-    // Init the switcher to the first manipulator (in this case the only manipulator)
-    keyswitchManipulator->selectMatrixManipulator(0);  // Zero based index Value
-	
+	// Init the switcher to the first manipulator (in this case the only manipulator)
+	keyswitchManipulator->selectMatrixManipulator(0);  // Zero based index Value
+
 
 
 	// 初始化 earth 操作器
@@ -55,112 +90,233 @@ void cOSG::InitManipulators(void)
 		earth_manipulator_->setNode(mapNode_);
 	}
 	earth_manipulator_->getSettings()->setArcViewpointTransitions(true);
-	
+
+}
+
+
+std::string attributeTypeToString( AttributeType type )
+{
+	switch (type)
+	{
+	case ATTRTYPE_BOOL: return "Boolean";
+	case ATTRTYPE_DOUBLE: return "Double";
+	case ATTRTYPE_INT: return "Integer";
+	case ATTRTYPE_STRING: return "String";
+	default:  return "Unspecified";
+	}
+}
+
+
+void printStats(FeatureSource* features)
+{
+	// std::cout << "Feature Count:  " << features->getFeatureCount() << std::endl;
+	// std::cout << "Geometry Type:  " << osgEarth::Symbology::Geometry::toString( features->getGeometryType() ) << std::endl;
+	// TRACE2(TEXT("Feature Count: %d, Geometry Type: %s \n"),features->getFeatureCount(), osgEarth::Symbology::Geometry::toString( features->getGeometryType() ) );
+	char buffer[520] = {0};
+	sprintf(buffer,TEXT("Feature Count: %d, Geometry Type: %s \n"),
+		features->getFeatureCount(), osgEarth::Symbology::Geometry::toString( features->getGeometryType() )
+		);
+	OutputDebugString(buffer);
+
+	//Print the schema
+	const FeatureSchema schema = features->getSchema();
+	// std::cout << "Schema:" << std::endl;
+	TRACE(TEXT("Schema: \n"));
+	for (FeatureSchema::const_iterator itr = schema.begin(); itr != schema.end(); ++itr)
+	{
+		// std::cout << indent << itr->first << ": " << attributeTypeToString(itr->second) << std::endl;
+		char buffer[520] = {0};
+		//sprintf(buffer,TEXT("\t\t %s: %s"),itr->first ,attributeTypeToString(itr->second));
+		OutputDebugString("\t\t");
+		OutputDebugString(itr->first.c_str());
+		OutputDebugString("\t");
+		OutputDebugString(attributeTypeToString(itr->second).c_str());
+		OutputDebugString("\n");
+		// TRACE2(TEXT("\t\t %s:  %s\n"), itr->first ,attributeTypeToString(itr->second));
+	}
+	// std::cout << std::endl;
+	TRACE(TEXT("\n"));
+}
+
+void printFeature( Feature* feature )
+{
+	// std::cout << "FID: " << feature->getFID() << std::endl;
+	TRACE1(_T("FID: %ul \n"), feature->getFID());
+	for (AttributeTable::const_iterator itr = feature->getAttrs().begin(); itr != feature->getAttrs().end(); ++itr)
+	{
+		/*std::cout 
+			<< indent 
+			<< itr->first << "=" << itr->second.getString() << " ("
+			<< (itr->second.first == ATTRTYPE_INT?    "integer" :
+			itr->second.first == ATTRTYPE_DOUBLE? "double" :
+			itr->second.first == ATTRTYPE_BOOL?   "bool" :
+			"string")
+			<< ")" << std::endl;*/
+		// RACE2(TEXT("\t\t %s = %s"),itr->first,itr->second.getString());
+		OutputDebugString("\t\t");
+		OutputDebugString(itr->first.c_str());
+		OutputDebugString("\t");
+		OutputDebugString(itr->second.getString().c_str());
+		OutputDebugString("\t");
+		OutputDebugString((itr->second.first == ATTRTYPE_INT?    "integer" :
+			itr->second.first == ATTRTYPE_DOUBLE? "double" :
+			itr->second.first == ATTRTYPE_BOOL?   "bool" :
+			"string"));
+		OutputDebugString("\n");
+	}
+
+	//Print out the geometry
+	Geometry* geom = feature->getGeometry();
+	if (geom)
+	{
+		std::cout << "\t\t" << GeometryUtils::geometryToWKT( geom ) << std::endl;
+	}
+	std::cout << std::endl;
+}
+
+void printAllFeatures(FeatureSource* features)
+{
+	osg::ref_ptr< FeatureCursor > cursor = features->createFeatureCursor(0L);
+	while (cursor.valid() && cursor->hasMore())
+	{
+		osg::ref_ptr< Feature > feature = cursor->nextFeature();
+		printFeature( feature.get() );
+	}
 }
 
 
 void cOSG::InitSceneGraph(void)
 {
-    // Init the main Root Node/Group
-    mRoot  = new osg::Group;
+	// Init the main Root Node/Group
+	mRoot  = new osg::Group;
 
-    // 构造MapNode，arguments里面有earth文件的路径
-    mModel = osgDB::readNodeFile(m_ModelName);
-    if (!mModel) return;
+	// 构造MapNode，arguments里面有earth文件的路径
+	mModel = osgDB::readNodeFile(m_ModelName);
+	if (!mModel) return;
+
+	/******************
+	
+	//创建节点,读取SHP文件
+	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile("./data/china_data/county_total.shp");
+
+	//Open the feature source
+	OGRFeatureOptions featureOpt;
+	featureOpt.url() = TEXT("./data/china_data/county_total.shp");
+	featureOpt.openWrite() = false; 
+
+	osgEarth::Drivers::OGRFeatureOptions ogr_option;
+	ogr_option.url() = TEXT("./data/china_data/county_total.shp");
+	// osg::ref_ptr<osgEarth::Features::FeatureSource> features = osgEarth::Features::FeatureSourceFactory::create(featureOpt);
 
 
-    // Optimize the model
-    osgUtil::Optimizer optimizer;
-    optimizer.optimize(mModel.get());
-    optimizer.reset();
+	osg::ref_ptr< FeatureSource > features = FeatureSourceFactory::create( featureOpt );
+	Status s = features->open();
+	if (s.isError())
+		return ;
+	// features->initialize();
 
-    // Add the model to the scene
-    mRoot->addChild(mModel.get());
+	
+
+	//Print out feature info
+	// printStats( features.get() );
+
+
+	// printAllFeatures( features.get() );
+	
+	******************/
+
+	// Optimize the model
+	osgUtil::Optimizer optimizer;
+	optimizer.optimize(mModel.get());
+	optimizer.reset();
+
+	// Add the model to the scene
+	mRoot->addChild(mModel.get());
 	mapNode_ = dynamic_cast<osgEarth::MapNode*>(mModel.get());
 	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.第三讲-VPB用法详解与常见问题处理/vpbtest/TestCommon10/output.ive"));
 
 	earth_label_ = new osg::Group();
-	mRoot->addChild(earth_label_);
+
 	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode_->getMap()->getLayerByName("GlobeBoundary"));
-	
+
 }
 
 void cOSG::InitCameraConfig(void)
 {
-    // Local Variable to hold window size data
-    RECT rect;
+	// Local Variable to hold window size data
+	RECT rect;
 
-    // osg 的场景
-    mViewer = new osgViewer::Viewer();
+	// osg 的场景
+	mViewer = new osgViewer::Viewer();
 
-    // Add a Stats Handler to the viewer
-    mViewer->addEventHandler(new osgViewer::StatsHandler);
+	// Add a Stats Handler to the viewer
+	mViewer->addEventHandler(new osgViewer::StatsHandler);
 
 
-    // Get the current window size
-    ::GetWindowRect(m_hWnd, &rect);
+	// Get the current window size
+	::GetWindowRect(m_hWnd, &rect);
 
-    // Init the GraphicsContext Traits
-    osg::ref_ptr<osg::GraphicsContext::Traits> traits = new osg::GraphicsContext::Traits;
+	// Init the GraphicsContext Traits
+	osg::ref_ptr<osg::GraphicsContext::Traits> traits = new osg::GraphicsContext::Traits;
 
-    // Init the Windata Variable that holds the handle for the Window to display OSG in.
-    osg::ref_ptr<osg::Referenced> windata = new osgViewer::GraphicsWindowWin32::WindowData(m_hWnd);
+	// Init the Windata Variable that holds the handle for the Window to display OSG in.
+	osg::ref_ptr<osg::Referenced> windata = new osgViewer::GraphicsWindowWin32::WindowData(m_hWnd);
 
-    // Setup the traits parameters
-    traits->x = 0;
-    traits->y = 0;
-    traits->width = rect.right - rect.left;
-    traits->height = rect.bottom - rect.top;
-    traits->windowDecoration = false;
-    traits->doubleBuffer = true;
-    traits->sharedContext = 0;
-    traits->setInheritedWindowPixelFormat = true;
-    traits->inheritedWindowData = windata;
+	// Setup the traits parameters
+	traits->x = 0;
+	traits->y = 0;
+	traits->width = rect.right - rect.left;
+	traits->height = rect.bottom - rect.top;
+	traits->windowDecoration = false;
+	traits->doubleBuffer = true;
+	traits->sharedContext = 0;
+	traits->setInheritedWindowPixelFormat = true;
+	traits->inheritedWindowData = windata;
 
-    // Create the Graphics Context
-    osg::GraphicsContext* gc = osg::GraphicsContext::createGraphicsContext(traits.get());
+	// Create the Graphics Context
+	osg::GraphicsContext* gc = osg::GraphicsContext::createGraphicsContext(traits.get());
 
-    // Init Master Camera for this View
-    osg::ref_ptr<osg::Camera> camera = mViewer->getCamera();
+	// Init Master Camera for this View
+	osg::ref_ptr<osg::Camera> camera = mViewer->getCamera();
 
-    // Assign Graphics Context to the Camera
-    camera->setGraphicsContext(gc);
+	// Assign Graphics Context to the Camera
+	camera->setGraphicsContext(gc);
 
-    // Set the viewport for the Camera
-    camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
+	// Set the viewport for the Camera
+	camera->setViewport(new osg::Viewport(0, 0, traits->width, traits->height));
 
-    // set the draw and read buffers up for a double buffered window with rendering going to back buffer
-    camera->setDrawBuffer(GL_BACK);
-    camera->setReadBuffer(GL_BACK);
+	// set the draw and read buffers up for a double buffered window with rendering going to back buffer
+	camera->setDrawBuffer(GL_BACK);
+	camera->setReadBuffer(GL_BACK);
 
-    // Set projection matrix and camera attribtues
-    camera->setClearMask(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-    camera->setClearColor(osg::Vec4f(0.2f, 0.2f, 0.4f, 1.0f));
-    camera->setProjectionMatrixAsPerspective(
-        30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
+	// Set projection matrix and camera attribtues
+	camera->setClearMask(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+	camera->setClearColor(osg::Vec4f(0.2f, 0.2f, 0.4f, 1.0f));
+	camera->setProjectionMatrixAsPerspective(
+		30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
 
-    // Add the Camera to the Viewer
-    //mViewer->addSlave(camera.get());
-    mViewer->setCamera(camera.get());
+	// Add the Camera to the Viewer
+	//mViewer->addSlave(camera.get());
+	mViewer->setCamera(camera.get());
 
 	// 将组节点设置为场景节点
 	mViewer->setSceneData(mRoot.get());
 
-    // 设置earth操作器
-    // mViewer->setCameraManipulator(keyswitchManipulator.get());
+	// 设置earth操作器
+	// mViewer->setCameraManipulator(keyswitchManipulator.get());
 	// mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
 	mViewer->setCameraManipulator(earth_manipulator_);
 
 	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
 
-    // Realize the Viewer
-    mViewer->realize();
+	// Realize the Viewer
+	mViewer->realize();
 
-    // Correct aspect ratio
-    /*double fovy,aspectRatio,z1,z2;
-    mViewer->getCamera()->getProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
-    aspectRatio=double(traits->width)/double(traits->height);
-    mViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);*/
+	// Correct aspect ratio
+	/*double fovy,aspectRatio,z1,z2;
+	mViewer->getCamera()->getProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);
+	aspectRatio=double(traits->width)/double(traits->height);
+	mViewer->getCamera()->setProjectionMatrixAsPerspective(fovy,aspectRatio,z1,z2);*/
 }
 
 void cOSG::InitOsgEarth()
@@ -185,21 +341,20 @@ void cOSG::InitOsgEarth()
 
 	// 添加地标
 	addEarthLabel();
-
 }
 
 void cOSG::PreFrameUpdate()
 {
-    // Due any preframe updates in this routine
+	// Due any preframe updates in this routine
 	/*while(theApp.b_need_modify_){Sleep(1);}
 	theApp.b_can_modify_ = false;*/
 }
 
 void cOSG::PostFrameUpdate()
 {
-    // Due any postframe updates in this routine
+	// Due any postframe updates in this routine
 	/*if (theApp.b_need_modify_){
-		theApp.b_can_modify_ = true;
+	theApp.b_can_modify_ = true;
 	}*/
 }
 
@@ -260,19 +415,342 @@ void cOSG::addWorldBound()
 
 void cOSG::addEarthLabel()
 {
-	// osg::Image *china_flag = osgDB::readImageFile("./res/china_flag.png");
-	osgEarth::Symbology::Style style;
-	style.getOrCreate<IconSymbol>()->url()->setLiteral(TEXT("./res/china_flag.png"));		// 图片
-	// style.getOrCreate<IconSymbol>()->declutter() = false;									// 是否在文本上启用分离功能
-	style.getOrCreate<TextSymbol>()->halo() = Color("#5f5f5f");							// 文本轮廓颜色
-	style.getOrCreate<TextSymbol>()->font() = TEXT("simsun.ttc");									// 字体
-	style.getOrCreate<TextSymbol>()->size() = 20.0;										// 字体尺寸
-	style.getOrCreate<TextSymbol>()->pixelOffset() = osg::Vec2s(100,100.0);
-	
-	// mapNode为顶层的贴图节点(osg::ref_ptr<osg::Node>),即地图
-	const osgEarth::SpatialReference* spatialReference = mapNode_->getMapSRS()->getGeographicSRS();
-	earth_label_->addChild(new osgEarth::Annotation::PlaceNode(GeoPoint(spatialReference, 110, 34, 0), "china", style));
+	// Group to hold all our annotation elements.
+	osg::Group* annoGroup = new osg::Group();
+	MapNode::get(mapNode_)->addChild( annoGroup );
 
+	// Make a group for labels
+	osg::Group* labelGroup = new osg::Group();
+	annoGroup->addChild( labelGroup );
+
+	osg::Group* editGroup = new osg::Group();
+	MapNode::get(mapNode_)->addChild( editGroup );
+
+	// Style our labels:
+	Style labelStyle;
+	labelStyle.getOrCreate<TextSymbol>()->alignment() = TextSymbol::ALIGN_CENTER_CENTER;
+	labelStyle.getOrCreate<TextSymbol>()->fill()->color() = Color::Yellow;
+
+	// A lat/long SRS for specifying points.
+	const SpatialReference* geoSRS = mapNode_->getMapSRS()->getGeographicSRS();
+
+	//--------------------------------------------------------------------
+
+	// A series of place nodes (an icon with a text label)
+	{
+		osgEarth::Style pm;
+		pm.getOrCreate<IconSymbol>()->url()->setLiteral( "../data/placemark32.png" );
+		pm.getOrCreate<IconSymbol>()->declutter() = true;
+		pm.getOrCreate<TextSymbol>()->halo() = Color("#5f5f5f");
+
+		// bunch of pins:
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 116.3979471 ,   39.9081726) ,  "BeiJing"     , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 121.4692688 ,   31.2381763) ,  "ShangHai"    , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 117.2523808 ,   39.1038561) ,  "TianJin"     , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 106.548425  ,   29.5549144) ,  "ChongQing"   , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 114.4897766 ,   38.0451279) ,  "HeiBei"      , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 112.5223053 ,   37.8357424) ,  "ShanXi"      , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 123.4116821 ,   41.7966156) ,  "LiaoNing"    , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 125.3154297 ,   43.8925629) ,  "JiLin"       , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 126.6433411 ,   45.7414932) ,  "HeiLongJang" , pm));
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 120.1592484 ,   30.265995 ) ,  "ZheJiang"    , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 119.2978134 ,   26.0785904) ,  "FuJian"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 117.0056	,   36.6670723) ,  "ShanDong"    , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 113.6500473 ,   34.7570343) ,  "HeNan"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 114.2919388 ,   30.5675144) ,  "HuBei"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 112.9812698 ,   28.2008247) ,  "HuNan"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 113.2614288 ,   23.1189117) ,  "Guangdong"   , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 110.3465118 ,   20.0317936) ,  "HaiNan"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 104.0817566 ,   30.6610565) ,  "SiChuan"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 106.7113724 ,   26.5768738) ,  "GuiZhou"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 102.704567  ,   25.0438442) ,  "YunNan"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 115.8999176 ,   28.6759911) ,  "JiangXi"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 108.949028  ,   34.2616844) ,  "ShanXi"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 101.7874527 ,   36.6094475) ,  "QingHai"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 103.7500534 ,   36.0680389) ,  "GanSu"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 108.3117676 ,   22.8065434) ,  "GuangXi"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 87.6061172  ,   43.7909393) ,  "XinJiang"    , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 111.6632996 ,   40.8209419) ,  "NeiMengGu"   , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 91.1320496  ,   29.657589 ) ,  "XiZang"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 106.2719421 ,   38.4680099) ,  "NingXia"     , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 120.9581316 ,   23.8516062) ,  "TaiWan"      , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 114.139452  ,   22.391577 ) ,  "XiangGang"   , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 113.5678411 ,   22.167654 ) ,  "AoMen"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 117.2757034 ,   31.8632545) ,  "AnHui"       , pm)); 
+		labelGroup->addChild(new PlaceNode(GeoPoint(geoSRS, 118.7727814 ,   32.0476151) ,  "JangSu"      , pm)); 
+
+
+		// test with an LOD:
+		osg::LOD* lod = new osg::LOD();
+		lod->addChild( new PlaceNode(GeoPoint(geoSRS, 14.68, 50.0), "Prague", pm), 0.0, 2e6);
+		labelGroup->addChild( lod );
+
+		// absolute altitude:
+		labelGroup->addChild( new PlaceNode(GeoPoint(geoSRS, -87.65, 41.90, 1000, ALTMODE_ABSOLUTE), "Chicago", pm));
+	}
+
+	//--------------------------------------------------------------------
+
+	// a box that follows lines of latitude (rhumb line interpolation, the default)
+	// and flashes on and off using a cull callback.
+	{
+		struct C : public osg::NodeCallback {
+			void operator()(osg::Node* n, osg::NodeVisitor* nv) {
+				static int i=0;
+				i++;
+				if (i % 100 < 50)
+					traverse(n, nv);
+			}
+		};
+
+		osgEarth::Geometry* geom = new osgEarth::Polygon();
+		geom->push_back( osg::Vec3d(0,   40, 0) );
+		geom->push_back( osg::Vec3d(-60, 40, 0) );
+		geom->push_back( osg::Vec3d(-60, 60, 0) );
+		geom->push_back( osg::Vec3d(0,   60, 0) );
+
+		Feature* feature = new Feature(geom, geoSRS);
+		feature->geoInterp() = GEOINTERP_RHUMB_LINE;
+
+		Style geomStyle;
+		geomStyle.getOrCreate<LineSymbol>()->stroke()->color() = Color::Cyan;
+		geomStyle.getOrCreate<LineSymbol>()->stroke()->width() = 5.0f;
+		geomStyle.getOrCreate<LineSymbol>()->tessellationSize() = 75000;
+		geomStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		geomStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_GPU;
+
+		FeatureNode* fnode = new FeatureNode(feature, geomStyle);
+
+		fnode->addCullCallback(new C());
+
+		annoGroup->addChild( fnode );
+
+		LabelNode* label = new LabelNode("Rhumb line polygon", labelStyle);
+		label->setPosition(GeoPoint(geoSRS, -30, 50));
+		labelGroup->addChild(label);
+	}
+
+	//--------------------------------------------------------------------
+
+	// another rhumb box that crosses the antimeridian
+	{
+		osgEarth::Geometry* geom = new osgEarth::Polygon();
+		geom->push_back( -160., -30. );
+		geom->push_back(  150., -20. );
+		geom->push_back(  160., -45. );
+		geom->push_back( -150., -40. );
+		Style geomStyle;
+
+		Feature* feature = new Feature(geom, geoSRS);
+		feature->geoInterp() = GEOINTERP_RHUMB_LINE;
+
+		geomStyle.getOrCreate<LineSymbol>()->stroke()->color() = Color::Lime;
+		geomStyle.getOrCreate<LineSymbol>()->stroke()->width() = 3.0f;
+		geomStyle.getOrCreate<LineSymbol>()->tessellationSize() = 75000;
+		geomStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		geomStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_GPU;
+
+		FeatureNode* gnode = new FeatureNode(feature, geomStyle);
+		annoGroup->addChild( gnode );
+
+		LabelNode* label = new LabelNode("Antimeridian polygon", labelStyle);
+		label->setPosition(GeoPoint(geoSRS, -175, -35));
+		labelGroup->addChild(label);
+	}
+
+	//--------------------------------------------------------------------
+
+
+
+	// A path using great-circle interpolation.
+	// Keep a pointer to it so we can modify it later on.
+	FeatureNode* pathNode = 0;
+	{
+		osgEarth::Geometry* path = new osgEarth::LineString();
+		path->push_back( osg::Vec3d(-74, 40.714, 0) );   // New York
+		path->push_back( osg::Vec3d(139.75, 35.68, 0) ); // Tokyo
+
+		Feature* pathFeature = new Feature(path, geoSRS);
+		pathFeature->geoInterp() = GEOINTERP_GREAT_CIRCLE;
+
+		Style pathStyle;
+		pathStyle.getOrCreate<LineSymbol>()->stroke()->color() = Color::White;
+		pathStyle.getOrCreate<LineSymbol>()->stroke()->width() = 1.0f;
+		pathStyle.getOrCreate<LineSymbol>()->stroke()->smooth() = true;
+		pathStyle.getOrCreate<LineSymbol>()->tessellationSize() = 75000;
+		pathStyle.getOrCreate<PointSymbol>()->size() = 8;
+		pathStyle.getOrCreate<PointSymbol>()->fill()->color() = Color::Red;
+		pathStyle.getOrCreate<PointSymbol>()->smooth() = true;
+		pathStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		pathStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_GPU;
+		pathStyle.getOrCreate<RenderSymbol>()->depthOffset()->enabled() = true;
+
+		//OE_INFO << "Path extent = " << pathFeature->getExtent().toString() << std::endl;
+
+		pathNode = new FeatureNode(pathFeature, pathStyle);
+		annoGroup->addChild( pathNode );
+
+		LabelNode* label = new LabelNode("Great circle path", labelStyle);
+		label->setPosition(GeoPoint(geoSRS,-170, 61.2));
+		labelGroup->addChild(label);
+	}
+
+	//--------------------------------------------------------------------
+
+	// Two circle segments around New Orleans.
+	{
+		Style circleStyle;
+		circleStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::Cyan, 0.5);
+		circleStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		circleStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_DRAPE;
+
+		CircleNode* circle = new CircleNode();
+		circle->set(
+			GeoPoint(geoSRS, -90.25, 29.98, 1000., ALTMODE_RELATIVE),
+			Distance(300, Units::KILOMETERS),
+			circleStyle, 
+			Angle(-45.0, Units::DEGREES),
+			Angle(45.0, Units::DEGREES),
+			true);
+
+		annoGroup->addChild( circle );
+
+		editGroup->addChild( new CircleNodeEditor(circle) );
+	}
+
+	{
+		Style circleStyle;
+		circleStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::Red, 0.5);
+		circleStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		circleStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_DRAPE;
+
+		CircleNode* circle = new CircleNode();
+		circle->set(
+			GeoPoint(geoSRS, -90.25, 29.98, 1000., ALTMODE_RELATIVE),
+			Distance(300, Units::KILOMETERS),
+			circleStyle,
+			Angle(45.0, Units::DEGREES),
+			Angle(360.0 - 45.0, Units::DEGREES),
+			true);
+
+		annoGroup->addChild( circle );
+
+		editGroup->addChild( new CircleNodeEditor(circle) );
+	}
+
+	//--------------------------------------------------------------------
+
+	// An extruded ellipse around Miami.
+	{
+		Style ellipseStyle;
+		ellipseStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::Orange, 0.75);
+		ellipseStyle.getOrCreate<ExtrusionSymbol>()->height() = 250000.0; // meters MSL
+		EllipseNode* ellipse = new EllipseNode();
+		ellipse->set(
+			GeoPoint(geoSRS, -80.28, 25.82, 0.0, ALTMODE_RELATIVE),
+			Distance(250, Units::MILES),
+			Distance(100, Units::MILES),
+			Angle   (0, Units::DEGREES),
+			ellipseStyle,
+			Angle(45.0, Units::DEGREES),
+			Angle(360.0 - 45.0, Units::DEGREES), 
+			true);
+		annoGroup->addChild( ellipse );
+
+		editGroup->addChild( new EllipseNodeEditor(ellipse) );
+	}
+	{
+		Style ellipseStyle;
+		ellipseStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::Blue, 0.75);
+		ellipseStyle.getOrCreate<ExtrusionSymbol>()->height() = 250000.0; // meters MSL
+		EllipseNode* ellipse = new EllipseNode();
+		ellipse->set(
+			GeoPoint(geoSRS, -80.28, 25.82, 0.0, ALTMODE_RELATIVE),
+			Distance(250, Units::MILES),
+			Distance(100, Units::MILES),
+			Angle   (0, Units::DEGREES),
+			ellipseStyle, 
+			Angle(-40.0, Units::DEGREES), 
+			Angle(40.0, Units::DEGREES), 
+			true);
+		annoGroup->addChild( ellipse );
+
+		editGroup->addChild( new EllipseNodeEditor(ellipse) );
+	}
+
+	//--------------------------------------------------------------------
+
+	{
+		// A rectangle around San Diego
+		Style rectStyle;
+		rectStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::Green, 0.5);
+		rectStyle.getOrCreate<AltitudeSymbol>()->clamping() = AltitudeSymbol::CLAMP_TO_TERRAIN;
+		rectStyle.getOrCreate<AltitudeSymbol>()->technique() = AltitudeSymbol::TECHNIQUE_DRAPE;
+		RectangleNode* rect = new RectangleNode(
+			GeoPoint(geoSRS, -117.172, 32.721),
+			Distance(300, Units::KILOMETERS ),
+			Distance(600, Units::KILOMETERS ),
+			rectStyle);
+		annoGroup->addChild( rect );
+
+		editGroup->addChild( new RectangleNodeEditor(rect) );
+	}    
+
+	//--------------------------------------------------------------------
+
+	// An extruded polygon roughly the shape of Utah. Here we demonstrate the
+	// FeatureNode, where you create a geographic geometry and use it as an
+	// annotation.
+	{
+		osgEarth::Geometry* utah = new osgEarth::Polygon();
+		utah->push_back( -114.052, 37.0   );
+		utah->push_back( -109.054, 37.0   );
+		utah->push_back( -109.054, 41.0   );
+		utah->push_back( -111.040, 41.0   );
+		utah->push_back( -111.080, 42.059 );
+		utah->push_back( -114.080, 42.024 );
+
+		Style utahStyle;
+		utahStyle.getOrCreate<ExtrusionSymbol>()->height() = 250000.0; // meters MSL
+		utahStyle.getOrCreate<PolygonSymbol>()->fill()->color() = Color(Color::White, 0.8);
+
+		Feature*     utahFeature = new Feature(utah, geoSRS);
+		FeatureNode* featureNode = new FeatureNode(utahFeature, utahStyle);
+
+		annoGroup->addChild( featureNode );
+	}
+
+	//--------------------------------------------------------------------
+
+	// an image overlay.
+	{
+		ImageOverlay* imageOverlay = 0L;
+		osg::ref_ptr<osg::Image> image = osgDB::readRefImageFile( "../data/USFLAG.TGA" );
+		if (image.valid())
+		{
+			imageOverlay = new ImageOverlay(mapNode_, image.get());
+			imageOverlay->setBounds( Bounds( -100.0, 35.0, -90.0, 40.0) );
+			annoGroup->addChild( imageOverlay );
+
+			editGroup->addChild( new ImageOverlayEditor(imageOverlay) );
+		}
+	}
+
+	//--------------------------------------------------------------------
+
+	// a model node with auto scaling.
+	{
+		Style style;
+		style.getOrCreate<ModelSymbol>()->autoScale() = true;
+		style.getOrCreate<ModelSymbol>()->url()->setLiteral("../data/red_flag.osg.50.scale");
+		ModelNode* modelNode = new ModelNode(mapNode_, style); 
+		modelNode->setPosition(GeoPoint(geoSRS, -100, 52));
+		annoGroup->addChild(modelNode);
+	}
+
+	//--------------------------------------------------------------------
+
+	// mRoot->addChild(earth_label_);
 }
 
 
@@ -343,8 +821,8 @@ double cOSG::GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed)
 void cOSG::DoAPreLine()
 {
 	/*
-		if 0代码为直接加入经纬高、速度，可能导致飞机姿态不准确。
-		else代码为在0的经纬高基础上每个节点多生成了20个节点，导致无人机更加逼真靠近。
+	if 0代码为直接加入经纬高、速度，可能导致飞机姿态不准确。
+	else代码为在0的经纬高基础上每个节点多生成了20个节点，导致无人机更加逼真靠近。
 	*/
 #if 0
 	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
@@ -420,7 +898,7 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 	osg::ref_ptr<osg::AnimationPath> animationPath = new osg::AnimationPath;		// 动画路径
 	animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);						// 动画不循环
 
-	
+
 	osg::Vec3d curPosition,curNextPosition;
 	double time = 0;
 
@@ -444,14 +922,14 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 			//osg::DegreesToRadians(iterator->z()),
 			iterator->z(),
 			curPosition.x(), curPosition.y(), curPosition.z()
-		);		
+			);		
 		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ(
 			osg::DegreesToRadians(iterator2->y()),
 			osg::DegreesToRadians(iterator2->x()),
 			//osg::DegreesToRadians(iterator2->z()),
 			iterator2->z(),
 			curNextPosition.x(), curNextPosition.y(), curNextPosition.z()
-		);
+			);
 
 		// 计算垂直夹角  高度相同
 		if (iterator->z() == iterator2->z())
@@ -513,7 +991,7 @@ void cOSG::DoPreLineNow()
 	heading	水平方位角：0-360的值，控制地图水平旋转，单位是度。
 	*/
 	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
-	
+
 	// em_->setNode(mtrix_fly_airport);
 	// em_->setTetherNode(mtrix_fly_airport);
 	// osgEarth2.10中用setNode替代setTetherNode设置视点跟踪
@@ -559,13 +1037,13 @@ void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
 
-  /*setViewpoint参数:
+	/*setViewpoint参数:
 	1:视点
-		1:视点名称
-		2、3、4:视点经纬高度
-		5:水平方位角：0-360的值，控制地图水平旋转，单位是度
-		6:俯仰角:-90至0的值，单位是度
-		7:焦距:相机位置到焦点的距离，单位是米
+	1:视点名称
+	2、3、4:视点经纬高度
+	5:水平方位角：0-360的值，控制地图水平旋转，单位是度
+	6:俯仰角:-90至0的值，单位是度
+	7:焦距:相机位置到焦点的距离，单位是米
 	2:飞行时间(s)
 	*/
 	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("viewer_point3", longitude, latitude, altitude, -60, -90, 1000), 2);
@@ -573,59 +1051,59 @@ void cOSG::FlyTo(double longitude,double latitude,double altitude){
 
 /*void cOSG::Render(void* ptr)
 {
-    cOSG* osg = (cOSG*)ptr;
+cOSG* osg = (cOSG*)ptr;
 
-    osgViewer::Viewer* viewer = osg->getViewer();
+osgViewer::Viewer* viewer = osg->getViewer();
 
-    // You have two options for the main viewer loop
-    //      viewer->run()   or
-    //      while(!viewer->done()) { viewer->frame(); }
+// You have two options for the main viewer loop
+//      viewer->run()   or
+//      while(!viewer->done()) { viewer->frame(); }
 
-    //viewer->run();
-    while(!viewer->done())
-    {
-        osg->PreFrameUpdate();
-        viewer->frame();
-        osg->PostFrameUpdate();
-        //Sleep(10);         // Use this command if you need to allow other processes to have cpu time
-    }
+//viewer->run();
+while(!viewer->done())
+{
+osg->PreFrameUpdate();
+viewer->frame();
+osg->PostFrameUpdate();
+//Sleep(10);         // Use this command if you need to allow other processes to have cpu time
+}
 
-    // For some reason this has to be here to avoid issue:
-    // if you have multiple OSG windows up
-    // and you exit one then all stop rendering
-    AfxMessageBox("Exit Rendering Thread");
+// For some reason this has to be here to avoid issue:
+// if you have multiple OSG windows up
+// and you exit one then all stop rendering
+AfxMessageBox("Exit Rendering Thread");
 
-    _endthread();
+_endthread();
 }*/
 
 CRenderingThread::CRenderingThread( cOSG* ptr )
-:   OpenThreads::Thread(), _ptr(ptr), _done(false)
+	:   OpenThreads::Thread(), _ptr(ptr), _done(false)
 {
 }
 
 CRenderingThread::~CRenderingThread()
 {
-    _done = true;
-    if (isRunning())
-    {
-        cancel();
-        join();
-    }
+	_done = true;
+	if (isRunning())
+	{
+		cancel();
+		join();
+	}
 }
 
 void CRenderingThread::run()
 {
-    if ( !_ptr )
-    {
-        _done = true;
-        return;
-    }
+	if ( !_ptr )
+	{
+		_done = true;
+		return;
+	}
 
-    osgViewer::Viewer* viewer = _ptr->getViewer();
-    do
-    {
-        _ptr->PreFrameUpdate();
-        viewer->frame();
-        _ptr->PostFrameUpdate();
-    } while ( !testCancel() && !viewer->done() && !_done );
+	osgViewer::Viewer* viewer = _ptr->getViewer();
+	do
+	{
+		_ptr->PreFrameUpdate();
+		viewer->frame();
+		_ptr->PostFrameUpdate();
+	} while ( !testCancel() && !viewer->done() && !_done );
 }
