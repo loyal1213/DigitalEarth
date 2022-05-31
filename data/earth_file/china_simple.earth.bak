@@ -40,7 +40,7 @@
 	</image>
 	<!-- 省界线(白色) -->
 	<image name="ChinaBoundary" driver="agglite">
-		<features name="china_provincial_boundaries" driver="ogr">
+		<features name="provincial_boundaries" driver="ogr">
 			<url>../china_data/provincial_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
@@ -56,10 +56,53 @@
 			</style>
 		</styles>
 	</image>
+<<<<<<< HEAD:data/earth_file/china_simple.earth.bak
 	<!-- 县界线(褐色) -->
 	<!--<image name="CountryBoundary" driver="agglite">
 		<features name="country_boundaries" driver="ogr">
 			<url>../china_data/country_boundaries.shp</url>
+=======
+	<!-- 省会城市 （棕色）-->
+	<image name="ProvinceBoundary" driver="agglite">
+		<features name="province_capital" driver="ogr">
+			<url>../china_data/province_capital.shp</url>
+			<build_spatial_index>true</build_spatial_index>
+		</features>
+		<geometry_type>line</geometry_type>
+		<relative_line_size>true</relative_line_size>
+		<styles>
+			<style type="text/css">
+				china{
+					stroke: #A52A2A;
+					stroke-opacity: 0.8;
+					stroke-width: 1.0;
+				}
+			</style>
+		</styles>
+	</image>
+	<!-- 地级市 (茶色)-->
+	<image name="CityBoundary" driver="agglite">
+		<features name="province_level_cities" driver="ogr">
+			<url>../china_data/province_level_cities.shp</url>
+			<build_spatial_index>true</build_spatial_index>
+		</features>
+		<geometry_type>line</geometry_type>
+		<relative_line_size>true</relative_line_size>
+		<styles>
+			<style type="text/css">
+				china{
+					stroke: #D2B48C;
+					stroke-opacity: 0.9;
+					stroke-width: 1.2;
+				}
+			</style>
+		</styles>
+	</image>
+	<!-- 县界线(褐色) -->
+	<image name="CountyBoundary" driver="agglite">
+		<features name="county_boundaries" driver="ogr">
+			<url>../china_data/county_boundaries.shp</url>
+>>>>>>> 2490618f2773106ace87d6293b622e99ccff3991:data/earth_file/china_simple.earth.bak
 			<build_spatial_index>true</build_spatial_index>
 		</features>
 		<geometry_type>line</geometry_type>
@@ -126,8 +169,13 @@
 		<sort_by_priority>    true </sort_by_priority>
 	</screen_space_layout>-->
 	<!-- 主要道路 （深橙色）-->
+<<<<<<< HEAD:data/earth_file/china_simple.earth.bak
 	<!--<image name="MainRoad" driver="agglite">
 		<features name="china_road" driver="ogr">
+=======
+	<image name="MainRoad" driver="agglite">
+		<features name="main_road" driver="ogr">
+>>>>>>> 2490618f2773106ace87d6293b622e99ccff3991:data/earth_file/china_simple.earth.bak
 			<url>../china_data/main_road.shp</url>
 			<build_spatial_index>true</build_spatial_index>
 		</features>
