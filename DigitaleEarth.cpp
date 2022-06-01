@@ -109,6 +109,10 @@ BOOL CDigitaleEarthApp::InitInstance()
 	InitKeyboardManager();
 
 	InitTooltipManager();
+
+	// 读取配置文件
+	ReadConfigurationFile();
+
 	CMFCToolTipInfo ttParams;
 	ttParams.m_bVislManagerTheme = TRUE;
 	theApp.GetTooltipManager()->SetTooltipParams(AFX_TOOLTIP_TYPE_ALL,
@@ -215,6 +219,32 @@ void CDigitaleEarthApp::SaveCustomState()
 {
 }
 
+bool CDigitaleEarthApp::ReadConfigurationFile()
+{
+	char pFileName[MAX_PATH];   
+	int nPos = GetCurrentDirectory(MAX_PATH, pFileName);   
+
+	CString csFullPath(pFileName);    
+
+	std::string confname = TEXT("config/Configuration.ini");
+	CHAR buf[1024]={0};
+	GetPrivateProfileString("DigitaleEarth", "EARTH_PATH", "", buf, MAX_PATH, confname.c_str());
+	GetPrivateProfileString("DigitaleEarth", "HOST_ADDR", "", buf, MAX_PATH, confname.c_str());
+
+	if (std::string(buf).empty()){
+		return false;
+	}
+
+
+	return true;
+}
+
+void CDigitaleEarthApp::InitNetwork()
+{
+
+
+}
+
 // CDigitaleEarthApp 消息处理程序
 
 
@@ -222,3 +252,5 @@ void CDigitaleEarthApp::SaveCustomState()
 //{
 //	// TODO: 在此添加命令更新用户界面处理程序代码
 //}
+
+

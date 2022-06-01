@@ -12,7 +12,6 @@
 #include <osgEarthFeatures/FeatureCursor>
 #include <osgEarthAnnotation/LabelNode>
 
-
 #include <osgEarth/MapNode>
 #include <osgEarthUtil/EarthManipulator>
 #include <osgEarthUtil/ExampleResources>
@@ -31,7 +30,7 @@
 #include <osgViewer/Viewer>
 
 #include "StringConvert.h"
-
+using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Features;
 using namespace osgEarth::Drivers;
@@ -341,6 +340,9 @@ void cOSG::InitOsgEarth()
 
 	// 添加地标
 	addEarthLabel();
+
+	// 读取临时路径   暂时在这里调用 
+	DoAPreLine();
 }
 
 void cOSG::PreFrameUpdate()
@@ -1029,6 +1031,26 @@ void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
 	geode->addDrawable(fire->getParticleSystem());
 	mRoot->addChild(geode);
+}
+
+
+void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
+{
+	osg::ref_ptr<osg::Geometry> geom = new osg::Geometry;
+
+	// 设置顶点
+	osg::ref_ptr<osg::Vec3Array> vertex = new osg::Vec3Array();
+	osg::ref_ptr<osg::Vec4Array> vertex_colors = new osg::Vec4Array();
+
+	for (int i = 0; i < size; i++){
+		vertex->push_back(osg::Vec3(0,0,0));
+		vertex->push_back(osg::Vec3(0,0,0));
+		
+		float alpha = sinf(osg::PI * (float)i/(float)size);
+		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
+		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
+
+	}
 }
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){

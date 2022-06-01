@@ -97,6 +97,9 @@ public:
 	// Build 尾迹
 	void BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar);
 
+	// 添加彩带
+	void BuildRibbon(int size, osg::MatrixTransform* scalar);
+
 	// 预设值路径飞行
 	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
 

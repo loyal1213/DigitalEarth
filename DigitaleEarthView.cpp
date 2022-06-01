@@ -311,9 +311,6 @@ void CDigitaleEarthView::OnCheckStartAirplane()
 	isStartFly_ = !isStartFly_;
 	TRACE("OnCheckStartAirplane 1111111111\n");
 	if (isStartFly_){	// 点击的时候触发
-		// 读取临时路径
-		mOSG->DoAPreLine();
-
 		// 开始起飞
 		mOSG->DoPreLineNow(); 
 	}

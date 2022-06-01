@@ -29,9 +29,6 @@ class CDigitaleEarthApp : public CWinAppEx
 public:
 	CDigitaleEarthApp();
 
-public:
-	bool b_need_modify_;
-	bool b_can_modify_;
 
 // 重写
 public:
@@ -43,6 +40,15 @@ public:
 	virtual void PreLoadState();
 	virtual void LoadCustomState();
 	virtual void SaveCustomState();
+
+protected:
+	// 读取配置文件
+	bool ReadConfigurationFile();
+	// 初始化网络
+	void InitNetwork();
+public:
+	bool b_need_modify_;
+	bool b_can_modify_;
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
