@@ -1036,7 +1036,7 @@ void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 
 void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 {
-	osg::ref_ptr<osg::Geometry> geom = new osg::Geometry;
+	osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
 
 	// …Ë÷√∂•µ„
 	osg::ref_ptr<osg::Vec3Array> vertex = new osg::Vec3Array();
@@ -1049,8 +1049,25 @@ void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 		float alpha = sinf(osg::PI * (float)i/(float)size);
 		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
 		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
-
 	}
+
+	geometry->setDataVariance(osg::Object::DYNAMIC);
+	geometry->setUseDisplayList(true);
+	geometry->setUseVertexBufferObjects(true);
+
+	geometry->setVertexArray(vertex);
+	geometry->setColorArray(vertex_colors);
+	geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+	geometry->addPrimitiveSet(new osg::DrawArrays(GL_QUAD_STRIP,0,size));
+
+	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
+	geode->addDrawable(geometry);
+	geode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
+	geode->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);
+	geode->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+
+	mRoot->addChild(geode);
+
 }
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
