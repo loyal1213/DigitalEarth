@@ -19,7 +19,7 @@ public:
 	~CTrailerCallback();
 	virtual void operator()(osg::Node* node, osg::NodeVisitor* nv);
 private:
-	osg::observer_ptr<osg::Geometry> m_opGeometryRibbon;
+	osg::observer_ptr<osg::Geometry> m_opGeometryRibbon;   // π€≤Ï’ﬂ÷∏’Î
 	int m_nsize;
 	int m_nwidth;
 };

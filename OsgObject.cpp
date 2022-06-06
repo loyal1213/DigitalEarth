@@ -141,8 +141,7 @@ void printFeature( Feature* feature )
 {
 	// std::cout << "FID: " << feature->getFID() << std::endl;
 	TRACE1(_T("FID: %ul \n"), feature->getFID());
-	for (AttributeTable::const_iterator itr = feature->getAttrs().begin(); itr != feature->getAttrs().end(); ++itr)
-	{
+	for (AttributeTable::const_iterator itr = feature->getAttrs().begin(); itr != feature->getAttrs().end(); ++itr){
 		/*std::cout 
 			<< indent 
 			<< itr->first << "=" << itr->second.getString() << " ("
@@ -165,9 +164,8 @@ void printFeature( Feature* feature )
 	}
 
 	//Print out the geometry
-	Geometry* geom = feature->getGeometry();
-	if (geom)
-	{
+	osgEarth::Geometry* geom = feature->getGeometry();
+	if (geom){
 		std::cout << "\t\t" << GeometryUtils::geometryToWKT( geom ) << std::endl;
 	}
 	std::cout << std::endl;
@@ -1004,7 +1002,9 @@ void cOSG::DoPreLineNow()
 	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//观察的角度
 	earth_manipulator_->setViewpoint(vp, 1.0);
 
+	// 加载尾迹
 	BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
+	BuildRibbon(512,mtrix_fly_self);
 	// osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
 	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
 	// earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point5", 109.126324, 34.376233, 4000, -60, -90, 1000),1);
@@ -1023,7 +1023,7 @@ void cOSG::IsTrack(bool btrack)
 void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 {
 	osg::ref_ptr<osgParticle::FireEffect> fire = new osgParticle::FireEffect(position,10);
-	fire->setUseLocalParticleSystem(false);													// 不使用世界坐标系统
+	fire->setUseLocalParticleSystem(false);		// 不使用世界坐标系统
 	fire->getEmitter()->setEndless(true);		// 发射器周期
 	fire->getEmitter()->setLifeTime(1);			// 设置效果生命周期为无限
 	scalar->addChild(fire);
@@ -1066,6 +1066,7 @@ void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 	geode->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);
 	geode->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
 
+	// scalar->
 	mRoot->addChild(geode);
 
 }
