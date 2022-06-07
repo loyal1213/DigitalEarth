@@ -13,7 +13,7 @@
 #include<iostream>
 #include<fstream>
 // ⾃定义回调类
-//
+// BuildRader/BuildRaderCallback 主要⽤来处理雷达相关操作
 class CBuildRaderCallback:public osg::NodeCallback
 {
 public:

@@ -14,6 +14,7 @@ void CTrailerCallback::operator()( osg::Node* node, osg::NodeVisitor* nv )
 	if(pmtTrans && m_opGeometryRibbon.valid()){
 		osg::Matrix mtx = pmtTrans->getMatrix();
 		osg::Vec3Array* pvec3Vertex =dynamic_cast<osg::Vec3Array*>(m_opGeometryRibbon->getVertexArray());
+
 		for(int i = 0; i < m_nsize - 3; i+=2){
 			(*pvec3Vertex)[i]=(*pvec3Vertex)[i+2];
 			(*pvec3Vertex)[i+1]=(*pvec3Vertex)[i+3];

@@ -1,4 +1,4 @@
-// MFC_OSG.cpp : implementation of the cOSG class
+ï»¿// MFC_OSG.cpp : implementation of the cOSG class
 //
 #include "stdafx.h"
 #include "OsgObject.h"
@@ -30,6 +30,9 @@
 #include <osgViewer/Viewer>
 
 #include "StringConvert.h"
+#include "CreateTrackCallback.h"
+#include "TrailerCallback.h"
+
 using namespace osg;
 using namespace osgEarth;
 using namespace osgEarth::Features;
@@ -57,7 +60,7 @@ void cOSG::InitOSG(std::string modelname)
 	m_ModelName = modelname;
 
 	// Init different parts of OSG
-	InitManipulators(); // ²Ù×İÆ÷
+	InitManipulators(); // æ“çºµå™¨
 
 	InitSceneGraph();
 
@@ -83,7 +86,7 @@ void cOSG::InitManipulators(void)
 
 
 
-	// ³õÊ¼»¯ earth ²Ù×÷Æ÷
+	// åˆå§‹åŒ– earth æ“ä½œå™¨
 	earth_manipulator_ = new osgEarth::Util::EarthManipulator;
 	if (mapNode_.valid()){
 		earth_manipulator_->setNode(mapNode_);
@@ -187,13 +190,13 @@ void cOSG::InitSceneGraph(void)
 	// Init the main Root Node/Group
 	mRoot  = new osg::Group;
 
-	// ¹¹ÔìMapNode£¬argumentsÀïÃæÓĞearthÎÄ¼şµÄÂ·¾¶
+	// æ„é€ MapNodeï¼Œargumentsé‡Œé¢æœ‰earthæ–‡ä»¶çš„è·¯å¾„
 	mModel = osgDB::readNodeFile(m_ModelName);
 	if (!mModel) return;
 
 	/******************
 	
-	//´´½¨½Úµã,¶ÁÈ¡SHPÎÄ¼ş
+	//åˆ›å»ºèŠ‚ç‚¹,è¯»å–SHPæ–‡ä»¶
 	osg::ref_ptr<osg::Node> node1 = osgDB::readNodeFile("./data/china_data/county_total.shp");
 
 	//Open the feature source
@@ -230,7 +233,7 @@ void cOSG::InitSceneGraph(void)
 	// Add the model to the scene
 	mRoot->addChild(mModel.get());
 	mapNode_ = dynamic_cast<osgEarth::MapNode*>(mModel.get());
-	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.µÚÈı½²-VPBÓÃ·¨Ïê½âÓë³£¼ûÎÊÌâ´¦Àí/vpbtest/TestCommon10/output.ive"));
+	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.ç¬¬ä¸‰è®²-VPBç”¨æ³•è¯¦è§£ä¸å¸¸è§é—®é¢˜å¤„ç†/vpbtest/TestCommon10/output.ive"));
 
 	earth_label_ = new osg::Group();
 
@@ -243,7 +246,7 @@ void cOSG::InitCameraConfig(void)
 	// Local Variable to hold window size data
 	RECT rect;
 
-	// osg µÄ³¡¾°
+	// osg çš„åœºæ™¯
 	mViewer = new osgViewer::Viewer();
 
 	// Add a Stats Handler to the viewer
@@ -296,10 +299,10 @@ void cOSG::InitCameraConfig(void)
 	//mViewer->addSlave(camera.get());
 	mViewer->setCamera(camera.get());
 
-	// ½«×é½ÚµãÉèÖÃÎª³¡¾°½Úµã
+	// å°†ç»„èŠ‚ç‚¹è®¾ç½®ä¸ºåœºæ™¯èŠ‚ç‚¹
 	mViewer->setSceneData(mRoot.get());
 
-	// ÉèÖÃearth²Ù×÷Æ÷
+	// è®¾ç½®earthæ“ä½œå™¨
 	// mViewer->setCameraManipulator(keyswitchManipulator.get());
 	// mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
 	mViewer->setCameraManipulator(earth_manipulator_);
@@ -318,7 +321,7 @@ void cOSG::InitCameraConfig(void)
 
 void cOSG::InitOsgEarth()
 {
-	////³õÊ¼»¯Ìì¿Õ
+	////åˆå§‹åŒ–å¤©ç©º
 	/*osgEarth::Config skyConf;
 	double hours = skyConf.value("hours", 12.0);
 	osg::ref_ptr<osgEarth::Util::SkyNode> sky_node = new osgEarth::Util::SkyNode(mapNode->getMap());
@@ -330,16 +333,16 @@ void cOSG::InitOsgEarth()
 	mapNode_->getBound();
 
 
-	// ĞÂÔöÏÔÊ¾ÊÓµãĞÅÏ¢µÄ¿Ø¼ş
+	// æ–°å¢æ˜¾ç¤ºè§†ç‚¹ä¿¡æ¯çš„æ§ä»¶
 	addViewPointLable();
 
-	// Ìí¼Ó»ú³¡
+	// æ·»åŠ æœºåœº
 	addAirport();
 
-	// Ìí¼ÓµØ±ê
+	// æ·»åŠ åœ°æ ‡
 	addEarthLabel();
 
-	// ¶ÁÈ¡ÁÙÊ±Â·¾¶   ÔİÊ±ÔÚÕâÀïµ÷ÓÃ 
+	// è¯»å–ä¸´æ—¶è·¯å¾„   æš‚æ—¶åœ¨è¿™é‡Œè°ƒç”¨ 
 	DoAPreLine();
 }
 
@@ -361,28 +364,31 @@ void cOSG::PostFrameUpdate()
 
 void cOSG::addAirport()
 {
-	coordinate_system_node_ = new osg::CoordinateSystemNode; // ´´½¨×ø±êÏµ½Úµã
-	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel()); // ÉèÖÃÍÖÔ²ÌåÄ£ĞÍ
+	coordinate_system_node_ = new osg::CoordinateSystemNode; // åˆ›å»ºåæ ‡ç³»èŠ‚ç‚¹
+	coordinate_system_node_->setEllipsoidModel(new osg::EllipsoidModel()); // è®¾ç½®æ¤­åœ†ä½“æ¨¡å‹
 
-	// ¼ÓÔØ»ú³¡
-	airport = osgDB::readNodeFile("./data/airport/heinei_airport.ive"); // ¶ÁÈ¡»ú³¡ÎÄ¼ş
-	mtAirport = new osg::MatrixTransform; // ¾ØÕó±ä»»
-	// mtAirport->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(-1.57/2,osg::Vec3(0,0,1)));
+	// åŠ è½½æœºåœº
+	airport = osgDB::readNodeFile("./data/airport/heinei_airport.ive"); // è¯»å–æœºåœºæ–‡ä»¶
+	mtAirport = new osg::MatrixTransform; // çŸ©é˜µå˜æ¢
 	mtAirport->addChild(airport);
 	mRoot->addChild(mtAirport);
 
-	// ÉèÖÃ»ú³¡¾ØÕó
-	osg::Matrixd mtTemp;   // »ú³¡Î»ÖÃ  109.13 34.38 ¸ß¶È£º8434.96  º£°Î£º390
+	// è®¾ç½®æœºåœºçŸ©é˜µ
+	osg::Matrixd mtTemp;   // æœºåœºä½ç½®  109.13 34.38 é«˜åº¦ï¼š8434.96  æµ·æ‹”ï¼š390
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
 	mtAirport->setMatrix(mtTemp);
 
-	// ¼ÓÔØ·É»ú
-	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;  //ÕıÖµ£º ÄæÊ±Õë  
-	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // ¶ÁÈ¡·É»úÎÄ¼ş
+	// åŠ è½½é£æœº
+	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;  //æ­£å€¼ï¼š é€†æ—¶é’ˆ  
+	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // è¯»å–é£æœºæ–‡ä»¶
+	fly_airport->setName(TEXT("F16"));
 	mtrix_fly_self = new osg::MatrixTransform();
-	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)*osg::Matrixd::rotate(plane_angle,osg::Vec3(0,0,1))); // -(osg::PI_2/2*10)
+	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)
+		* osg::Matrixd::rotate(osg::DegreesToRadians(75.0f), osg::Vec3(0,0,1))
+		// * osg::Matrix::translate(osg::Vec3f(0, 0, 0))
+		); // -(osg::PI_2/2*10)
 
-	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// ÉèÖÃÊôĞÔ£¬¹âÕÕ·¨Ïß
+	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// è®¾ç½®å±æ€§ï¼Œå…‰ç…§æ³•çº¿
 	mtrix_fly_self->addChild(fly_airport);
 
 	// mtrix_fly_self->addChild(m_pBuildRader->BuildRader(500,300).get());
@@ -391,7 +397,7 @@ void cOSG::addAirport()
 
 	mRoot->addChild(mtrix_fly_airport);
 
-	// ÉèÖÃ·É»ú¾ØÕó
+	// è®¾ç½®é£æœºçŸ©é˜µ
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.376128), osg::DegreesToRadians(109.125682), 537, mtTemp);
 	mtrix_fly_airport->setMatrix(mtTemp);
 
@@ -762,7 +768,7 @@ void cOSG::addViewPointLable()
 	}
 	canvas_ = ControlCanvas::getOrCreate(mViewer);
 
-	// Ìí¼Ó¿Ø¼ş£¬ÓÃÀ´ÏÔÊ¾ÊÓµãĞÅÏ¢
+	// æ·»åŠ æ§ä»¶ï¼Œç”¨æ¥æ˜¾ç¤ºè§†ç‚¹ä¿¡æ¯
 	osgEarth::Util::Controls::LabelControl* viewCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
 	/*viewCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_LEFT);
 	viewCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_TOP);
@@ -771,7 +777,7 @@ void cOSG::addViewPointLable()
 	viewCoords->setMargin(10);*/
 	canvas_->addControl(viewCoords);
 
-	// Ìí¼Ó¿Ø¼ş£¬ÓÃÀ´ÏÔÊ¾Êó±êĞÅÏ¢
+	// æ·»åŠ æ§ä»¶ï¼Œç”¨æ¥æ˜¾ç¤ºé¼ æ ‡ä¿¡æ¯
 	/*osgEarth::Util::Controls::LabelControl* mouseCoords = new osgEarth::Util::Controls::LabelControl(TEXT("TestViewPoint"),osg::Vec4(1.0,1.0,1.0,1.0));
 	mouseCoords->setHorizAlign(osgEarth::Util::Controls::Control::ALIGN_RIGHT);
 	mouseCoords->setVertAlign(osgEarth::Util::Controls::Control::ALIGN_BOTTOM);
@@ -779,6 +785,9 @@ void cOSG::addViewPointLable()
 	mouseCoords->setSize(400,50);
 	mouseCoords->setMargin(10);
 	canvas_->addControl(mouseCoords);*/
+
+
+
 
 	if (label_event_ == 0){
 		label_event_ = new CLabelControlEventHandler(mapNode_,viewCoords);
@@ -802,13 +811,13 @@ double cOSG::get_boundaries()
 	return 0.0f;
 }
 
-// Á½µã¼äµÄ¾àÀë¹«Ê½ 
+// ä¸¤ç‚¹é—´çš„è·ç¦»å…¬å¼ 
 double cOSG::GetDis(osg::Vec3 form, osg::Vec3 to)
 {
 	return sqrt(pow((to.x() - form.x()), 2) + pow((to.y() - form.y()), 2) + pow((to.z() - form.z()), 2));
 }
 
-// Çó³öÏÂÒ»µãµÄÊ±¼ä
+// æ±‚å‡ºä¸‹ä¸€ç‚¹çš„æ—¶é—´
 double cOSG::GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed)
 {
 	double dist = GetDis(from, to);
@@ -821,8 +830,8 @@ double cOSG::GetRunTime(osg::Vec3 from, osg::Vec3 to, double speed)
 void cOSG::DoAPreLine()
 {
 	/*
-	if 0´úÂëÎªÖ±½Ó¼ÓÈë¾­Î³¸ß¡¢ËÙ¶È£¬¿ÉÄÜµ¼ÖÂ·É»ú×ËÌ¬²»×¼È·¡£
-	else´úÂëÎªÔÚ0µÄ¾­Î³¸ß»ù´¡ÉÏÃ¿¸ö½Úµã¶àÉú³ÉÁË20¸ö½Úµã£¬µ¼ÖÂÎŞÈË»ú¸ü¼Ó±ÆÕæ¿¿½ü¡£
+	if 0ä»£ç ä¸ºç›´æ¥åŠ å…¥ç»çº¬é«˜ã€é€Ÿåº¦ï¼Œå¯èƒ½å¯¼è‡´é£æœºå§¿æ€ä¸å‡†ç¡®ã€‚
+	elseä»£ç ä¸ºåœ¨0çš„ç»çº¬é«˜åŸºç¡€ä¸Šæ¯ä¸ªèŠ‚ç‚¹å¤šç”Ÿæˆäº†20ä¸ªèŠ‚ç‚¹ï¼Œå¯¼è‡´æ— äººæœºæ›´åŠ é€¼çœŸé è¿‘ã€‚
 	*/
 #if 0
 	osg::ref_ptr<osg::Vec4Array> vaTemp = new osg::Vec4Array;
@@ -882,44 +891,43 @@ void cOSG::DoAPreLine()
 			vaTemp->push_back(osg::Vec4(data.x + valueX, data.y + valueY, data.z + valueZ, data.speed));
 		}
 	}
-	// ¸ù¾İÊäÈëµÄ¿ØÖÆµã£¬Êä³öÒ»¸öÂ·¾¶
+	// æ ¹æ®è¾“å…¥çš„æ§åˆ¶ç‚¹ï¼Œè¾“å‡ºä¸€ä¸ªè·¯å¾„
 	apc_ = createAirLinePath(vaTemp);
 
 #endif
 }
 
-// ¸ù¾İÊäÈëµÄ¿ØÖÆµã£¬Êä³öÒ»¸öÂ·¾¶£¬¿ØÖÆµã¸ñÊ½£¨¾­¶È£¬Î³¶È£¬¸ß¶È£¬ËÙ¶È£©
-osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) // ¿ØÖÆµã
+// æ ¹æ®è¾“å…¥çš„æ§åˆ¶ç‚¹ï¼Œè¾“å‡ºä¸€ä¸ªè·¯å¾„ï¼Œæ§åˆ¶ç‚¹æ ¼å¼ï¼ˆç»åº¦ï¼Œçº¬åº¦ï¼Œé«˜åº¦ï¼Œé€Ÿåº¦ï¼‰
+osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) // æ§åˆ¶ç‚¹
 {
-	osg::ref_ptr<osg::AnimationPath> animationPath = new osg::AnimationPath;		// ¶¯»­Â·¾¶
-	animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);						// ¶¯»­²»Ñ­»·
+	osg::ref_ptr<osg::AnimationPath> animationPath = new osg::AnimationPath;		// åŠ¨ç”»è·¯å¾„
+	animationPath->setLoopMode(osg::AnimationPath::NO_LOOPING);						// åŠ¨ç”»ä¸å¾ªç¯
 
-
-	osg::Vec3d curPosition,curNextPosition;
 	double time = 0;
+	osg::Vec3d curPosition,curNextPosition;
 
 	osg::Matrix matrix;
 	osg::Quat _rotation;
 
-	_rotation.makeRotate(osg::DegreesToRadians(90.0),0.0,0.0,1.0);
-
 	double hAngle = 0.0,vAngle = 0.0;
 	for (osg::Vec4Array::iterator iterator = ctrl->begin(); iterator != ctrl->end(); ++iterator){
-		osg::Vec4Array::iterator iterator2 = iterator; // iterator2 ÊÇ iterator µÄÏÂÒ»¸öµã
+		osg::Vec4Array::iterator iterator2 = iterator;
 		++iterator2;
 
-		// ĞèÒªÅĞ¶ÏÊÇ²»ÊÇÒÑ¾­µ½¶¥
+		// éœ€è¦åˆ¤æ–­æ˜¯ä¸æ˜¯å·²ç»åˆ°é¡¶
 		if (iterator2 == ctrl->end()) { break; }
 
-		// ¼ÆËãµ±Ç°µãºÍµ±Ç°µÄÏÂÒ»µãÎ»ÖÃ:ÓÉ¾­Î³¸ß×ªÎªxyz
-		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ(
+		// è®¡ç®—å½“å‰ç‚¹å’Œå½“å‰çš„ä¸‹ä¸€ç‚¹ä½ç½®:ç”±ç»çº¬é«˜è½¬ä¸ºxyz
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
+			(
 			osg::DegreesToRadians(iterator->y()),
 			osg::DegreesToRadians(iterator->x()),
 			//osg::DegreesToRadians(iterator->z()),
 			iterator->z(),
 			curPosition.x(), curPosition.y(), curPosition.z()
 			);		
-		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ(
+		coordinate_system_node_->getEllipsoidModel()->convertLatLongHeightToXYZ
+			(
 			osg::DegreesToRadians(iterator2->y()),
 			osg::DegreesToRadians(iterator2->x()),
 			//osg::DegreesToRadians(iterator2->z()),
@@ -927,50 +935,40 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 			curNextPosition.x(), curNextPosition.y(), curNextPosition.z()
 			);
 
-		// ¼ÆËã´¹Ö±¼Ğ½Ç  ¸ß¶ÈÏàÍ¬
-		if (iterator->z() == iterator2->z())
-		{
-			vAngle = 0; // Ë®Æ½Ïß
-		}
-		else
-		{
+		// è®¡ç®—å‚ç›´å¤¹è§’
+		if (iterator->z() == iterator2->z()){
+			vAngle = 0;
+		}else{
 			if (sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow(iterator2->z() - iterator->z(), 2) == 0){
 				vAngle = osg::PI_2;
 			}else{
-				vAngle = atan((iterator2->z() - iterator->z()) / sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow((iterator2->z() - iterator->z()), 2)); // ÓàÏÒ¶¨Àí
+				vAngle = atan((iterator2->z() - iterator->z()) / sqrt(pow(GetDis(curPosition, curNextPosition), 2)) - pow((iterator2->z() - iterator->z()), 2));
 			}
 
-			if (vAngle >= osg::PI_2)// ±£Ö¤·É»ú²»ÄÜ´ò¹ö
+			if (vAngle >= osg::PI_2)
 				vAngle = osg::PI_2;
 			if (vAngle <= -osg::PI_2){
 				vAngle = -osg::PI_2;
 			}
 		}
 
-		// µã1 £º Ö±Ïß·É£¬ ×óÓÒ½Ç¶È£º¾­Î³¶È¼Ğ½Ç   ÉÏÏÂ½Ç¶È
-
-		// Ë®Æ½¼Ğ½Ç£º ¾­¶ÈÏàÍ¬ ¼Ğ½Ç90¶È   | Î³¶ÈÏàÍ¬ ¼Ğ½Ç0£¬180
-
-		// ¼ÆËãË®Æ½¼Ğ½Ç  ¾­¶ÈÏàÍ¬ Ë®Æ½¼Ğ½Ç90¶È  
-		if (iterator->x() == iterator2->x())
-		{
+		// è®¡ç®—æ°´å¹³å¤¹è§’
+		if (iterator->x() == iterator2->x()){
 			hAngle = osg::PI_2;
-		}
-		else
-		{
+		}else{
 			hAngle = (iterator2->y() - iterator->y()) / (iterator2->x() - iterator->x());
 
 			if (iterator2->x() > iterator->x())
 				hAngle += osg::PI;
 		}
 
-		// Çó·É»úµÄ±ä»»¾ØÕó
+		//æ±‚é£æœºçš„å˜æ¢çŸ©é˜µ
 		coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
 		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), vAngle + osg::PI_2, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
 		matrix.preMultRotate(_rotation);
 		animationPath->insert(time, osg::AnimationPath::ControlPoint(curPosition, matrix.getRotate()));
 
-		// °ÑÏÂÒ»¸öµãµÄÊ±¼äÇó³öÀ´
+		//æŠŠä¸‹ä¸€ä¸ªç‚¹çš„æ—¶é—´æ±‚å‡ºæ¥
 		time += GetRunTime(curPosition, curNextPosition, iterator2->w());
 	}
 
@@ -981,39 +979,43 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 void cOSG::DoPreLineNow()
 {
 	/*
-	focalPoint	½¹µã£ºÏà»úµÄ½¹µãÎ»ÖÃ£¬ÊÇÒ»¸öµØÀí×ø±ê£¨º¬¸ß³Ì£©
-	range	½¹¾à£ºÏà»úÎ»ÖÃµ½½¹µãµÄ¾àÀë£¬µ¥Î»ÊÇÃ×¡£
-	pitch	¸©Ñö½Ç£º-90ÖÁ0µÄÖµ£¬µ¥Î»ÊÇ¶È
-	heading	Ë®Æ½·½Î»½Ç£º0-360µÄÖµ£¬¿ØÖÆµØÍ¼Ë®Æ½Ğı×ª£¬µ¥Î»ÊÇ¶È¡£
+	focalPoint	ç„¦ç‚¹ï¼šç›¸æœºçš„ç„¦ç‚¹ä½ç½®ï¼Œæ˜¯ä¸€ä¸ªåœ°ç†åæ ‡ï¼ˆå«é«˜ç¨‹ï¼‰
+	range	ç„¦è·ï¼šç›¸æœºä½ç½®åˆ°ç„¦ç‚¹çš„è·ç¦»ï¼Œå•ä½æ˜¯ç±³ã€‚
+	pitch	ä¿¯ä»°è§’ï¼š-90è‡³0çš„å€¼ï¼Œå•ä½æ˜¯åº¦
+	heading	æ°´å¹³æ–¹ä½è§’ï¼š0-360çš„å€¼ï¼Œæ§åˆ¶åœ°å›¾æ°´å¹³æ—‹è½¬ï¼Œå•ä½æ˜¯åº¦ã€‚
 	*/
 	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
 
 	// em_->setNode(mtrix_fly_airport);
 	// em_->setTetherNode(mtrix_fly_airport);
-	// osgEarth2.10ÖĞÓÃsetNodeÌæ´úsetTetherNodeÉèÖÃÊÓµã¸ú×Ù
+	// osgEarth2.10ä¸­ç”¨setNodeæ›¿ä»£setTetherNodeè®¾ç½®è§†ç‚¹è·Ÿè¸ª
 	// em_->setNode(mtrix_fly_airport);
 
-	//ÏÂÃæÊÇÇø±ğ
-	//»ñÈ¡µ±Ç°²Ù×÷Æ÷µÄÊÓµã£¬½«Ä£ĞÍ·Å½øÕâ¸öÊÓ½ÇÖĞ£¬È»ºóÉèÖÃÕâ¸öÊÓ½ÇµÄÒ»Ğ©²ÎÊı£¬±ÈÈç´ÓÄÄ¸ö½Ç¶ÈºÍ¾àÀë¹Û²ìÄ£ĞÍ¡£È»ºó½«Õâ¸öÊÓµãÉèÖÃÎª²Ù×÷Æ÷µÄÊÓµã¡£
+	//ä¸‹é¢æ˜¯åŒºåˆ«
+	//è·å–å½“å‰æ“ä½œå™¨çš„è§†ç‚¹ï¼Œå°†æ¨¡å‹æ”¾è¿›è¿™ä¸ªè§†è§’ä¸­ï¼Œç„¶åè®¾ç½®è¿™ä¸ªè§†è§’çš„ä¸€äº›å‚æ•°ï¼Œæ¯”å¦‚ä»å“ªä¸ªè§’åº¦å’Œè·ç¦»è§‚å¯Ÿæ¨¡å‹ã€‚ç„¶åå°†è¿™ä¸ªè§†ç‚¹è®¾ç½®ä¸ºæ“ä½œå™¨çš„è§†ç‚¹ã€‚
 	osgEarth::Viewpoint vp = earth_manipulator_->getViewpoint();
 	vp.setNode(mtrix_fly_airport);
 	// vp.name()._set("view_point5");
-	vp.range()->set(3000.0, osgEarth::Units::METERS);//¹Û²ìµÄ¾àÀë
-	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//¹Û²ìµÄ½Ç¶È
-	earth_manipulator_->setViewpoint(vp, 1.0);
+	vp.range()->set(3000.0, osgEarth::Units::METERS);//è§‚å¯Ÿçš„è·ç¦»
+	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//è§‚å¯Ÿçš„è§’åº¦
+	
 
-	// ¼ÓÔØÎ²¼£
-	BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
-	BuildRibbon(512,mtrix_fly_self);
+	// åŠ è½½å°¾è¿¹
+	// BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
+	// BuildRibbon(512, mtrix_fly_self);
 	// osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
-	// ÎÄ¼şÃû ¾­¶È  Î³¶È ¸ß¶È Ë®Æ½·½Î»½Ç ´¹Ö±¸©Ñö½Ç ¿ÉÊÓ·¶Î§
+	// æ–‡ä»¶å ç»åº¦  çº¬åº¦ é«˜åº¦ æ°´å¹³æ–¹ä½è§’ å‚ç›´ä¿¯ä»°è§’ å¯è§†èŒƒå›´
 	// earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point5", 109.126324, 34.376233, 4000, -60, -90, 1000),1);
+
+	earth_manipulator_->setViewpoint(vp, 1.0);
 }
 
-// ÉèÖÃ¸ú×Ù
+// è®¾ç½®è·Ÿè¸ª
 void cOSG::IsTrack(bool btrack)
 {
 	if (btrack){
+		// è®¾ç½®è§†â¾“è·Ÿè¸ª
+		earth_manipulator_->setViewpoint(osgEarth::Viewpoint(TEXT("v6"),109.1263, 34.3762, 0, 24.261, -21.6, 3000),5);
 		earth_manipulator_->getViewpoint().setNode(mtrix_fly_airport);
 	}else{
 		earth_manipulator_->getViewpoint().setNode(0);
@@ -1023,9 +1025,9 @@ void cOSG::IsTrack(bool btrack)
 void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 {
 	osg::ref_ptr<osgParticle::FireEffect> fire = new osgParticle::FireEffect(position,10);
-	fire->setUseLocalParticleSystem(false);		// ²»Ê¹ÓÃÊÀ½ç×ø±êÏµÍ³
-	fire->getEmitter()->setEndless(true);		// ·¢ÉäÆ÷ÖÜÆÚ
-	fire->getEmitter()->setLifeTime(1);			// ÉèÖÃĞ§¹ûÉúÃüÖÜÆÚÎªÎŞÏŞ
+	fire->setUseLocalParticleSystem(false);		// ä¸ä½¿ç”¨ä¸–ç•Œåæ ‡ç³»ç»Ÿ
+	fire->getEmitter()->setEndless(false);		// å‘å°„å™¨å‘¨æœŸ
+	fire->getEmitter()->setLifeTime(1);			// è®¾ç½®æ•ˆæœç”Ÿå‘½å‘¨æœŸä¸ºæ— é™
 	scalar->addChild(fire);
 
 	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
@@ -1036,53 +1038,55 @@ void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 
 void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 {
-	osg::ref_ptr<osg::Geometry> geometry = new osg::Geometry;
+	osg::ref_ptr<osg::Geometry> rpgeom =new osg::Geometry;
+	// è®¾ç½®é¡¶ç‚¹
+	osg::ref_ptr<osg::Vec3Array> rpvec3Vertex =new osg::Vec3Array(size);
+	// è®¾ç½®é¢œâ¾Š
+	osg::ref_ptr<osg::Vec4Array> rpvec4Color =new osg::Vec4Array(size);
 
-	// ÉèÖÃ¶¥µã
-	osg::ref_ptr<osg::Vec3Array> vertex = new osg::Vec3Array();
-	osg::ref_ptr<osg::Vec4Array> vertex_colors = new osg::Vec4Array();
-
-	for (int i = 0; i < size; i++){
-		vertex->push_back(osg::Vec3(0,0,0));
-		vertex->push_back(osg::Vec3(0,0,0));
-		
-		float alpha = sinf(osg::PI * (float)i/(float)size);
-		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
-		vertex_colors->push_back(osg::Vec4(osg::Vec3(1.0,0.0,1.0),alpha));
+	for(unsigned int i = 0 ;i < size-1 ; i += 2){
+		(*rpvec3Vertex)[i]= osg::Vec3(0,0,0);
+		(*rpvec3Vertex)[i+1]= osg::Vec3(0,0,0);
+		float falpha = sinf(osg::PI *(float)i /(float)size);
+		(*rpvec4Color)[i]= osg::Vec4(osg::Vec3(1.0,0.0,1.0), falpha );//m_vec3RibbonColor,falpha);
+		(*rpvec4Color)[i+1]= osg::Vec4(osg::Vec3(1.0,0.0,1.0), falpha);//m_vec3RibbonColor,falpha);
 	}
-
-	geometry->setDataVariance(osg::Object::DYNAMIC);
-	geometry->setUseDisplayList(true);
-	geometry->setUseVertexBufferObjects(true);
-
-	geometry->setVertexArray(vertex);
-	geometry->setColorArray(vertex_colors);
-	geometry->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
-	geometry->addPrimitiveSet(new osg::DrawArrays(GL_QUAD_STRIP,0,size));
-
-	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
-	geode->addDrawable(geometry);
-	geode->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
-	geode->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);
-	geode->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
-
-	// scalar->
-	mRoot->addChild(geode);
-
+	// åœºæ™¯æ•°æ®åŠ¨æ€æ”¹å˜
+	rpgeom->setDataVariance(osg::Object::DYNAMIC);
+	// ç¦â½¤æ˜¾â½°åˆ—è¡¨ï¼ŒåŠ¨æ€æ›´æ–°ä¸å®‰å…¨
+	rpgeom->setUseDisplayList(false);
+	// ä½¿â½¤VBOæ¨¡å¼
+		
+		
+	rpgeom->setUseVertexBufferObjects(true);
+	rpgeom->setVertexArray(rpvec3Vertex);
+	rpgeom->setColorArray(rpvec4Color);
+	rpgeom->setColorBinding(osg::Geometry::BIND_PER_VERTEX);
+	rpgeom->addPrimitiveSet(new osg::DrawArrays(GL_QUAD_STRIP,0,size));
+	osg::ref_ptr<osg::Geode> rpgeode =new osg::Geode;
+	rpgeode->addDrawable(rpgeom);
+	
+	//ç¯å…‰ã€é€æ˜åº¦
+	rpgeom->getOrCreateStateSet()->setMode(GL_LIGHTING,osg::StateAttribute::OFF);
+	rpgeom->getOrCreateStateSet()->setMode(GL_BLEND,osg::StateAttribute::ON);
+	rpgeom->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+	scalar->addUpdateCallback(new CTrailerCallback(rpgeom,size,10));
+	
+	mRoot->addChild(rpgeode);
 }
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){
 
-	/*setViewpoint²ÎÊı:
-	1:ÊÓµã
-	1:ÊÓµãÃû³Æ
-	2¡¢3¡¢4:ÊÓµã¾­Î³¸ß¶È
-	5:Ë®Æ½·½Î»½Ç£º0-360µÄÖµ£¬¿ØÖÆµØÍ¼Ë®Æ½Ğı×ª£¬µ¥Î»ÊÇ¶È
-	6:¸©Ñö½Ç:-90ÖÁ0µÄÖµ£¬µ¥Î»ÊÇ¶È
-	7:½¹¾à:Ïà»úÎ»ÖÃµ½½¹µãµÄ¾àÀë£¬µ¥Î»ÊÇÃ×
-	2:·ÉĞĞÊ±¼ä(s)
+	/*setViewpointå‚æ•°:
+	1:è§†ç‚¹
+	1:è§†ç‚¹åç§°
+	2ã€3ã€4:è§†ç‚¹ç»çº¬é«˜åº¦
+	5:æ°´å¹³æ–¹ä½è§’ï¼š0-360çš„å€¼ï¼Œæ§åˆ¶åœ°å›¾æ°´å¹³æ—‹è½¬ï¼Œå•ä½æ˜¯åº¦
+	6:ä¿¯ä»°è§’:-90è‡³0çš„å€¼ï¼Œå•ä½æ˜¯åº¦
+	7:ç„¦è·:ç›¸æœºä½ç½®åˆ°ç„¦ç‚¹çš„è·ç¦»ï¼Œå•ä½æ˜¯ç±³
+	2:é£è¡Œæ—¶é—´(s)
 	*/
-	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("viewer_point3", longitude, latitude, altitude, -60, -90, 1000), 2);
+	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("viewer_point3", longitude, latitude, altitude, -60, -45, 1000), 2);
 }
 
 /*void cOSG::Render(void* ptr)

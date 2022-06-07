@@ -49,7 +49,6 @@ public:
 
 	bool Done(void) { return mDone; }
 
-	
     void InitOSG(std::string filename);
 	//static void Render(void* ptr);
 
