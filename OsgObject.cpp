@@ -32,6 +32,7 @@
 #include "StringConvert.h"
 #include "CreateTrackCallback.h"
 #include "TrailerCallback.h"
+#include "Compass.h"
 
 using namespace osg;
 using namespace osgEarth;
@@ -344,6 +345,8 @@ void cOSG::InitOsgEarth()
 
 	// 读取临时路径   暂时在这里调用 
 	DoAPreLine();
+
+	// CreateCompress();
 }
 
 void cOSG::PreFrameUpdate()
@@ -793,6 +796,43 @@ void cOSG::addViewPointLable()
 		label_event_ = new CLabelControlEventHandler(mapNode_,viewCoords);
 	}
 	mViewer->addEventHandler(label_event_);
+}
+
+void cOSG::CreateCompress()
+{
+	osg::ref_ptr<Compass> compass = new Compass();
+	compass->setProjectionMatrix(osg::Matrixd::ortho(-1.5, 1.5, -1.5, 1.5, -10.0, 10.0));
+	compass->setPlate(CreateCompressPart("d:/data/image/compass_plate.jpeg", 1.5f, -1.0f)); //圆盘图片
+	// compass->setNeedle(CreateCompressPart("d:/data/image/needle.png", 1.5f, 0.0f));//指针图片
+	compass->setWidthHeight(100,100,100,100); //起始点、宽高
+	compass->setMainCamera(mViewer->getCamera());
+
+	compass->setRenderOrder(osg::Camera::POST_RENDER);
+	compass->setClearMask(GL_DEPTH_BUFFER_BIT);
+	compass->setAllowEventFocus(false);
+	compass->setReferenceFrame(osg::Transform::ABSOLUTE_RF);
+	compass->getOrCreateStateSet()->setMode(GL_LIGHTING, osg::StateAttribute::OFF);
+	compass->getOrCreateStateSet()->setMode(GL_BLEND, osg::StateAttribute::ON);
+
+	mRoot->addChild(compass); //加入跟节点
+
+
+}
+
+osg::MatrixTransform* cOSG::CreateCompressPart(const std::string &image, float radius, float height)
+{
+	osg::Vec3 center(-radius, -radius, height);
+	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
+	geode->addDrawable(createTexturedQuadGeometry(center, osg::Vec3(radius*2.0f, 0.0f, 0.0f), osg::Vec3(0.0f, radius*2.0f, 0.0f)));
+
+	osg::ref_ptr<osg::Texture2D> texture = new osg::Texture2D;
+	texture->setImage(osgDB::readImageFile(image));
+
+	osg::ref_ptr<osg::MatrixTransform> part = new osg::MatrixTransform;
+	part->getOrCreateStateSet()->setTextureAttributeAndModes(0, texture.get());
+	part->getOrCreateStateSet()->setRenderingHint(osg::StateSet::TRANSPARENT_BIN);
+	part->addChild(geode.get());
+	return part.release();
 }
 
 void cOSG::set_boundaries(double opt)

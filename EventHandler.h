@@ -15,5 +15,10 @@ public:
 
 	// 根据两点和模型 求出这两点连成的线和模型是否有焦点
 	osg::Node* IntersectPoint(osg::Vec3 x_point, osg::Vec3 y_point, osg::ref_ptr<osg::Node> node, std::string name);
+
+private:
+	// 表盘，指针
+	osg::MatrixTransform* _plate;
+	osg::MatrixTransform* _needle;
 };
 
