@@ -383,7 +383,11 @@ void cOSG::addAirport()
 	mtAirport->setMatrix(mtTemp);
 
 	// 加载飞机
+<<<<<<< HEAD
 	osg::Matrixd::value_type plane_angle = osg::PI_4f*1.6554;  //正值： 逆时针  
+=======
+	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;     // 正值： 逆时针  
+>>>>>>> d18bade8c4edd5f78ac618b65661b57e9d49fd1d
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	fly_airport->setName(TEXT("F16"));
 	mtrix_fly_self = new osg::MatrixTransform();
@@ -963,7 +967,7 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 			(
 			osg::DegreesToRadians(iterator->y()),
 			osg::DegreesToRadians(iterator->x()),
-			//osg::DegreesToRadians(iterator->z()),
+			// osg::DegreesToRadians(iterator->z()),
 			iterator->z(),
 			curPosition.x(), curPosition.y(), curPosition.z()
 			);		
@@ -971,7 +975,7 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 			(
 			osg::DegreesToRadians(iterator2->y()),
 			osg::DegreesToRadians(iterator2->x()),
-			//osg::DegreesToRadians(iterator2->z()),
+			// osg::DegreesToRadians(iterator2->z()),
 			iterator2->z(),
 			curNextPosition.x(), curNextPosition.y(), curNextPosition.z()
 			);
@@ -1003,9 +1007,9 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 				hAngle += osg::PI;
 		}
 
-		//求飞机的变换矩阵
+		//求飞机的变换矩阵  vAngle + osg::PI_2
 		coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(iterator->y()), osg::DegreesToRadians(iterator->x()), iterator->z(), matrix);
-		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), vAngle + osg::PI_2, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
+		_rotation.makeRotate(0, osg::Vec3(1.0, 0.0, 0.0), 0, osg::Vec3(0.0, 1.0, 0.0), hAngle, osg::Vec3(0.0, 0.0, 1.0));
 		matrix.preMultRotate(_rotation);
 		animationPath->insert(time, osg::AnimationPath::ControlPoint(curPosition, matrix.getRotate()));
 
@@ -1073,6 +1077,7 @@ void cOSG::BuildTail(osg::Vec3 position, osg::MatrixTransform *scalar)
 
 	osg::ref_ptr<osg::Geode> geode = new osg::Geode;
 	geode->addDrawable(fire->getParticleSystem());
+
 	mRoot->addChild(geode);
 }
 
