@@ -57,7 +57,7 @@
 		</styles>
 	</image>
 	<!-- 省会城市 （棕色）-->
-	<image name="ProvinceBoundary" driver="agglite">
+<!--	<image name="ProvinceBoundary" driver="agglite">
 		<features name="province_capital" driver="ogr">
 			<url>../china_data/province_capital.shp</url>
 			<build_spatial_index>true</build_spatial_index>
@@ -73,9 +73,9 @@
 				}
 			</style>
 		</styles>
-	</image>
+	</image>-->
 	<!-- 地级市 (茶色)-->
-	<image name="CityBoundary" driver="agglite">
+<!--	<image name="CityBoundary" driver="agglite">
 		<features name="province_level_cities" driver="ogr">
 			<url>../china_data/province_level_cities.shp</url>
 			<build_spatial_index>true</build_spatial_index>
@@ -91,9 +91,9 @@
 				}
 			</style>
 		</styles>
-	</image>
+	</image>-->
 	<!-- 县界线(褐色) -->
-	<image name="CountyBoundary" driver="agglite">
+<!--	<image name="CountyBoundary" driver="agglite">
 		<features name="county_boundaries" driver="ogr">
 			<url>../china_data/county_boundaries.shp</url>
 			<build_spatial_index>true</build_spatial_index>
@@ -109,7 +109,7 @@
 				}
 			</style>
 		</styles>
-	</image>
+	</image>-->
 	<!-- 经纬线（闪兰色(道奇蓝)） -->
 	<image name="GraticuleBoundary" driver="agglite">
 		<features name="china_graticule" driver="ogr">
@@ -129,7 +129,7 @@
 		</styles>
 	</image>
 	<!-- 主要道路 （深橙色）-->
-	<image name="MainRoad" driver="agglite">
+<!--	<image name="MainRoad" driver="agglite">
 		<features name="main_road" driver="ogr">
 			<url>../china_data/main_road.shp</url>
 			<build_spatial_index>true</build_spatial_index>
@@ -145,9 +145,9 @@
 				}
 			</style>
 		</styles>
-	</image>
+	</image>-->
 	<!-- 主要河流 （深天蓝)-->
-	<image name="MainRiver" driver="agglite">
+<!--	<image name="MainRiver" driver="agglite">
 		<features name="main_river" driver="ogr">
 			<url>../china_data/main_river.shp</url>
 			<build_spatial_index>true</build_spatial_index>
@@ -163,7 +163,7 @@
 				}
 			</style>
 		</styles>
-	</image>
+	</image>-->
 	<!--文件缓存-->
 	<options>
 		<cache type="filesystem">

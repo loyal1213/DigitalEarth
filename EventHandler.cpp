@@ -39,4 +39,5 @@ osg::Node* CEventHandler::IntersectPoint(osg::Vec3 x_point, osg::Vec3 y_point, o
 
 	}
 
+	return node;
 }
