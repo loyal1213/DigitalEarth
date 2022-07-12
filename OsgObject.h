@@ -83,6 +83,10 @@ public:
 	// 添加显示视点信息的控件
 	void addViewPointLable();
 
+	void CreateCompress();
+
+	osg::MatrixTransform* CreateCompressPart(const std::string & image, float radius, float height);
+
 public:
 	void set_boundaries(double opt);
 	double get_boundaries();
@@ -139,6 +143,8 @@ private:
 	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_airport;
 	osg::ref_ptr<osg::AnimationPath> apc_;
 
+	
+
     CBuildRader  m_pBuildRader;
 private:
     osg::ref_ptr<osgGA::TrackballManipulator> trackball;
@@ -151,7 +157,10 @@ private:
 	// 地标
 	osg::ref_ptr<osg::Group> earth_label_;
 
-	
+	// 表盘，指针
+	osg::MatrixTransform* _plate;
+	osg::MatrixTransform* _needle;
+
 public:
 	osg::ref_ptr<osg::CoordinateSystemNode> coordinate_system_node_;// 地表的矩阵操作
 

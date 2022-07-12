@@ -119,6 +119,7 @@
   <ItemGroup>
     <ClInclude Include="BuildRader.h" />
     <ClInclude Include="BuildRaderCallback.h" />
+    <ClInclude Include="Compass.h" />
     <ClInclude Include="CreateTrackCallback.h" />
     <ClInclude Include="DigitaleEarth.h" />
     <ClInclude Include="DigitaleEarthDoc.h" />
@@ -136,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="BuildRader.cpp" />
     <ClCompile Include="BuildRaderCallback.cpp" />
+    <ClCompile Include="Compass.cpp" />
     <ClCompile Include="CreateTrackCallback.cpp" />
     <ClCompile Include="DigitaleEarth.cpp" />
     <ClCompile Include="DigitaleEarthDoc.cpp" />
