@@ -296,6 +296,7 @@ void cOSG::InitCameraConfig(void)
 	camera->setProjectionMatrixAsPerspective(
 		30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
 
+
 	// Add the Camera to the Viewer
 	//mViewer->addSlave(camera.get());
 	mViewer->setCamera(camera.get());
@@ -382,7 +383,7 @@ void cOSG::addAirport()
 	mtAirport->setMatrix(mtTemp);
 
 	// 加载飞机
-	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;  //正值： 逆时针  
+	osg::Matrixd::value_type plane_angle = osg::PI_4f*1.6554;  //正值： 逆时针  
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	fly_airport->setName(TEXT("F16"));
 	mtrix_fly_self = new osg::MatrixTransform();
@@ -1037,7 +1038,7 @@ void cOSG::DoPreLineNow()
 	vp.setNode(mtrix_fly_airport);
 	// vp.name()._set("view_point5");
 	vp.range()->set(3000.0, osgEarth::Units::METERS);//观察的距离
-	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//观察的角度
+	vp.pitch()->set(-30.0f, osgEarth::Units::DEGREES);//观察的角度
 	
 
 	// 加载尾迹

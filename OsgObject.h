@@ -33,7 +33,8 @@
 #include "DigitaleEarth.h"
 #include "LabelCOntrolEventHandler.h"
 #include "BuildRader.h"
-
+#include "EventHandler.h"
+#include "BuildRaderCallback.h"
 using namespace osgEarth::Symbology;
 using namespace osgEarth::Util::Controls;
 class cOSG
