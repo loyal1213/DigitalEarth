@@ -296,6 +296,7 @@ void cOSG::InitCameraConfig(void)
 	camera->setProjectionMatrixAsPerspective(
 		30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
 
+
 	// Add the Camera to the Viewer
 	//mViewer->addSlave(camera.get());
 	mViewer->setCamera(camera.get());
@@ -382,7 +383,8 @@ void cOSG::addAirport()
 	mtAirport->setMatrix(mtTemp);
 
 	// 加载飞机
-	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;     // 正值： 逆时针  
+	osg::Matrixd::value_type plane_angle = osg::PI_4f*1.6554;  //正值： 逆时针  
+
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	fly_airport->setName(TEXT("F16"));
 	mtrix_fly_self = new osg::MatrixTransform();
@@ -394,11 +396,14 @@ void cOSG::addAirport()
 	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// 设置属性，光照法线
 	mtrix_fly_self->addChild(fly_airport);
 
+	
 	// mtrix_fly_self->addChild(m_pBuildRader->BuildRader(500,300).get());
 	mtrix_fly_airport = new osg::MatrixTransform;
 	mtrix_fly_airport->addChild(mtrix_fly_self);
 
 	mRoot->addChild(mtrix_fly_airport);
+
+	BuildHistoryRoute(mtrix_fly_self, 10.0f);
 
 	// 设置飞机矩阵
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.376128), osg::DegreesToRadians(109.125682), 537, mtTemp);
@@ -1037,7 +1042,7 @@ void cOSG::DoPreLineNow()
 	vp.setNode(mtrix_fly_airport);
 	// vp.name()._set("view_point5");
 	vp.range()->set(3000.0, osgEarth::Units::METERS);//观察的距离
-	vp.pitch()->set(-45.0, osgEarth::Units::DEGREES);//观察的角度
+	vp.pitch()->set(-30.0f, osgEarth::Units::DEGREES);//观察的角度
 	
 
 	// 加载尾迹
@@ -1085,7 +1090,7 @@ void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 	// 设置颜⾊
 	osg::ref_ptr<osg::Vec4Array> rpvec4Color =new osg::Vec4Array(size);
 
-	for(unsigned int i = 0 ;i < size-1 ; i += 2){
+	for(int i = 0 ;i < size-1 ; i += 2){
 		(*rpvec3Vertex)[i]= osg::Vec3(0,0,0);
 		(*rpvec3Vertex)[i+1]= osg::Vec3(0,0,0);
 		float falpha = sinf(osg::PI *(float)i /(float)size);
@@ -1114,6 +1119,16 @@ void cOSG::BuildRibbon(int size, osg::MatrixTransform* scalar)
 	scalar->addUpdateCallback(new CTrailerCallback(rpgeom,size,10));
 	
 	mRoot->addChild(rpgeode);
+}
+
+// 创建飞机历史航迹
+void cOSG::BuildHistoryRoute(osg::MatrixTransform *scaler, float line_width)
+{
+	osg::ref_ptr<osg::Group> group = new osg::Group();
+
+	scaler->addUpdateCallback(new CreateTrackCallback(group,scaler,line_width));
+
+	mRoot->addChild(group);
 }
 
 void cOSG::FlyTo(double longitude,double latitude,double altitude){

@@ -33,7 +33,8 @@
 #include "DigitaleEarth.h"
 #include "LabelCOntrolEventHandler.h"
 #include "BuildRader.h"
-
+#include "EventHandler.h"
+#include "BuildRaderCallback.h"
 using namespace osgEarth::Symbology;
 using namespace osgEarth::Util::Controls;
 class cOSG
@@ -102,6 +103,9 @@ public:
 
 	// 添加彩带
 	void BuildRibbon(int size, osg::MatrixTransform* scalar);
+
+	// 创建飞机历史航迹
+	void BuildHistoryRoute(osg::MatrixTransform *scaler, float line_width);
 
 	// 预设值路径飞行
 	osg::ref_ptr<osg::AnimationPath> createAirLinePath(osg::Vec4Array * ctrl);
