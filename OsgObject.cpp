@@ -383,11 +383,8 @@ void cOSG::addAirport()
 	mtAirport->setMatrix(mtTemp);
 
 	// 加载飞机
-<<<<<<< HEAD
 	osg::Matrixd::value_type plane_angle = osg::PI_4f*1.6554;  //正值： 逆时针  
-=======
-	osg::Matrixd::value_type plane_angle = osg::PI_2/2*1.6554;     // 正值： 逆时针  
->>>>>>> d18bade8c4edd5f78ac618b65661b57e9d49fd1d
+
 	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
 	fly_airport->setName(TEXT("F16"));
 	mtrix_fly_self = new osg::MatrixTransform();
