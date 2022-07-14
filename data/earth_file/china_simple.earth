@@ -1,4 +1,4 @@
-<map name="Globe" type="geocentric" version="2">
+﻿<map name="Globe" type="geocentric" version="2">
 	<!--全球影像图-->
 	<image name="GlobeImage" driver="gdal">
 		<url>../world_data/world.tif</url>

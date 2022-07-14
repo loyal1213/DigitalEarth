@@ -142,9 +142,10 @@ private:
 	CLabelControlEventHandler* label_event_;
 
 	// ·É»ú
-	osg::ref_ptr<osg::Node> fly_airport;
-	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_self;  // ¾ØÕó
-	osg::ref_ptr<osg::MatrixTransform> mtrix_fly_airport;
+	osg::ref_ptr<osg::Node> node_airfly_;
+	osg::ref_ptr<osg::MatrixTransform>  airfly_positioned_;  // ¾ØÕó
+	// osg::ref_ptr<osg::MatrixTransform> ;
+	osg::MatrixTransform* xform_;
 	osg::ref_ptr<osg::AnimationPath> apc_;
 
 	

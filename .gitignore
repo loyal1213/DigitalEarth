@@ -42,16 +42,17 @@
 srtm30plus.tif
 
 # Build results
-[Dd]ebug/*
-[Dd]ebugPublic/*
-[Rr]elease/*
-[Rr]eleases/*
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
 x64/
 x86/
 bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+[Ii]pch/
 
 # Visual Studio 2019 cache/options directory
 .vs/

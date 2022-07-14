@@ -28,6 +28,7 @@
 #include <osgEarthAnnotation/ImageOverlayEditor>
 #include <osgEarthSymbology/GeometryFactory>
 #include <osgViewer/Viewer>
+#include <osgGA/StateSetManipulator>
 
 #include "StringConvert.h"
 #include "CreateTrackCallback.h"
@@ -92,6 +93,7 @@ void cOSG::InitManipulators(void)
 	if (mapNode_.valid()){
 		earth_manipulator_->setNode(mapNode_);
 	}
+
 	earth_manipulator_->getSettings()->setArcViewpointTransitions(true);
 
 }
@@ -191,9 +193,14 @@ void cOSG::InitSceneGraph(void)
 	// Init the main Root Node/Group
 	mRoot  = new osg::Group;
 
+	earth_label_ = new osg::Group();
+
 	// 构造MapNode，arguments里面有earth文件的路径
 	mModel = osgDB::readNodeFile(m_ModelName);
 	if (!mModel) return;
+
+	// Add the model to the scene
+	mRoot->addChild(mModel.get());
 
 	/******************
 	
@@ -225,19 +232,19 @@ void cOSG::InitSceneGraph(void)
 	// printAllFeatures( features.get() );
 	
 	******************/
-
 	// Optimize the model
 	osgUtil::Optimizer optimizer;
 	optimizer.optimize(mModel.get());
 	optimizer.reset();
 
-	// Add the model to the scene
-	mRoot->addChild(mModel.get());
-	mapNode_ = dynamic_cast<osgEarth::MapNode*>(mModel.get());
+
+	//检测地图节点是否创建好
+	mapNode_ = osgEarth::MapNode::findMapNode(mModel.get());
+	if (!mapNode_.get()) return ;
+
+
+	// mapNode_ = dynamic_cast<osgEarth::MapNode*>(mModel.get());
 	//mRoot->addChild(osgDB::readNodeFile("H:/002.OpenSceneGraph/019.Earth/003.第三讲-VPB用法详解与常见问题处理/vpbtest/TestCommon10/output.ive"));
-
-	earth_label_ = new osg::Group();
-
 	china_boundaries_ = dynamic_cast<osgEarth::ImageLayer*>(mapNode_->getMap()->getLayerByName("GlobeBoundary"));
 
 }
@@ -297,6 +304,25 @@ void cOSG::InitCameraConfig(void)
 		30.0f, static_cast<double>(traits->width)/static_cast<double>(traits->height), 1.0, 1000.0);
 
 
+	//添加状态事件，可以相应键盘和鼠标事件，响应L T B W
+	mViewer->addEventHandler(new osgGA::StateSetManipulator(mViewer->getCamera()->getOrCreateStateSet()));
+
+	//窗口大小变化，响应F
+	mViewer->addEventHandler(new osgViewer::WindowSizeHandler);
+
+	//添加路径记录 Z
+	mViewer->addEventHandler(new osgViewer::RecordCameraPathHandler);
+
+	//帮助文档显示H
+	mViewer->addEventHandler(new osgViewer::HelpHandler);
+
+	//截屏 C
+	mViewer->addEventHandler(new osgViewer::ScreenCaptureHandler);
+
+	//添加一些常用状态设置，响应S
+	mViewer->addEventHandler(new osgViewer::StatsHandler);
+
+
 	// Add the Camera to the Viewer
 	//mViewer->addSlave(camera.get());
 	mViewer->setCamera(camera.get());
@@ -304,12 +330,14 @@ void cOSG::InitCameraConfig(void)
 	// 将组节点设置为场景节点
 	mViewer->setSceneData(mRoot.get());
 
+
 	// 设置earth操作器
 	// mViewer->setCameraManipulator(keyswitchManipulator.get());
 	// mViewer->setCameraManipulator(new osgEarth::Util::EarthManipulator);
 	mViewer->setCameraManipulator(earth_manipulator_);
 
 	earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point2",112.44,33.75,444.02,-15.84,-53.01,402812.75),5);
+
 
 	// Realize the Viewer
 	mViewer->realize();
@@ -385,29 +413,32 @@ void cOSG::addAirport()
 	// 加载飞机
 	osg::Matrixd::value_type plane_angle = osg::PI_4f*1.6554;  //正值： 逆时针  
 
-	fly_airport = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
-	fly_airport->setName(TEXT("F16"));
-	mtrix_fly_self = new osg::MatrixTransform();
-	mtrix_fly_self->setMatrix(osg::Matrix::scale(10,10,10)
+	node_airfly_ = osgDB::readNodeFile("./data/airplane/F-16.ive"); // 读取飞机文件
+	node_airfly_->setName(TEXT("F16"));
+	airfly_positioned_ = new osg::MatrixTransform();
+	airfly_positioned_->setDataVariance(osg::Object::STATIC);
+	airfly_positioned_->setMatrix(osg::Matrix::scale(10,10,10)
 		* osg::Matrixd::rotate(osg::DegreesToRadians(75.0f), osg::Vec3(0,0,1))
 		// * osg::Matrix::translate(osg::Vec3f(0, 0, 0))
 		); // -(osg::PI_2/2*10)
 
-	mtrix_fly_self->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// 设置属性，光照法线
-	mtrix_fly_self->addChild(fly_airport);
+	airfly_positioned_->getOrCreateStateSet()->setMode(GL_RESCALE_NORMAL,osg::StateAttribute::ON);// 设置属性，光照法线
+	airfly_positioned_->addChild(node_airfly_);
+
+	airfly_positioned_->addChild(m_pBuildRader.BuildRader(50,30).get());
 
 	
 	// mtrix_fly_self->addChild(m_pBuildRader->BuildRader(500,300).get());
-	mtrix_fly_airport = new osg::MatrixTransform;
-	mtrix_fly_airport->addChild(mtrix_fly_self);
+	xform_ = new osg::MatrixTransform();
+	xform_->addChild(airfly_positioned_);
 
-	mRoot->addChild(mtrix_fly_airport);
+	mRoot->addChild(xform_);
 
-	BuildHistoryRoute(mtrix_fly_self, 10.0f);
 
+	
 	// 设置飞机矩阵
 	coordinate_system_node_->getEllipsoidModel()->computeLocalToWorldTransformFromLatLongHeight(osg::DegreesToRadians(34.376128), osg::DegreesToRadians(109.125682), 537, mtTemp);
-	mtrix_fly_airport->setMatrix(mtTemp);
+	xform_->setMatrix(mtTemp);
 
 }
 
@@ -1021,6 +1052,7 @@ osg::ref_ptr<osg::AnimationPath> cOSG::createAirLinePath(osg::Vec4Array * ctrl) 
 	return animationPath.release();
 }
 
+// 飞机起飞
 void cOSG::DoPreLineNow()
 {
 	/*
@@ -1029,7 +1061,7 @@ void cOSG::DoPreLineNow()
 	pitch	俯仰角：-90至0的值，单位是度
 	heading	水平方位角：0-360的值，控制地图水平旋转，单位是度。
 	*/
-	mtrix_fly_airport->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
+	xform_->setUpdateCallback(new osg::AnimationPathCallback(apc_,0.0,1.0));
 
 	// em_->setNode(mtrix_fly_airport);
 	// em_->setTetherNode(mtrix_fly_airport);
@@ -1039,7 +1071,7 @@ void cOSG::DoPreLineNow()
 	//下面是区别
 	//获取当前操作器的视点，将模型放进这个视角中，然后设置这个视角的一些参数，比如从哪个角度和距离观察模型。然后将这个视点设置为操作器的视点。
 	osgEarth::Viewpoint vp = earth_manipulator_->getViewpoint();
-	vp.setNode(mtrix_fly_airport);
+	vp.setNode(xform_);
 	// vp.name()._set("view_point5");
 	vp.range()->set(3000.0, osgEarth::Units::METERS);//观察的距离
 	vp.pitch()->set(-30.0f, osgEarth::Units::DEGREES);//观察的角度
@@ -1047,7 +1079,8 @@ void cOSG::DoPreLineNow()
 
 	// 加载尾迹
 	// BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
-	// BuildRibbon(512, mtrix_fly_self);
+	// BuildRibbon(512, mt_fly_.get());
+	BuildHistoryRoute(xform_, 10.0f);
 	// osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
 	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
 	// earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point5", 109.126324, 34.376233, 4000, -60, -90, 1000),1);
@@ -1061,7 +1094,7 @@ void cOSG::IsTrack(bool btrack)
 	if (btrack){
 		// 设置视⾓跟踪
 		earth_manipulator_->setViewpoint(osgEarth::Viewpoint(TEXT("v6"),109.1263, 34.3762, 0, 24.261, -21.6, 3000),5);
-		earth_manipulator_->getViewpoint().setNode(mtrix_fly_airport);
+		earth_manipulator_->getViewpoint().setNode(node_airfly_);
 	}else{
 		earth_manipulator_->getViewpoint().setNode(0);
 	}
