@@ -3,10 +3,7 @@
 	<image name="GlobeImage" driver="gdal">
 		<url>../world_data/world.tif</url>
 	</image>
-	<!--全球高程图-->
-	<heightfield name="GlobeHeightfiled" driver="gdal">
-		<url>../world_data/srtm30plus.tif</url>
-	</heightfield>
+
 	<!--在线地图 经纬度不准-->
 	<!--<image name="mapbox_satellite" driver="xyz">
 		<url>http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}</url>
@@ -51,7 +48,7 @@
 				china{
 					stroke: #ffffff;
 					stroke-opacity: 1.0;
-					stroke-width: 1.5;
+					stroke-width: 1.0;
 				}
 			</style>
 		</styles>

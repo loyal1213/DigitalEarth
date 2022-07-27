@@ -1,0 +1,4963 @@
+#Ascii Scene 
+#Version 161 
+#Generator OpenSceneGraph 3.6.5 
+
+osg::Group {
+  UniqueID 1 
+  CullCallback TRUE {
+    osgEarth::InstallViewportSizeUniform {
+      UniqueID 2 
+    }
+  }
+  Children 22 {
+    osgEarth::LineDrawable {
+      UniqueID 3 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 4 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 5 
+              Width 8 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 6 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 1 FloatArray 1 {
+                8 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 7 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 8 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 48 {
+            5 3 2 4 
+            5 2 9 7 
+            6 8 9 6 
+            13 11 10 12 
+            13 10 17 15 
+            14 16 17 14 
+            21 19 18 20 
+            21 18 25 23 
+            22 24 25 22 
+            29 27 26 28 
+            29 26 33 31 
+            30 32 33 30 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 9 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 10 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 11 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 10 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 12 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 10 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            10 0 10 
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 13 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 10 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            15 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 10 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 15 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            20 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            15 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 20 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+            10 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+            15 0 15 
+          }
+        }
+      }
+      LineWidth 8 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 14 
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 15 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 16 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 54 {
+            5 3 2 4 
+            5 2 9 7 
+            6 8 9 6 
+            13 11 10 12 
+            13 10 17 15 
+            14 16 17 14 
+            21 19 18 20 
+            21 18 25 23 
+            22 24 25 22 
+            29 27 26 28 
+            29 26 33 31 
+            30 32 33 30 
+            1 35 34 0 
+            1 34 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 17 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 18 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            30 0 10 
+            30 0 10 
+            30 0 10 
+            30 0 10 
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+            35 0 15 
+            35 0 15 
+            35 0 15 
+            35 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 19 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 18 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 20 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 18 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            35 0 15 
+            35 0 15 
+            35 0 15 
+            35 0 15 
+            30 0 10 
+            30 0 10 
+            30 0 10 
+            30 0 10 
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 21 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 18 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            35 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 10 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 15 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            40 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            35 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 20 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+            30 0 15 
+            35 0 15 
+            35 0 15 
+            35 0 15 
+            35 0 15 
+            30 0 10 
+            30 0 10 
+            30 0 10 
+            30 0 10 
+          }
+        }
+      }
+      Mode 2 
+      Color 1 1 0 1 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 22 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 23 
+          ModeList 1 {
+            GL_LINE_STIPPLE ON 
+          }
+          AttributeList 2 {
+            osg::LineWidth {
+              UniqueID 24 
+              Width 4 
+            }
+            Value OFF 
+            osg::LineStipple {
+              UniqueID 25 
+              Pattern 0xff00 
+            }
+            Value OFF 
+          }
+          UniformList 3 {
+            osg::Uniform {
+              UniqueID 26 
+              Name "oe_GL_LineStippleFactor" 
+              Type INT 
+              NumElements 1 
+              Elements TRUE ArrayID 2 IntArray 1 {
+                1 
+              }
+            }
+            Value OFF 
+            osg::Uniform {
+              UniqueID 27 
+              Name "oe_GL_LineStipplePattern" 
+              Type INT 
+              NumElements 1 
+              Elements TRUE ArrayID 3 IntArray 1 {
+                65280 
+              }
+            }
+            Value OFF 
+            osg::Uniform {
+              UniqueID 28 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 4 FloatArray 1 {
+                4 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 29 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 30 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 48 {
+            5 3 2 4 
+            5 2 9 7 
+            6 8 9 6 
+            13 11 10 12 
+            13 10 17 15 
+            14 16 17 14 
+            21 19 18 20 
+            21 18 25 23 
+            22 24 25 22 
+            29 27 26 28 
+            29 26 33 31 
+            30 32 33 30 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 31 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 32 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 33 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 32 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+            0 1 0 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 34 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 32 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            50 0 10 
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 35 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 32 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            55 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 10 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 15 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            60 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            55 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 20 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+            50 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+            55 0 15 
+          }
+        }
+      }
+      StipplePattern 65280 
+      Color 0 1 0 1 
+      LineWidth 4 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 36 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 37 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 38 
+              Width 3 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 39 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 5 FloatArray 1 {
+                3 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 40 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 41 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 24 {
+            3 1 0 2 
+            3 0 7 5 
+            4 6 7 4 
+            11 9 8 10 
+            11 8 15 13 
+            12 14 15 12 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 42 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 43 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 18 {
+            70 0 10 
+            70 0 10 
+            75 0 10 
+            75 0 10 
+            80 0 10 
+            80 0 10 
+            80 0 15 
+            80 0 15 
+            80 0 20 
+            80 0 20 
+            75 0 20 
+            75 0 20 
+            70 0 20 
+            70 0 20 
+            70 0 15 
+            70 0 15 
+            75 0 15 
+            75 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 44 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 43 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 18 {
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 45 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 43 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 18 {
+            70 0 10 
+            70 0 10 
+            70 0 10 
+            70 0 10 
+            80 0 10 
+            80 0 10 
+            80 0 10 
+            80 0 10 
+            80 0 20 
+            80 0 20 
+            80 0 20 
+            80 0 20 
+            70 0 20 
+            70 0 20 
+            70 0 20 
+            70 0 20 
+            75 0 15 
+            75 0 15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 46 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 43 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 18 {
+            75 0 10 
+            75 0 10 
+            75 0 10 
+            75 0 10 
+            80 0 15 
+            80 0 15 
+            80 0 15 
+            80 0 15 
+            75 0 20 
+            75 0 20 
+            75 0 20 
+            75 0 20 
+            70 0 15 
+            70 0 15 
+            70 0 15 
+            70 0 15 
+            75 0 15 
+            75 0 15 
+          }
+        }
+      }
+      Mode 1 
+      Color 0 1 1 1 
+      LineWidth 3 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 47 
+      UpdateCallback TRUE {
+        osg::NodeCallback {
+          UniqueID 48 
+        }
+      }
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 49 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 50 
+              Width 5 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 51 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 6 FloatArray 1 {
+                5 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 52 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 53 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 48 {
+            5 3 2 4 
+            5 2 9 7 
+            6 8 9 6 
+            13 11 10 12 
+            13 10 17 15 
+            14 16 17 14 
+            21 19 18 20 
+            21 18 25 23 
+            22 24 25 22 
+            29 27 26 28 
+            29 26 33 31 
+            30 32 33 30 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 54 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 55 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 56 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 55 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+            1 0 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 57 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 55 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            90 0 10 
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 58 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 55 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 36 {
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            95 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 10 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 15 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            100 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            95 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 20 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+            90 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+            95 0 15 
+          }
+        }
+      }
+      Color 1 0 1 1 
+      LineWidth 5 
+    }
+    osgEarth::LineGroup {
+      UniqueID 59 
+      Children 1 {
+        osgEarth::LineDrawable {
+          UniqueID 60 
+          StateSet TRUE {
+            osg::StateSet {
+              UniqueID 61 
+              ModeList 1 {
+                GL_LINE_STIPPLE ON 
+              }
+              AttributeList 2 {
+                osg::LineWidth {
+                  UniqueID 62 
+                  Width 3 
+                }
+                Value OFF 
+                osg::LineStipple {
+                  UniqueID 63 
+                  Pattern 0xfff0 
+                }
+                Value OFF 
+              }
+              UniformList 3 {
+                osg::Uniform {
+                  UniqueID 64 
+                  Name "oe_GL_LineStippleFactor" 
+                  Type INT 
+                  NumElements 1 
+                  Elements TRUE ArrayID 7 IntArray 1 {
+                    1 
+                  }
+                }
+                Value OFF 
+                osg::Uniform {
+                  UniqueID 65 
+                  Name "oe_GL_LineStipplePattern" 
+                  Type INT 
+                  NumElements 1 
+                  Elements TRUE ArrayID 8 IntArray 1 {
+                    65520 
+                  }
+                }
+                Value OFF 
+                osg::Uniform {
+                  UniqueID 66 
+                  Name "oe_GL_LineWidth" 
+                  Type FLOAT 
+                  NumElements 1 
+                  Elements TRUE ArrayID 9 FloatArray 1 {
+                    3 
+                  }
+                }
+                Value OFF 
+              }
+            }
+          }
+          UseDisplayList FALSE 
+          UseVertexBufferObjects TRUE 
+          PrimitiveSetList 1 {
+            osg::DrawElementsUByte {
+              UniqueID 67 
+              BufferObject TRUE {
+                osg::ElementBufferObject {
+                  UniqueID 68 
+                  Target 34963 
+                }
+              }
+              Mode TRIANGLES 
+              vector 48 {
+                3 1 0 2 
+                3 0 7 5 
+                4 6 7 4 
+                11 9 8 10 
+                11 8 15 13 
+                12 14 15 12 
+                19 17 16 18 
+                19 16 23 21 
+                20 22 23 20 
+                27 25 24 26 
+                27 24 31 29 
+                28 30 31 28 
+                
+              }
+            }
+          }
+          VertexArray TRUE {
+            osg::Vec3Array {
+              UniqueID 69 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 70 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 32 {
+                110 0 10 
+                110 0 10 
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+                115 0 15 
+                115 0 15 
+              }
+            }
+          }
+          ColorArray TRUE {
+            osg::Vec4Array {
+              UniqueID 71 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 70 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 32 {
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+                1 1 1 1 
+              }
+            }
+          }
+          VertexAttribArrayList 11 {
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            NULL 
+            osg::Vec3Array {
+              UniqueID 72 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 70 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 32 {
+                110 0 10 
+                110 0 10 
+                110 0 10 
+                110 0 10 
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+              }
+            }
+            osg::Vec3Array {
+              UniqueID 73 
+              BufferObject TRUE {
+                osg::VertexBufferObject {
+                  UniqueID 70 
+                }
+              }
+              Binding BIND_PER_VERTEX 
+              vector 32 {
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                115 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 10 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 15 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                120 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                115 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 20 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+                110 0 15 
+                115 0 15 
+                115 0 15 
+                115 0 15 
+                115 0 15 
+              }
+            }
+          }
+          Mode 1 
+          StipplePattern 65520 
+          LineWidth 3 
+        }
+      }
+      Drawables 1 {
+        osgEarth::LineDrawable {
+          UniqueID 60 
+        }
+      }
+    }
+    osgEarth::LineDrawable {
+      UniqueID 74 
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawArrays {
+          UniqueID 75 
+          Count 9 
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 76 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 77 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 9 {
+            130 0 10 
+            135 0 10 
+            140 0 10 
+            140 0 15 
+            140 0 20 
+            135 0 20 
+            130 0 20 
+            130 0 15 
+            135 0 15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 78 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 77 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 9 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      Mode 0 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 79 
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 80 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 81 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 82 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 83 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -10 
+            20 0 -10 
+            120 0 -10 
+            120 0 -10 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 84 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 83 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 85 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 83 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -10 
+            20 0 -10 
+            20 0 -10 
+            20 0 -10 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 86 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 83 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -10 
+            120 0 -10 
+            120 0 -10 
+            120 0 -10 
+          }
+        }
+      }
+      Mode 1 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 87 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 88 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 89 
+              Width 2 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 90 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 10 FloatArray 1 {
+                2 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 91 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 92 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 93 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 94 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -12 
+            20 0 -12 
+            120 0 -12 
+            120 0 -12 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 95 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 94 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 96 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 94 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -12 
+            20 0 -12 
+            20 0 -12 
+            20 0 -12 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 97 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 94 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -12 
+            120 0 -12 
+            120 0 -12 
+            120 0 -12 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 2 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 98 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 99 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 100 
+              Width 3 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 101 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 11 FloatArray 1 {
+                3 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 102 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 103 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 104 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 105 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -15 
+            20 0 -15 
+            120 0 -15 
+            120 0 -15 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 106 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 105 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 107 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 105 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -15 
+            20 0 -15 
+            20 0 -15 
+            20 0 -15 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 108 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 105 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -15 
+            120 0 -15 
+            120 0 -15 
+            120 0 -15 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 3 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 109 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 110 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 111 
+              Width 4 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 112 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 12 FloatArray 1 {
+                4 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 113 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 114 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 115 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 116 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -19 
+            20 0 -19 
+            120 0 -19 
+            120 0 -19 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 117 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 116 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 118 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 116 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -19 
+            20 0 -19 
+            20 0 -19 
+            20 0 -19 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 119 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 116 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -19 
+            120 0 -19 
+            120 0 -19 
+            120 0 -19 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 4 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 120 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 121 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 122 
+              Width 5 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 123 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 13 FloatArray 1 {
+                5 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 124 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 125 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 126 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 127 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -24 
+            20 0 -24 
+            120 0 -24 
+            120 0 -24 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 128 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 127 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 129 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 127 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -24 
+            20 0 -24 
+            20 0 -24 
+            20 0 -24 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 130 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 127 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -24 
+            120 0 -24 
+            120 0 -24 
+            120 0 -24 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 5 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 131 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 132 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 133 
+              Width 6 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 134 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 14 FloatArray 1 {
+                6 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 135 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 136 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 137 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 138 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -30 
+            20 0 -30 
+            120 0 -30 
+            120 0 -30 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 139 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 138 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 140 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 138 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -30 
+            20 0 -30 
+            20 0 -30 
+            20 0 -30 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 141 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 138 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -30 
+            120 0 -30 
+            120 0 -30 
+            120 0 -30 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 6 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 142 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 143 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 144 
+              Width 7 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 145 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 15 FloatArray 1 {
+                7 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 146 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 147 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 148 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 149 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -37 
+            20 0 -37 
+            120 0 -37 
+            120 0 -37 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 150 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 149 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 151 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 149 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -37 
+            20 0 -37 
+            20 0 -37 
+            20 0 -37 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 152 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 149 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -37 
+            120 0 -37 
+            120 0 -37 
+            120 0 -37 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 7 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 153 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 154 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 155 
+              Width 8 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 156 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 16 FloatArray 1 {
+                8 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 157 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 158 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 159 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 160 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -45 
+            20 0 -45 
+            120 0 -45 
+            120 0 -45 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 161 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 160 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 162 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 160 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -45 
+            20 0 -45 
+            20 0 -45 
+            20 0 -45 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 163 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 160 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -45 
+            120 0 -45 
+            120 0 -45 
+            120 0 -45 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 8 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 164 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 165 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 166 
+              Width 9 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 167 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 17 FloatArray 1 {
+                9 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 168 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 169 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 170 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 171 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -54 
+            20 0 -54 
+            120 0 -54 
+            120 0 -54 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 172 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 171 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 173 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 171 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -54 
+            20 0 -54 
+            20 0 -54 
+            20 0 -54 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 174 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 171 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -54 
+            120 0 -54 
+            120 0 -54 
+            120 0 -54 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 9 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 175 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 176 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 177 
+              Width 10 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 178 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 18 FloatArray 1 {
+                10 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 179 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 180 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 6 {
+            3 1 0 2 
+            3 0 
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 181 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 182 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -64 
+            20 0 -64 
+            120 0 -64 
+            120 0 -64 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 183 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 182 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 184 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 182 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            20 0 -64 
+            20 0 -64 
+            20 0 -64 
+            20 0 -64 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 185 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 182 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 4 {
+            120 0 -64 
+            120 0 -64 
+            120 0 -64 
+            120 0 -64 
+          }
+        }
+      }
+      Mode 1 
+      LineWidth 10 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 186 
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 187 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 188 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 192 {
+            3 1 0 2 
+            3 0 7 5 
+            4 6 7 4 
+            11 9 8 10 
+            11 8 15 13 
+            12 14 15 12 
+            19 17 16 18 
+            19 16 23 21 
+            20 22 23 20 
+            27 25 24 26 
+            27 24 31 29 
+            28 30 31 28 
+            35 33 32 34 
+            35 32 39 37 
+            36 38 39 36 
+            43 41 40 42 
+            43 40 47 45 
+            44 46 47 44 
+            51 49 48 50 
+            51 48 55 53 
+            52 54 55 52 
+            59 57 56 58 
+            59 56 63 61 
+            60 62 63 60 
+            67 65 64 66 
+            67 64 71 69 
+            68 70 71 68 
+            75 73 72 74 
+            75 72 79 77 
+            76 78 79 76 
+            83 81 80 82 
+            83 80 87 85 
+            84 86 87 84 
+            91 89 88 90 
+            91 88 95 93 
+            92 94 95 92 
+            99 97 96 98 
+            99 96 103 101 
+            100 102 103 100 
+            107 105 104 106 
+            107 104 111 109 
+            108 110 111 108 
+            115 113 112 114 
+            115 112 119 117 
+            116 118 119 116 
+            123 121 120 122 
+            123 120 127 125 
+            124 126 127 124 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 189 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 190 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            20 0 -95 
+            20 0 -95 
+            30 0 -85 
+            30 0 -85 
+            20 0 -95 
+            20 0 -95 
+            27.8569 0 -83.2412 
+            27.8569 0 -83.2412 
+            20 0 -95 
+            20 0 -95 
+            25.412 0 -81.9344 
+            25.412 0 -81.9344 
+            20 0 -95 
+            20 0 -95 
+            22.759 0 -81.1296 
+            22.759 0 -81.1296 
+            20 0 -95 
+            20 0 -95 
+            20 0 -80.8579 
+            20 0 -80.8579 
+            20 0 -95 
+            20 0 -95 
+            17.241 0 -81.1296 
+            17.241 0 -81.1296 
+            20 0 -95 
+            20 0 -95 
+            14.588 0 -81.9344 
+            14.588 0 -81.9344 
+            20 0 -95 
+            20 0 -95 
+            12.1431 0 -83.2412 
+            12.1431 0 -83.2412 
+            20 0 -95 
+            20 0 -95 
+            10 0 -85 
+            10 0 -85 
+            20 0 -95 
+            20 0 -95 
+            8.24125 0 -87.1431 
+            8.24125 0 -87.1431 
+            20 0 -95 
+            20 0 -95 
+            6.93437 0 -89.588 
+            6.93437 0 -89.588 
+            20 0 -95 
+            20 0 -95 
+            6.1296 0 -92.241 
+            6.1296 0 -92.241 
+            20 0 -95 
+            20 0 -95 
+            5.85786 0 -95 
+            5.85786 0 -95 
+            20 0 -95 
+            20 0 -95 
+            6.1296 0 -97.759 
+            6.1296 0 -97.759 
+            20 0 -95 
+            20 0 -95 
+            6.93437 0 -100.412 
+            6.93437 0 -100.412 
+            20 0 -95 
+            20 0 -95 
+            8.24125 0 -102.857 
+            8.24125 0 -102.857 
+            20 0 -95 
+            20 0 -95 
+            10 0 -105 
+            10 0 -105 
+            20 0 -95 
+            20 0 -95 
+            12.1431 0 -106.759 
+            12.1431 0 -106.759 
+            20 0 -95 
+            20 0 -95 
+            14.588 0 -108.066 
+            14.588 0 -108.066 
+            20 0 -95 
+            20 0 -95 
+            17.241 0 -108.87 
+            17.241 0 -108.87 
+            20 0 -95 
+            20 0 -95 
+            20 0 -109.142 
+            20 0 -109.142 
+            20 0 -95 
+            20 0 -95 
+            22.759 0 -108.87 
+            22.759 0 -108.87 
+            20 0 -95 
+            20 0 -95 
+            25.412 0 -108.066 
+            25.412 0 -108.066 
+            20 0 -95 
+            20 0 -95 
+            27.857 0 -106.759 
+            27.857 0 -106.759 
+            20 0 -95 
+            20 0 -95 
+            30 0 -105 
+            30 0 -105 
+            20 0 -95 
+            20 0 -95 
+            31.7588 0 -102.857 
+            31.7588 0 -102.857 
+            20 0 -95 
+            20 0 -95 
+            33.0656 0 -100.412 
+            33.0656 0 -100.412 
+            20 0 -95 
+            20 0 -95 
+            33.8704 0 -97.759 
+            33.8704 0 -97.759 
+            20 0 -95 
+            20 0 -95 
+            34.1421 0 -95 
+            34.1421 0 -95 
+            20 0 -95 
+            20 0 -95 
+            33.8704 0 -92.241 
+            33.8704 0 -92.241 
+            20 0 -95 
+            20 0 -95 
+            33.0656 0 -89.588 
+            33.0656 0 -89.588 
+            20 0 -95 
+            20 0 -95 
+            31.7587 0 -87.143 
+            31.7587 0 -87.143 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 191 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 190 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 192 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 190 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+            20 0 -95 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 193 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 190 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            30 0 -85 
+            30 0 -85 
+            30 0 -85 
+            30 0 -85 
+            27.8569 0 -83.2412 
+            27.8569 0 -83.2412 
+            27.8569 0 -83.2412 
+            27.8569 0 -83.2412 
+            25.412 0 -81.9344 
+            25.412 0 -81.9344 
+            25.412 0 -81.9344 
+            25.412 0 -81.9344 
+            22.759 0 -81.1296 
+            22.759 0 -81.1296 
+            22.759 0 -81.1296 
+            22.759 0 -81.1296 
+            20 0 -80.8579 
+            20 0 -80.8579 
+            20 0 -80.8579 
+            20 0 -80.8579 
+            17.241 0 -81.1296 
+            17.241 0 -81.1296 
+            17.241 0 -81.1296 
+            17.241 0 -81.1296 
+            14.588 0 -81.9344 
+            14.588 0 -81.9344 
+            14.588 0 -81.9344 
+            14.588 0 -81.9344 
+            12.1431 0 -83.2412 
+            12.1431 0 -83.2412 
+            12.1431 0 -83.2412 
+            12.1431 0 -83.2412 
+            10 0 -85 
+            10 0 -85 
+            10 0 -85 
+            10 0 -85 
+            8.24125 0 -87.1431 
+            8.24125 0 -87.1431 
+            8.24125 0 -87.1431 
+            8.24125 0 -87.1431 
+            6.93437 0 -89.588 
+            6.93437 0 -89.588 
+            6.93437 0 -89.588 
+            6.93437 0 -89.588 
+            6.1296 0 -92.241 
+            6.1296 0 -92.241 
+            6.1296 0 -92.241 
+            6.1296 0 -92.241 
+            5.85786 0 -95 
+            5.85786 0 -95 
+            5.85786 0 -95 
+            5.85786 0 -95 
+            6.1296 0 -97.759 
+            6.1296 0 -97.759 
+            6.1296 0 -97.759 
+            6.1296 0 -97.759 
+            6.93437 0 -100.412 
+            6.93437 0 -100.412 
+            6.93437 0 -100.412 
+            6.93437 0 -100.412 
+            8.24125 0 -102.857 
+            8.24125 0 -102.857 
+            8.24125 0 -102.857 
+            8.24125 0 -102.857 
+            10 0 -105 
+            10 0 -105 
+            10 0 -105 
+            10 0 -105 
+            12.1431 0 -106.759 
+            12.1431 0 -106.759 
+            12.1431 0 -106.759 
+            12.1431 0 -106.759 
+            14.588 0 -108.066 
+            14.588 0 -108.066 
+            14.588 0 -108.066 
+            14.588 0 -108.066 
+            17.241 0 -108.87 
+            17.241 0 -108.87 
+            17.241 0 -108.87 
+            17.241 0 -108.87 
+            20 0 -109.142 
+            20 0 -109.142 
+            20 0 -109.142 
+            20 0 -109.142 
+            22.759 0 -108.87 
+            22.759 0 -108.87 
+            22.759 0 -108.87 
+            22.759 0 -108.87 
+            25.412 0 -108.066 
+            25.412 0 -108.066 
+            25.412 0 -108.066 
+            25.412 0 -108.066 
+            27.857 0 -106.759 
+            27.857 0 -106.759 
+            27.857 0 -106.759 
+            27.857 0 -106.759 
+            30 0 -105 
+            30 0 -105 
+            30 0 -105 
+            30 0 -105 
+            31.7588 0 -102.857 
+            31.7588 0 -102.857 
+            31.7588 0 -102.857 
+            31.7588 0 -102.857 
+            33.0656 0 -100.412 
+            33.0656 0 -100.412 
+            33.0656 0 -100.412 
+            33.0656 0 -100.412 
+            33.8704 0 -97.759 
+            33.8704 0 -97.759 
+            33.8704 0 -97.759 
+            33.8704 0 -97.759 
+            34.1421 0 -95 
+            34.1421 0 -95 
+            34.1421 0 -95 
+            34.1421 0 -95 
+            33.8704 0 -92.241 
+            33.8704 0 -92.241 
+            33.8704 0 -92.241 
+            33.8704 0 -92.241 
+            33.0656 0 -89.588 
+            33.0656 0 -89.588 
+            33.0656 0 -89.588 
+            33.0656 0 -89.588 
+            31.7587 0 -87.143 
+            31.7587 0 -87.143 
+            31.7587 0 -87.143 
+            31.7587 0 -87.143 
+          }
+        }
+      }
+      Mode 1 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 194 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 195 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 196 
+              Width 2 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 197 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 19 FloatArray 1 {
+                2 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 198 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 199 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 192 {
+            3 1 0 2 
+            3 0 7 5 
+            4 6 7 4 
+            11 9 8 10 
+            11 8 15 13 
+            12 14 15 12 
+            19 17 16 18 
+            19 16 23 21 
+            20 22 23 20 
+            27 25 24 26 
+            27 24 31 29 
+            28 30 31 28 
+            35 33 32 34 
+            35 32 39 37 
+            36 38 39 36 
+            43 41 40 42 
+            43 40 47 45 
+            44 46 47 44 
+            51 49 48 50 
+            51 48 55 53 
+            52 54 55 52 
+            59 57 56 58 
+            59 56 63 61 
+            60 62 63 60 
+            67 65 64 66 
+            67 64 71 69 
+            68 70 71 68 
+            75 73 72 74 
+            75 72 79 77 
+            76 78 79 76 
+            83 81 80 82 
+            83 80 87 85 
+            84 86 87 84 
+            91 89 88 90 
+            91 88 95 93 
+            92 94 95 92 
+            99 97 96 98 
+            99 96 103 101 
+            100 102 103 100 
+            107 105 104 106 
+            107 104 111 109 
+            108 110 111 108 
+            115 113 112 114 
+            115 112 119 117 
+            116 118 119 116 
+            123 121 120 122 
+            123 120 127 125 
+            124 126 127 124 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 200 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 201 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            60 0 -95 
+            60 0 -95 
+            70 0 -85 
+            70 0 -85 
+            60 0 -95 
+            60 0 -95 
+            67.8569 0 -83.2412 
+            67.8569 0 -83.2412 
+            60 0 -95 
+            60 0 -95 
+            65.412 0 -81.9344 
+            65.412 0 -81.9344 
+            60 0 -95 
+            60 0 -95 
+            62.759 0 -81.1296 
+            62.759 0 -81.1296 
+            60 0 -95 
+            60 0 -95 
+            60 0 -80.8579 
+            60 0 -80.8579 
+            60 0 -95 
+            60 0 -95 
+            57.241 0 -81.1296 
+            57.241 0 -81.1296 
+            60 0 -95 
+            60 0 -95 
+            54.588 0 -81.9344 
+            54.588 0 -81.9344 
+            60 0 -95 
+            60 0 -95 
+            52.1431 0 -83.2412 
+            52.1431 0 -83.2412 
+            60 0 -95 
+            60 0 -95 
+            50 0 -85 
+            50 0 -85 
+            60 0 -95 
+            60 0 -95 
+            48.2412 0 -87.1431 
+            48.2412 0 -87.1431 
+            60 0 -95 
+            60 0 -95 
+            46.9344 0 -89.588 
+            46.9344 0 -89.588 
+            60 0 -95 
+            60 0 -95 
+            46.1296 0 -92.241 
+            46.1296 0 -92.241 
+            60 0 -95 
+            60 0 -95 
+            45.8579 0 -95 
+            45.8579 0 -95 
+            60 0 -95 
+            60 0 -95 
+            46.1296 0 -97.759 
+            46.1296 0 -97.759 
+            60 0 -95 
+            60 0 -95 
+            46.9344 0 -100.412 
+            46.9344 0 -100.412 
+            60 0 -95 
+            60 0 -95 
+            48.2412 0 -102.857 
+            48.2412 0 -102.857 
+            60 0 -95 
+            60 0 -95 
+            50 0 -105 
+            50 0 -105 
+            60 0 -95 
+            60 0 -95 
+            52.1431 0 -106.759 
+            52.1431 0 -106.759 
+            60 0 -95 
+            60 0 -95 
+            54.588 0 -108.066 
+            54.588 0 -108.066 
+            60 0 -95 
+            60 0 -95 
+            57.241 0 -108.87 
+            57.241 0 -108.87 
+            60 0 -95 
+            60 0 -95 
+            60 0 -109.142 
+            60 0 -109.142 
+            60 0 -95 
+            60 0 -95 
+            62.759 0 -108.87 
+            62.759 0 -108.87 
+            60 0 -95 
+            60 0 -95 
+            65.412 0 -108.066 
+            65.412 0 -108.066 
+            60 0 -95 
+            60 0 -95 
+            67.857 0 -106.759 
+            67.857 0 -106.759 
+            60 0 -95 
+            60 0 -95 
+            70 0 -105 
+            70 0 -105 
+            60 0 -95 
+            60 0 -95 
+            71.7588 0 -102.857 
+            71.7588 0 -102.857 
+            60 0 -95 
+            60 0 -95 
+            73.0656 0 -100.412 
+            73.0656 0 -100.412 
+            60 0 -95 
+            60 0 -95 
+            73.8704 0 -97.759 
+            73.8704 0 -97.759 
+            60 0 -95 
+            60 0 -95 
+            74.1421 0 -95 
+            74.1421 0 -95 
+            60 0 -95 
+            60 0 -95 
+            73.8704 0 -92.241 
+            73.8704 0 -92.241 
+            60 0 -95 
+            60 0 -95 
+            73.0656 0 -89.588 
+            73.0656 0 -89.588 
+            60 0 -95 
+            60 0 -95 
+            71.7587 0 -87.143 
+            71.7587 0 -87.143 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 202 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 201 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+            1 0.5 0 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 203 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 201 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+            60 0 -95 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 204 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 201 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            70 0 -85 
+            70 0 -85 
+            70 0 -85 
+            70 0 -85 
+            67.8569 0 -83.2412 
+            67.8569 0 -83.2412 
+            67.8569 0 -83.2412 
+            67.8569 0 -83.2412 
+            65.412 0 -81.9344 
+            65.412 0 -81.9344 
+            65.412 0 -81.9344 
+            65.412 0 -81.9344 
+            62.759 0 -81.1296 
+            62.759 0 -81.1296 
+            62.759 0 -81.1296 
+            62.759 0 -81.1296 
+            60 0 -80.8579 
+            60 0 -80.8579 
+            60 0 -80.8579 
+            60 0 -80.8579 
+            57.241 0 -81.1296 
+            57.241 0 -81.1296 
+            57.241 0 -81.1296 
+            57.241 0 -81.1296 
+            54.588 0 -81.9344 
+            54.588 0 -81.9344 
+            54.588 0 -81.9344 
+            54.588 0 -81.9344 
+            52.1431 0 -83.2412 
+            52.1431 0 -83.2412 
+            52.1431 0 -83.2412 
+            52.1431 0 -83.2412 
+            50 0 -85 
+            50 0 -85 
+            50 0 -85 
+            50 0 -85 
+            48.2412 0 -87.1431 
+            48.2412 0 -87.1431 
+            48.2412 0 -87.1431 
+            48.2412 0 -87.1431 
+            46.9344 0 -89.588 
+            46.9344 0 -89.588 
+            46.9344 0 -89.588 
+            46.9344 0 -89.588 
+            46.1296 0 -92.241 
+            46.1296 0 -92.241 
+            46.1296 0 -92.241 
+            46.1296 0 -92.241 
+            45.8579 0 -95 
+            45.8579 0 -95 
+            45.8579 0 -95 
+            45.8579 0 -95 
+            46.1296 0 -97.759 
+            46.1296 0 -97.759 
+            46.1296 0 -97.759 
+            46.1296 0 -97.759 
+            46.9344 0 -100.412 
+            46.9344 0 -100.412 
+            46.9344 0 -100.412 
+            46.9344 0 -100.412 
+            48.2412 0 -102.857 
+            48.2412 0 -102.857 
+            48.2412 0 -102.857 
+            48.2412 0 -102.857 
+            50 0 -105 
+            50 0 -105 
+            50 0 -105 
+            50 0 -105 
+            52.1431 0 -106.759 
+            52.1431 0 -106.759 
+            52.1431 0 -106.759 
+            52.1431 0 -106.759 
+            54.588 0 -108.066 
+            54.588 0 -108.066 
+            54.588 0 -108.066 
+            54.588 0 -108.066 
+            57.241 0 -108.87 
+            57.241 0 -108.87 
+            57.241 0 -108.87 
+            57.241 0 -108.87 
+            60 0 -109.142 
+            60 0 -109.142 
+            60 0 -109.142 
+            60 0 -109.142 
+            62.759 0 -108.87 
+            62.759 0 -108.87 
+            62.759 0 -108.87 
+            62.759 0 -108.87 
+            65.412 0 -108.066 
+            65.412 0 -108.066 
+            65.412 0 -108.066 
+            65.412 0 -108.066 
+            67.857 0 -106.759 
+            67.857 0 -106.759 
+            67.857 0 -106.759 
+            67.857 0 -106.759 
+            70 0 -105 
+            70 0 -105 
+            70 0 -105 
+            70 0 -105 
+            71.7588 0 -102.857 
+            71.7588 0 -102.857 
+            71.7588 0 -102.857 
+            71.7588 0 -102.857 
+            73.0656 0 -100.412 
+            73.0656 0 -100.412 
+            73.0656 0 -100.412 
+            73.0656 0 -100.412 
+            73.8704 0 -97.759 
+            73.8704 0 -97.759 
+            73.8704 0 -97.759 
+            73.8704 0 -97.759 
+            74.1421 0 -95 
+            74.1421 0 -95 
+            74.1421 0 -95 
+            74.1421 0 -95 
+            73.8704 0 -92.241 
+            73.8704 0 -92.241 
+            73.8704 0 -92.241 
+            73.8704 0 -92.241 
+            73.0656 0 -89.588 
+            73.0656 0 -89.588 
+            73.0656 0 -89.588 
+            73.0656 0 -89.588 
+            71.7587 0 -87.143 
+            71.7587 0 -87.143 
+            71.7587 0 -87.143 
+            71.7587 0 -87.143 
+          }
+        }
+      }
+      Mode 1 
+      Color 1 0.5 0 1 
+      LineWidth 2 
+    }
+    osgEarth::LineDrawable {
+      UniqueID 205 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 206 
+          AttributeList 1 {
+            osg::LineWidth {
+              UniqueID 207 
+              Width 3 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 208 
+              Name "oe_GL_LineWidth" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 20 FloatArray 1 {
+                3 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawElementsUByte {
+          UniqueID 209 
+          BufferObject TRUE {
+            osg::ElementBufferObject {
+              UniqueID 210 
+              Target 34963 
+            }
+          }
+          Mode TRIANGLES 
+          vector 192 {
+            3 1 0 2 
+            3 0 7 5 
+            4 6 7 4 
+            11 9 8 10 
+            11 8 15 13 
+            12 14 15 12 
+            19 17 16 18 
+            19 16 23 21 
+            20 22 23 20 
+            27 25 24 26 
+            27 24 31 29 
+            28 30 31 28 
+            35 33 32 34 
+            35 32 39 37 
+            36 38 39 36 
+            43 41 40 42 
+            43 40 47 45 
+            44 46 47 44 
+            51 49 48 50 
+            51 48 55 53 
+            52 54 55 52 
+            59 57 56 58 
+            59 56 63 61 
+            60 62 63 60 
+            67 65 64 66 
+            67 64 71 69 
+            68 70 71 68 
+            75 73 72 74 
+            75 72 79 77 
+            76 78 79 76 
+            83 81 80 82 
+            83 80 87 85 
+            84 86 87 84 
+            91 89 88 90 
+            91 88 95 93 
+            92 94 95 92 
+            99 97 96 98 
+            99 96 103 101 
+            100 102 103 100 
+            107 105 104 106 
+            107 104 111 109 
+            108 110 111 108 
+            115 113 112 114 
+            115 112 119 117 
+            116 118 119 116 
+            123 121 120 122 
+            123 120 127 125 
+            124 126 127 124 
+            
+          }
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 211 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 212 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            100 0 -95 
+            100 0 -95 
+            110 0 -85 
+            110 0 -85 
+            100 0 -95 
+            100 0 -95 
+            107.857 0 -83.2412 
+            107.857 0 -83.2412 
+            100 0 -95 
+            100 0 -95 
+            105.412 0 -81.9344 
+            105.412 0 -81.9344 
+            100 0 -95 
+            100 0 -95 
+            102.759 0 -81.1296 
+            102.759 0 -81.1296 
+            100 0 -95 
+            100 0 -95 
+            100 0 -80.8579 
+            100 0 -80.8579 
+            100 0 -95 
+            100 0 -95 
+            97.241 0 -81.1296 
+            97.241 0 -81.1296 
+            100 0 -95 
+            100 0 -95 
+            94.588 0 -81.9344 
+            94.588 0 -81.9344 
+            100 0 -95 
+            100 0 -95 
+            92.1431 0 -83.2412 
+            92.1431 0 -83.2412 
+            100 0 -95 
+            100 0 -95 
+            90 0 -85 
+            90 0 -85 
+            100 0 -95 
+            100 0 -95 
+            88.2412 0 -87.1431 
+            88.2412 0 -87.1431 
+            100 0 -95 
+            100 0 -95 
+            86.9344 0 -89.588 
+            86.9344 0 -89.588 
+            100 0 -95 
+            100 0 -95 
+            86.1296 0 -92.241 
+            86.1296 0 -92.241 
+            100 0 -95 
+            100 0 -95 
+            85.8579 0 -95 
+            85.8579 0 -95 
+            100 0 -95 
+            100 0 -95 
+            86.1296 0 -97.759 
+            86.1296 0 -97.759 
+            100 0 -95 
+            100 0 -95 
+            86.9344 0 -100.412 
+            86.9344 0 -100.412 
+            100 0 -95 
+            100 0 -95 
+            88.2412 0 -102.857 
+            88.2412 0 -102.857 
+            100 0 -95 
+            100 0 -95 
+            90 0 -105 
+            90 0 -105 
+            100 0 -95 
+            100 0 -95 
+            92.1431 0 -106.759 
+            92.1431 0 -106.759 
+            100 0 -95 
+            100 0 -95 
+            94.588 0 -108.066 
+            94.588 0 -108.066 
+            100 0 -95 
+            100 0 -95 
+            97.241 0 -108.87 
+            97.241 0 -108.87 
+            100 0 -95 
+            100 0 -95 
+            100 0 -109.142 
+            100 0 -109.142 
+            100 0 -95 
+            100 0 -95 
+            102.759 0 -108.87 
+            102.759 0 -108.87 
+            100 0 -95 
+            100 0 -95 
+            105.412 0 -108.066 
+            105.412 0 -108.066 
+            100 0 -95 
+            100 0 -95 
+            107.857 0 -106.759 
+            107.857 0 -106.759 
+            100 0 -95 
+            100 0 -95 
+            110 0 -105 
+            110 0 -105 
+            100 0 -95 
+            100 0 -95 
+            111.759 0 -102.857 
+            111.759 0 -102.857 
+            100 0 -95 
+            100 0 -95 
+            113.066 0 -100.412 
+            113.066 0 -100.412 
+            100 0 -95 
+            100 0 -95 
+            113.87 0 -97.759 
+            113.87 0 -97.759 
+            100 0 -95 
+            100 0 -95 
+            114.142 0 -95 
+            114.142 0 -95 
+            100 0 -95 
+            100 0 -95 
+            113.87 0 -92.241 
+            113.87 0 -92.241 
+            100 0 -95 
+            100 0 -95 
+            113.066 0 -89.588 
+            113.066 0 -89.588 
+            100 0 -95 
+            100 0 -95 
+            111.759 0 -87.143 
+            111.759 0 -87.143 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 213 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 212 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+            1 1 0 1 
+          }
+        }
+      }
+      VertexAttribArrayList 11 {
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        NULL 
+        osg::Vec3Array {
+          UniqueID 214 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 212 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+            100 0 -95 
+          }
+        }
+        osg::Vec3Array {
+          UniqueID 215 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 212 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 128 {
+            110 0 -85 
+            110 0 -85 
+            110 0 -85 
+            110 0 -85 
+            107.857 0 -83.2412 
+            107.857 0 -83.2412 
+            107.857 0 -83.2412 
+            107.857 0 -83.2412 
+            105.412 0 -81.9344 
+            105.412 0 -81.9344 
+            105.412 0 -81.9344 
+            105.412 0 -81.9344 
+            102.759 0 -81.1296 
+            102.759 0 -81.1296 
+            102.759 0 -81.1296 
+            102.759 0 -81.1296 
+            100 0 -80.8579 
+            100 0 -80.8579 
+            100 0 -80.8579 
+            100 0 -80.8579 
+            97.241 0 -81.1296 
+            97.241 0 -81.1296 
+            97.241 0 -81.1296 
+            97.241 0 -81.1296 
+            94.588 0 -81.9344 
+            94.588 0 -81.9344 
+            94.588 0 -81.9344 
+            94.588 0 -81.9344 
+            92.1431 0 -83.2412 
+            92.1431 0 -83.2412 
+            92.1431 0 -83.2412 
+            92.1431 0 -83.2412 
+            90 0 -85 
+            90 0 -85 
+            90 0 -85 
+            90 0 -85 
+            88.2412 0 -87.1431 
+            88.2412 0 -87.1431 
+            88.2412 0 -87.1431 
+            88.2412 0 -87.1431 
+            86.9344 0 -89.588 
+            86.9344 0 -89.588 
+            86.9344 0 -89.588 
+            86.9344 0 -89.588 
+            86.1296 0 -92.241 
+            86.1296 0 -92.241 
+            86.1296 0 -92.241 
+            86.1296 0 -92.241 
+            85.8579 0 -95 
+            85.8579 0 -95 
+            85.8579 0 -95 
+            85.8579 0 -95 
+            86.1296 0 -97.759 
+            86.1296 0 -97.759 
+            86.1296 0 -97.759 
+            86.1296 0 -97.759 
+            86.9344 0 -100.412 
+            86.9344 0 -100.412 
+            86.9344 0 -100.412 
+            86.9344 0 -100.412 
+            88.2412 0 -102.857 
+            88.2412 0 -102.857 
+            88.2412 0 -102.857 
+            88.2412 0 -102.857 
+            90 0 -105 
+            90 0 -105 
+            90 0 -105 
+            90 0 -105 
+            92.1431 0 -106.759 
+            92.1431 0 -106.759 
+            92.1431 0 -106.759 
+            92.1431 0 -106.759 
+            94.588 0 -108.066 
+            94.588 0 -108.066 
+            94.588 0 -108.066 
+            94.588 0 -108.066 
+            97.241 0 -108.87 
+            97.241 0 -108.87 
+            97.241 0 -108.87 
+            97.241 0 -108.87 
+            100 0 -109.142 
+            100 0 -109.142 
+            100 0 -109.142 
+            100 0 -109.142 
+            102.759 0 -108.87 
+            102.759 0 -108.87 
+            102.759 0 -108.87 
+            102.759 0 -108.87 
+            105.412 0 -108.066 
+            105.412 0 -108.066 
+            105.412 0 -108.066 
+            105.412 0 -108.066 
+            107.857 0 -106.759 
+            107.857 0 -106.759 
+            107.857 0 -106.759 
+            107.857 0 -106.759 
+            110 0 -105 
+            110 0 -105 
+            110 0 -105 
+            110 0 -105 
+            111.759 0 -102.857 
+            111.759 0 -102.857 
+            111.759 0 -102.857 
+            111.759 0 -102.857 
+            113.066 0 -100.412 
+            113.066 0 -100.412 
+            113.066 0 -100.412 
+            113.066 0 -100.412 
+            113.87 0 -97.759 
+            113.87 0 -97.759 
+            113.87 0 -97.759 
+            113.87 0 -97.759 
+            114.142 0 -95 
+            114.142 0 -95 
+            114.142 0 -95 
+            114.142 0 -95 
+            113.87 0 -92.241 
+            113.87 0 -92.241 
+            113.87 0 -92.241 
+            113.87 0 -92.241 
+            113.066 0 -89.588 
+            113.066 0 -89.588 
+            113.066 0 -89.588 
+            113.066 0 -89.588 
+            111.759 0 -87.143 
+            111.759 0 -87.143 
+            111.759 0 -87.143 
+            111.759 0 -87.143 
+          }
+        }
+      }
+      Mode 1 
+      Color 1 1 0 1 
+      LineWidth 3 
+    }
+    osgEarth::PointDrawable {
+      UniqueID 216 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 217 
+          ModeList 1 {
+            GL_POINT_SMOOTH ON 
+          }
+          AttributeList 1 {
+            osg::Point {
+              UniqueID 218 
+              Size 3 
+              FadeThresholdSize 1 
+              DistanceAttenuation 1 0 0 
+              MaxSize 100 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 219 
+              Name "oe_GL_PointSize" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 21 FloatArray 1 {
+                3 
+              }
+            }
+            Value OFF 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawArrays {
+          UniqueID 220 
+          Count 16 
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 221 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 222 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 16 {
+            20 0 -135 
+            20 0 -130 
+            20 0 -125 
+            20 0 -120 
+            25 0 -135 
+            25 0 -130 
+            25 0 -125 
+            25 0 -120 
+            30 0 -135 
+            30 0 -130 
+            30 0 -125 
+            30 0 -120 
+            35 0 -135 
+            35 0 -130 
+            35 0 -125 
+            35 0 -120 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 223 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 222 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 16 {
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+            0 1 1 1 
+          }
+        }
+      }
+      Color 0 1 1 1 
+      PointSize 3 
+    }
+    osgEarth::PointDrawable {
+      UniqueID 224 
+      StateSet TRUE {
+        osg::StateSet {
+          UniqueID 225 
+          ModeList 1 {
+            GL_POINT_SMOOTH ON 
+          }
+          AttributeList 1 {
+            osg::Point {
+              UniqueID 226 
+              Size 20 
+              FadeThresholdSize 1 
+              DistanceAttenuation 1 0 0 
+              MaxSize 100 
+            }
+            Value OFF 
+          }
+          UniformList 1 {
+            osg::Uniform {
+              UniqueID 227 
+              Name "oe_GL_PointSize" 
+              Type FLOAT 
+              NumElements 1 
+              Elements TRUE ArrayID 22 FloatArray 1 {
+                20 
+              }
+            }
+            Value OFF 
+          }
+          DefineList 1 {
+            "OE_POINT_SMOOTH" "" Value ON 
+          }
+        }
+      }
+      UseDisplayList FALSE 
+      UseVertexBufferObjects TRUE 
+      PrimitiveSetList 1 {
+        osg::DrawArrays {
+          UniqueID 228 
+          Count 16 
+        }
+      }
+      VertexArray TRUE {
+        osg::Vec3Array {
+          UniqueID 229 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 230 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 16 {
+            70 0 -135 
+            70 0 -130 
+            70 0 -125 
+            70 0 -120 
+            75 0 -135 
+            75 0 -130 
+            75 0 -125 
+            75 0 -120 
+            80 0 -135 
+            80 0 -130 
+            80 0 -125 
+            80 0 -120 
+            85 0 -135 
+            85 0 -130 
+            85 0 -125 
+            85 0 -120 
+          }
+        }
+      }
+      ColorArray TRUE {
+        osg::Vec4Array {
+          UniqueID 231 
+          BufferObject TRUE {
+            osg::VertexBufferObject {
+              UniqueID 230 
+            }
+          }
+          Binding BIND_PER_VERTEX 
+          vector 16 {
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+            1 1 1 1 
+          }
+        }
+      }
+      PointSize 20 
+    }
+  }
+}

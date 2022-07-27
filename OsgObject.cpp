@@ -1080,7 +1080,7 @@ void cOSG::DoPreLineNow()
 	// 加载尾迹
 	// BuildTail(osg::Vec3(0,0,0),mtrix_fly_self);
 	// BuildRibbon(512, mt_fly_.get());
-	BuildHistoryRoute(xform_, 10.0f);
+	BuildHistoryRoute(xform_, 2.0f);
 	// osg::DegreesToRadians(34.3762), osg::DegreesToRadians(109.1263), 460, mtTemp);
 	// 文件名 经度  纬度 高度 水平方位角 垂直俯仰角 可视范围
 	// earth_manipulator_->setViewpoint(osgEarth::Viewpoint("view_point5", 109.126324, 34.376233, 4000, -60, -90, 1000),1);
