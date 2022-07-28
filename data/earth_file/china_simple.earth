@@ -4,9 +4,9 @@
 		<url>../world_data/world.tif</url>
 	</image>
 	<!--全球高程图-->
-	<heightfield name="GlobeHeightfiled" driver="gdal">
+	<!--<heightfield name="GlobeHeightfiled" driver="gdal">
 		<url>../world_data/srtm30plus.tif</url>
-	</heightfield>
+	</heightfield>-->
 	<!--在线地图 经纬度不准-->
 	<!--<image name="mapbox_satellite" driver="xyz">
 		<url>http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}</url>
@@ -33,7 +33,7 @@
 				world{
 					stroke: #ffff00;
 					stroke-opacity: 1.0;
-					stroke-width: 1;
+					stroke-width: 1.0;
 				}
 			</style>
 		</styles>
@@ -51,7 +51,7 @@
 				china{
 					stroke: #ffffff;
 					stroke-opacity: 1.0;
-					stroke-width: 1.5;
+					stroke-width: 1.0;
 				}
 			</style>
 		</styles>
@@ -122,7 +122,7 @@
 			<style type="text/css">
 				china{
 					stroke: #1E90FF;
-					stroke-opacity: 1.0;
+					stroke-opacity: 0.5;
 					stroke-width: 1.0;
 				}
 			</style>
@@ -164,10 +164,58 @@
 			</style>
 		</styles>
 	</image>-->
+
+  <model name="cities" driver="feature_geom">
+  
+  	<features name="cities" driver="ogr">
+  		<url>../china_data/county_total.shp</url>
+  
+  		<!--Define a ChangeAttributeFilter, which is defined in the osgearth_featurefilter example.  This will change the cntry_name of all countries to osgEarthLand.-->
+  		<filters>
+  			<change_attribute key="Name" value="osgEarthLand"/>
+  		</filters>
+  	</features>
+  
+  	<styles>
+  		<style type="text/css">
+  			cities {
+  			text-provider:  annotation;
+  			text-content:   [cntry_name];
+  			text-priority:  [pop_cntry];
+  			text-halo:      #3f3f7f;
+  			text-align:     center_center;
+  			text-declutter: true;
+  			}
+  		</style>
+  	</styles>
+  
+  </model>
+  
+  <screen_space_layout>
+  	<out_animation_time>  0.0  </out_animation_time>
+  	<in_animation_time>   0.25 </in_animation_time>
+  	<min_animation_scale> 0.45 </min_animation_scale>
+  	<min_animation_alpha> 0.35 </min_animation_alpha>
+  	<sort_by_priority>    true </sort_by_priority>
+  </screen_space_layout>
+	
+	
 	<!--文件缓存-->
-	<options>
+  <options>
 		<cache type="filesystem">
 			<path>c:/osgearth_cache</path>
+			 <terrain normal_maps="true"/>
 		</cache>
 	</options>
+	
+
+  <sky driver="gl"/>
+  <bumpmap>
+     <image>../Image/rock_hard.jpg</image>
+     <octaves>8</octaves>
+     <intensity>2.5</intensity>
+  </bumpmap>
+	
+	<xi:include href="viewpoints.xml"/>
+	
 </map>
