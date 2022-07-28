@@ -3,10 +3,14 @@
 	<image name="GlobeImage" driver="gdal">
 		<url>../world_data/world.tif</url>
 	</image>
+<<<<<<< HEAD
 	<!--全球高程图-->
 	<!--<heightfield name="GlobeHeightfiled" driver="gdal">
 		<url>../world_data/srtm30plus.tif</url>
 	</heightfield>-->
+=======
+
+>>>>>>> d60956fbe867e24fbe71b985522d65a15f47a026
 	<!--在线地图 经纬度不准-->
 	<!--<image name="mapbox_satellite" driver="xyz">
 		<url>http://map.geoq.cn/ArcGIS/rest/services/ChinaOnlineStreetWarm/MapServer/tile/{z}/{y}/{x}</url>
